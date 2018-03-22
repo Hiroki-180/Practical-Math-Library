@@ -14,7 +14,6 @@ This library aims to provide useful functions or classes for IT practitioners.
     - bilinear/bicubic
 
  - One dimensional Root finding
-    - bisecion
     - Newton
     - globally convergent Newton
     - Brent-Dekker
@@ -29,7 +28,7 @@ This library aims to provide useful functions or classes for IT practitioners.
     - physicists/probabilistic Hermite
     - Laguerre
     
- - Copulas
+ - Two dimensional Copulas
     - independence/perfect dependence/perfect anti-dependence
     - Gaussian
     - Student t
