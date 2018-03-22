@@ -1,7 +1,7 @@
 # Practical-Math-Library
 This library aims to provide useful functions or classes for IT practitioners.
 
-# Contents(target)
+# Contents
  - Constants
     - ~~rational/irrational numbers~~
 
