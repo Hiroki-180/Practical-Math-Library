@@ -27,6 +27,16 @@ This library aims to provide useful functions or classes for IT practitioners.
     - Legendre
     - physicists/probabilistic Hermite
     - Laguerre
+ 
+ - Probability
+    - Standard Normal
+    - Noncentral chi-squared
+ 
+ - Stochastic processes
+    - Brownian motion
+    - 2d/3d binomial/trinomial Brownian tree
+    - Log-normal
+    - SABR model
     
  - Two dimensional Copulas
     - independence/perfect dependence/perfect anti-dependence
@@ -37,9 +47,6 @@ This library aims to provide useful functions or classes for IT practitioners.
     - Frank
     - Joe
     - Ali-Mikhail-Haq
- 
- - Stochastic processes
-    - Brownian motion
-    - 2d/3d binomial/trinomial Brownian tree
-    - Log-normal
-    - SABR model
+
+# Exceptions
+This library throws “PMLException” with detailed error descriptions when input is incorrect.
