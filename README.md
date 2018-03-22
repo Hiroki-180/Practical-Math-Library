@@ -28,9 +28,25 @@ This library aims to provide useful functions or classes for IT practitioners.
     - physicists/probabilistic Hermite
     - Laguerre
  
- - Probability
+ - Probability Distributions
     - Standard Normal
+    - Poisson
+    - chi-squared
     - Noncentral chi-squared
+    - exponentially modified Gaussian
+    - exponential
+    - arcsine
+    - beta
+    - gamma
+    - Laplace
+    - Erlang
+    - Weibull
+    - Benktander I/II
+    - Pareto
+    - Nakagami
+    - Gumbel
+    - logistics
+    - K
  
  - Stochastic processes
     - Brownian motion
