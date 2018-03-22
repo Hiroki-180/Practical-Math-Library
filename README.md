@@ -2,6 +2,9 @@
 This library aims to provide useful functions or classes for IT practitioners.
 
 # Contents(target)
+ - Differentiation
+    - 1st/2nd/3rd/4th derivatives with 1st/2nd/3rd/4th/5th accuracy by forward/central/backward finite difference
+
  - Integrations
     - Trapezoidal rules
     - Gaussian quadratures
@@ -33,7 +36,6 @@ This library aims to provide useful functions or classes for IT practitioners.
     - Poisson
     - chi-squared
     - Noncentral chi-squared
-    - exponentially modified Gaussian
     - exponential
     - arcsine
     - beta
@@ -47,12 +49,18 @@ This library aims to provide useful functions or classes for IT practitioners.
     - Gumbel
     - logistics
     - K
+    - exponentially modified Gaussian
  
  - Stochastic processes
-    - Brownian motion
+    - Brownian
     - 2d/3d binomial/trinomial Brownian tree
     - Log-normal
-    - SABR model
+    - Bessel
+    - squared Bessel
+    - gamma
+    - Ornstein-Uhlenbeck
+    - CEV
+    - SABR
     
  - Two dimensional Copulas
     - independence/perfect dependence/perfect anti-dependence
@@ -63,6 +71,7 @@ This library aims to provide useful functions or classes for IT practitioners.
     - Frank
     - Joe
     - Ali-Mikhail-Haq
+    - empilical
 
 # Exceptions
 This library throws “PMLException” with detailed error descriptions when input is incorrect.
