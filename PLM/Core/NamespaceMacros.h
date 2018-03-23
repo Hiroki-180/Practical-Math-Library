@@ -8,9 +8,14 @@
 PML_NS_BEGIN PML_NS_END
 namespace PMLNS = pml;
 
-#define PML_CONSTANTS_NS_BEGIN PML_NS_BEGIN namespace constants {
-#define PML_CONSTANTS_NS_END   } PML_NS_END
-PML_CONSTANTS_NS_BEGIN PML_CONSTANTS_NS_END
-namespace PMLConstantsNS = pml;
+#define PML_MATH_NS_BEGIN PML_NS_BEGIN namespace math {
+#define PML_MATH_NS_END   } PML_NS_END
+PML_MATH_NS_BEGIN PML_MATH_NS_END
+namespace PMLMathNS = pml::math;
+
+#define PML_MATH_CONSTANTS_NS_BEGIN PML_MATH_NS_BEGIN namespace constants {
+#define PML_MATH_CONSTANTS_NS_END   } PML_MATH_NS_END
+PML_MATH_CONSTANTS_NS_BEGIN PML_MATH_CONSTANTS_NS_END
+namespace PMLMathConstantsNS = pml::math::constants;
 
 #endif
