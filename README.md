@@ -3,7 +3,8 @@ This library aims to provide useful functions or classes for IT practitioners.
 
 # Contents
  - Constants
-    - ~~rational/irrational numbers~~
+    - ~~mathematical constants~~
+    - ~~physical constants~~
 
  - Differentiations
     - ~~1st/2nd/3rd/4th derivatives with 1st/2nd/3rd/4th/5th accuracy by forward/central/backward finite difference~~
