@@ -5,7 +5,7 @@ This library aims to provide useful functions or classes for IT practitioners.
 ## Current Status
 Current development is mainly for use in 32-bit applications.
 Also, current version supports only the Visual Studio 2017 Community compiler.
-64-bit development is future target.
+Supporting 64-bit environment or other compilers is important future task.
 
 ## Contents
  - Constants
