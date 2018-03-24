@@ -87,7 +87,7 @@ Also, current version supports only the Visual Studio 2017 Community compiler.
 This library throws “PMLException” with detailed error descriptions when input is incorrect.
 
 ## Tests
- - Unit tests are written with [GoogleTest](https://github.com/google/googletest), which has the following license that must be duplicated in its entirety, per its terms:
+ - Unit tests are written with [GoogleTest](https://github.com/google/googletest), which has the [following BSD 3-Clause license](https://github.com/google/googletest/blob/master/LICENSE) that must be duplicated in its entirety:
 ```
  Copyright 2005, Google Inc.  All rights reserved.
 
