@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <PLM/Core/NamespaceMacros.h>
+#include <PML/Core/NamespaceMacros.h>
 
 PML_MATH_NS_BEGIN namespace constants
 {
