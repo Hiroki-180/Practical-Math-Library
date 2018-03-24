@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\PLM\Math\Constants.h">
+    <ClInclude Include="..\..\include\PLM\Math\Constants.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

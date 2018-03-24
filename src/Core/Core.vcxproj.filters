@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\PLM\Core\NamespaceMacros.h">
+    <ClInclude Include="..\..\include\PLM\Core\NamespaceMacros.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
