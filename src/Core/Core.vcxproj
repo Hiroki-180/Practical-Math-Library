@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\PML\Core\CPUDetector.h" />
     <ClInclude Include="..\..\include\PML\Core\NamespaceMacros.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

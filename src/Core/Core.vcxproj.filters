@@ -18,5 +18,8 @@
     <ClInclude Include="..\..\include\PML\Core\NamespaceMacros.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\PML\Core\CPUDetector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
