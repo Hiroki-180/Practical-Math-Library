@@ -23,66 +23,66 @@ class CPUInfo final
     class CPUDetector;
   
 public:  
-    static std::string getVendor(void) { return CPU_Rep.vendor_; }  
-    static std::string getBrand(void) { return CPU_Rep.brand_; }  
+    static std::string getVendor() { return CPU_Rep.vendor_; }
+    static std::string getBrand() { return CPU_Rep.brand_; }
   
-    static bool isSSE3(void) { return CPU_Rep.f_1_ECX_[0]; }  
-    static bool isPCLMULQDQ(void) { return CPU_Rep.f_1_ECX_[1]; }  
-    static bool isMONITOR(void) { return CPU_Rep.f_1_ECX_[3]; }  
-    static bool isSSSE3(void) { return CPU_Rep.f_1_ECX_[9]; }  
-    static bool isFMA(void) { return CPU_Rep.f_1_ECX_[12]; }  
-    static bool isCMPXCHG16B(void) { return CPU_Rep.f_1_ECX_[13]; }  
-    static bool isSSE41(void) { return CPU_Rep.f_1_ECX_[19]; }  
-    static bool isSSE42(void) { return CPU_Rep.f_1_ECX_[20]; }  
-    static bool isMOVBE(void) { return CPU_Rep.f_1_ECX_[22]; }  
-    static bool isPOPCNT(void) { return CPU_Rep.f_1_ECX_[23]; }  
-    static bool isAES(void) { return CPU_Rep.f_1_ECX_[25]; }  
-    static bool isXSAVE(void) { return CPU_Rep.f_1_ECX_[26]; }  
-    static bool isOSXSAVE(void) { return CPU_Rep.f_1_ECX_[27]; }  
-    static bool isAVX(void) { return CPU_Rep.f_1_ECX_[28]; }  
-    static bool isF16C(void) { return CPU_Rep.f_1_ECX_[29]; }  
-    static bool isRDRAND(void) { return CPU_Rep.f_1_ECX_[30]; }  
+    static bool isSSE3() { return CPU_Rep.f_1_ECX_[0]; }
+    static bool isPCLMULQDQ() { return CPU_Rep.f_1_ECX_[1]; }
+    static bool isMONITOR() { return CPU_Rep.f_1_ECX_[3]; }
+    static bool isSSSE3() { return CPU_Rep.f_1_ECX_[9]; }
+    static bool isFMA() { return CPU_Rep.f_1_ECX_[12]; }
+    static bool isCMPXCHG16B() { return CPU_Rep.f_1_ECX_[13]; }
+    static bool isSSE41() { return CPU_Rep.f_1_ECX_[19]; }
+    static bool isSSE42() { return CPU_Rep.f_1_ECX_[20]; }
+    static bool isMOVBE() { return CPU_Rep.f_1_ECX_[22]; }
+    static bool isPOPCNT() { return CPU_Rep.f_1_ECX_[23]; }
+    static bool isAES() { return CPU_Rep.f_1_ECX_[25]; }
+    static bool isXSAVE() { return CPU_Rep.f_1_ECX_[26]; }
+    static bool isOSXSAVE() { return CPU_Rep.f_1_ECX_[27]; }
+    static bool isAVX() { return CPU_Rep.f_1_ECX_[28]; }
+    static bool isF16C() { return CPU_Rep.f_1_ECX_[29]; }
+    static bool isRDRAND() { return CPU_Rep.f_1_ECX_[30]; }
   
-    static bool isMSR(void) { return CPU_Rep.f_1_EDX_[5]; }  
-    static bool isCX8(void) { return CPU_Rep.f_1_EDX_[8]; }  
-    static bool isSEP(void) { return CPU_Rep.f_1_EDX_[11]; }  
-    static bool isCMOV(void) { return CPU_Rep.f_1_EDX_[15]; }  
-    static bool isCLFSH(void) { return CPU_Rep.f_1_EDX_[19]; }  
-    static bool isMMX(void) { return CPU_Rep.f_1_EDX_[23]; }  
-    static bool isFXSR(void) { return CPU_Rep.f_1_EDX_[24]; }  
-    static bool isSSE(void) { return CPU_Rep.f_1_EDX_[25]; }  
-    static bool isSSE2(void) { return CPU_Rep.f_1_EDX_[26]; }  
+    static bool isMSR() { return CPU_Rep.f_1_EDX_[5]; }
+    static bool isCX8() { return CPU_Rep.f_1_EDX_[8]; }
+    static bool isSEP() { return CPU_Rep.f_1_EDX_[11]; }
+    static bool isCMOV() { return CPU_Rep.f_1_EDX_[15]; }
+    static bool isCLFSH() { return CPU_Rep.f_1_EDX_[19]; }
+    static bool isMMX() { return CPU_Rep.f_1_EDX_[23]; }
+    static bool isFXSR() { return CPU_Rep.f_1_EDX_[24]; }
+    static bool isSSE() { return CPU_Rep.f_1_EDX_[25]; }
+    static bool isSSE2() { return CPU_Rep.f_1_EDX_[26]; }
   
-    static bool isFSGSBASE(void) { return CPU_Rep.f_7_EBX_[0]; }  
-    static bool isBMI1(void) { return CPU_Rep.f_7_EBX_[3]; }  
-    static bool isHLE(void) { return CPU_Rep.isIntel_ && CPU_Rep.f_7_EBX_[4]; }  
-    static bool isAVX2(void) { return CPU_Rep.f_7_EBX_[5]; }  
-    static bool isBMI2(void) { return CPU_Rep.f_7_EBX_[8]; }  
-    static bool isERMS(void) { return CPU_Rep.f_7_EBX_[9]; }  
-    static bool isINVPCID(void) { return CPU_Rep.f_7_EBX_[10]; }  
-    static bool isRTM(void) { return CPU_Rep.isIntel_ && CPU_Rep.f_7_EBX_[11]; }  
-    static bool isAVX512F(void) { return CPU_Rep.f_7_EBX_[16]; }  
-    static bool isRDSEED(void) { return CPU_Rep.f_7_EBX_[18]; }  
-    static bool isADX(void) { return CPU_Rep.f_7_EBX_[19]; }  
-    static bool isAVX512PF(void) { return CPU_Rep.f_7_EBX_[26]; }  
-    static bool isAVX512ER(void) { return CPU_Rep.f_7_EBX_[27]; }  
-    static bool isAVX512CD(void) { return CPU_Rep.f_7_EBX_[28]; }  
-    static bool isSHA(void) { return CPU_Rep.f_7_EBX_[29]; }  
+    static bool isFSGSBASE() { return CPU_Rep.f_7_EBX_[0]; }
+    static bool isBMI1() { return CPU_Rep.f_7_EBX_[3]; }
+    static bool isHLE() { return (CPU_Rep.isIntel_ && CPU_Rep.f_7_EBX_[4]); }
+    static bool isAVX2() { return CPU_Rep.f_7_EBX_[5]; }
+    static bool isBMI2() { return CPU_Rep.f_7_EBX_[8]; }
+    static bool isERMS() { return CPU_Rep.f_7_EBX_[9]; }
+    static bool isINVPCID() { return CPU_Rep.f_7_EBX_[10]; }
+    static bool isRTM() { return (CPU_Rep.isIntel_ && CPU_Rep.f_7_EBX_[11]); }
+    static bool isAVX512F() { return CPU_Rep.f_7_EBX_[16]; }
+    static bool isRDSEED() { return CPU_Rep.f_7_EBX_[18]; }
+    static bool isADX() { return CPU_Rep.f_7_EBX_[19]; }
+    static bool isAVX512PF() { return CPU_Rep.f_7_EBX_[26]; }
+    static bool isAVX512ER() { return CPU_Rep.f_7_EBX_[27]; }
+    static bool isAVX512CD() { return CPU_Rep.f_7_EBX_[28]; }
+    static bool isSHA() { return CPU_Rep.f_7_EBX_[29]; }
   
-    static bool isPREFETCHWT1(void) { return CPU_Rep.f_7_ECX_[0]; }  
+    static bool isPREFETCHWT1() { return CPU_Rep.f_7_ECX_[0]; }
   
-    static bool isLAHF(void) { return CPU_Rep.f_81_ECX_[0]; }  
-    static bool isLZCNT(void) { return CPU_Rep.isIntel_ && CPU_Rep.f_81_ECX_[5]; }  
-    static bool isABM(void) { return CPU_Rep.isAMD_ && CPU_Rep.f_81_ECX_[5]; }  
-    static bool isSSE4a(void) { return CPU_Rep.isAMD_ && CPU_Rep.f_81_ECX_[6]; }  
-    static bool isXOP(void) { return CPU_Rep.isAMD_ && CPU_Rep.f_81_ECX_[11]; }  
-    static bool isTBM(void) { return CPU_Rep.isAMD_ && CPU_Rep.f_81_ECX_[21]; }  
+    static bool isLAHF() { return CPU_Rep.f_81_ECX_[0]; }
+    static bool isLZCNT() { return (CPU_Rep.isIntel_ && CPU_Rep.f_81_ECX_[5]); }
+    static bool isABM() { return (CPU_Rep.isAMD_ && CPU_Rep.f_81_ECX_[5]); }
+    static bool isSSE4a() { return (CPU_Rep.isAMD_ && CPU_Rep.f_81_ECX_[6]); }
+    static bool isXOP() { return (CPU_Rep.isAMD_ && CPU_Rep.f_81_ECX_[11]); }
+    static bool isTBM() { return (CPU_Rep.isAMD_ && CPU_Rep.f_81_ECX_[21]); }
   
-    static bool isSYSCALL(void) { return CPU_Rep.isIntel_ && CPU_Rep.f_81_EDX_[11]; }  
-    static bool isMMXEXT(void) { return CPU_Rep.isAMD_ && CPU_Rep.f_81_EDX_[22]; }  
-    static bool isRDTSCP(void) { return CPU_Rep.isIntel_ && CPU_Rep.f_81_EDX_[27]; }  
-    static bool is3DNOWEXT(void) { return CPU_Rep.isAMD_ && CPU_Rep.f_81_EDX_[30]; }  
-    static bool is3DNOW(void) { return CPU_Rep.isAMD_ && CPU_Rep.f_81_EDX_[31]; }  
+    static bool isSYSCALL() { return (CPU_Rep.isIntel_ && CPU_Rep.f_81_EDX_[11]); }
+    static bool isMMXEXT() { return (CPU_Rep.isAMD_ && CPU_Rep.f_81_EDX_[22]); }
+    static bool isRDTSCP() { return (CPU_Rep.isIntel_ && CPU_Rep.f_81_EDX_[27]); }
+    static bool is3DNOWEXT() { return (CPU_Rep.isAMD_ && CPU_Rep.f_81_EDX_[30]); }
+    static bool is3DNOW() { return (CPU_Rep.isAMD_ && CPU_Rep.f_81_EDX_[31]); }
   
 private:  
     static const CPUDetector CPU_Rep;  
@@ -102,7 +102,7 @@ private:
             f_81_ECX_{ 0 },  
             f_81_EDX_{ 0 },  
             data_{},  
-            extdata_{}  
+            extdata_{}
         {  
             //int cpuInfo[4] = {-1};  
             std::array<int, 4> cpui;  
@@ -116,7 +116,7 @@ private:
             {  
                 __cpuidex(cpui.data(), i, 0);  
                 data_.push_back(cpui);  
-            }  
+            }
   
             // Capture vendor string  
             char vendor[0x20];  
@@ -128,25 +128,25 @@ private:
             if (vendor_ == "GenuineIntel")  
             {  
                 isIntel_ = true;  
-            }  
+            }
             else if (vendor_ == "AuthenticAMD")  
             {  
                 isAMD_ = true;  
-            }  
+            }
   
             // load bitset with flags for function 0x00000001  
             if (nIds_ >= 1)  
             {  
                 f_1_ECX_ = data_[1][2];  
                 f_1_EDX_ = data_[1][3];  
-            }  
+            }
   
             // load bitset with flags for function 0x00000007  
             if (nIds_ >= 7)  
             {  
                 f_7_EBX_ = data_[7][1];  
                 f_7_ECX_ = data_[7][2];  
-            }  
+            }
   
             // Calling __cpuid with 0x80000000 as the function_id argument  
             // gets the number of the highest valid extended ID.  
@@ -160,14 +160,14 @@ private:
             {  
                 __cpuidex(cpui.data(), i, 0);  
                 extdata_.push_back(cpui);  
-            }  
+            }
   
             // load bitset with flags for function 0x80000001  
             if (nExIds_ >= 0x80000001)  
             {  
                 f_81_ECX_ = extdata_[1][2];  
                 f_81_EDX_ = extdata_[1][3];  
-            }  
+            }
   
             // Interpret CPU brand string if reported  
             if (nExIds_ >= 0x80000004)  
@@ -176,7 +176,7 @@ private:
                 memcpy(brand + 16, extdata_[3].data(), sizeof(cpui));  
                 memcpy(brand + 32, extdata_[4].data(), sizeof(cpui));  
                 brand_ = brand;  
-            }  
+            }
         };  
   
         int nIds_;  
