@@ -29,6 +29,15 @@ PML_MATH_NS_BEGIN namespace constants
 	inline double GoldenRatio() noexcept { return 1.618033988749894; }
 	inline double Apery() noexcept { return 1.202056903159594; }
 	inline double UniversalParabolicP() noexcept { return 2.295587149392638; }
+
+	// rational numbers.
+	namespace Q
+	{
+		inline double _1Over3() noexcept { return 0.3333333333333333; }
+		inline double _1Over6() noexcept { return 0.1666666666666666; }
+		inline double _1Over7() noexcept { return 0.1428571428571428; }
+		inline double _1Over9() noexcept { return 0.1111111111111111; }
+	}
 }
 PML_MATH_NS_END
 
