@@ -18,7 +18,13 @@
     <ClInclude Include="..\..\include\PML\Core\NamespaceMacros.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\PML\Core\CPUDetector.h">
+    <ClInclude Include="..\..\include\PML\Core\CPUDispatcher.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\PML\Core\aligned_vector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\PML\Core\aligned_array.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

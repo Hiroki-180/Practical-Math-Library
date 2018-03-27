@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\PML\Core\CPUDetector.h" />
+    <ClInclude Include="..\..\include\PML\Core\CPUDispatcher.h" />
     <ClInclude Include="..\..\include\PML\Core\NamespaceMacros.h" />
+    <ClInclude Include="..\..\include\PML\Core\aligned_vector.h" />
+    <ClInclude Include="..\..\include\PML\Core\aligned_array.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
