@@ -18,32 +18,32 @@
 
 PML_NS_BEGIN
 
-namespace detail{
+namespace detail {
 
-	template<typename T = void*, typename std::enable_if<std::is_pointer<T>::value, std::nullptr_t>::type = nullptr>
-	static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
-	{
-		return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
-	}
+    template<typename T = void*, typename std::enable_if<std::is_pointer<T>::value, std::nullptr_t>::type = nullptr>
+    static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
+    {
+        return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
+    }
 
-	static inline void alignedFree(void* inPtr) noexcept
-	{
-		_aligned_free(inPtr);
-	}
+    static inline void alignedFree(void* inPtr) noexcept
+    {
+        _aligned_free(inPtr);
+    }
 
-	struct alignedDeleter final
-	{
-		void operator()(void* p) const noexcept
-		{
-			detail::alignedFree(p);
-		}
-	};
+    struct alignedDeleter final
+    {
+        void operator()(void* p) const noexcept
+        {
+            alignedFree(p);
+        }
+    };
 }
 
 template<typename T>
 auto createAlignedArray(std::size_t inSize, std::size_t inAlignment)
 {
-	return std::unique_ptr<T[], detail::alignedDeleter>(detail::alignedMalloc<T*>(inSize*sizeof(T), inAlignment));
+    return std::unique_ptr<T[], detail::alignedDeleter>(detail::alignedMalloc<T*>(inSize*sizeof(T), inAlignment));
 }
 
 PML_NS_END
