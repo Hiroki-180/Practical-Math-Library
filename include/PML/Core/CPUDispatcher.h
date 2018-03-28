@@ -20,11 +20,12 @@ PML_NS_BEGIN
 */
 class CPUInfo final
 {
+private:
     class CPUDetector;
 
 public:
-    static std::string getVendor() { return CPU_Rep.vendor_; }
-    static std::string getBrand() { return CPU_Rep.brand_; }
+    static const std::string& getVendor() { return CPU_Rep.vendor_; }
+    static const std::string& getBrand() { return CPU_Rep.brand_; }
 
     static bool isSSE3() { return CPU_Rep.f_1_ECX_[0]; }
     static bool isPCLMULQDQ() { return CPU_Rep.f_1_ECX_[1]; }

@@ -12,7 +12,7 @@ TEST(TestCore, CPUInfo)
 TEST(TestCore, aligned_array)
 {
     const auto lSize = 100;
-    const std::vector<std::size_t> lAligns = { 8, 16, 32, 64, 128 };
+    const std::vector<std::size_t> lAligns = { 2, 4, 8, 16, 32, 64, 128 };
 
     for (const auto& align_i : lAligns)
     {
