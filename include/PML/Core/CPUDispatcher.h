@@ -1,5 +1,5 @@
-#ifndef CORE_CPUDETECTOR_H
-#define CORE_CPUDETECTOR_H
+#ifndef CORE_CPUDISPATCHER_H
+#define CORE_CPUDISPATCHER_H
 
 #pragma once
 
