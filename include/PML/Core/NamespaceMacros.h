@@ -18,4 +18,9 @@ namespace PMLMathNS = pml::math;
 PML_MATH_CONSTANTS_NS_BEGIN PML_MATH_CONSTANTS_NS_END
 namespace PMLMathConstantsNS = pml::math::constants;
 
+#define PML_MATH_NUMERIC_SIMD_NS_BEGIN PML_MATH_NS_BEGIN namespace simd {
+#define PML_MATH_NUMERIC_SIMD_NS_END   } PML_MATH_NS_END
+PML_MATH_NUMERIC_SIMD_NS_BEGIN PML_MATH_NUMERIC_SIMD_NS_END
+namespace PMLMathNumericSIMDNS = pml::math::simd;
+
 #endif
