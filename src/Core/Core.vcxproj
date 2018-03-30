@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\PML\Core\CPUDispatcher.h" />
-    <ClInclude Include="..\..\include\PML\Core\NamespaceMacros.h" />
     <ClInclude Include="..\..\include\PML\Core\aligned_vector.h" />
     <ClInclude Include="..\..\include\PML\Core\aligned_array.h" />
   </ItemGroup>

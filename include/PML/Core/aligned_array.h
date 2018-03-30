@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include <PML/Core/NamespaceMacros.h>
-
 #include <type_traits>
 #include <memory>
 #include <stdexcept>
@@ -16,39 +14,40 @@
 #define PML_STATIC_ALLIGN(n) alignas(n)
 #endif
 
-PML_NS_BEGIN
+namespace pml {
 
-namespace detail {
+    namespace detail {
 
-    template<typename T = void*, typename std::enable_if<std::is_pointer<T>::value, std::nullptr_t>::type = nullptr>
-    static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
-    {
-        return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
-    }
-
-    static inline void alignedFree(void* inPtr) noexcept
-    {
-        _aligned_free(inPtr);
-    }
-
-    struct alignedDeleter final
-    {
-        void operator()(void* p) const noexcept
+        template<typename T = void*, typename std::enable_if<std::is_pointer<T>::value, std::nullptr_t>::type = nullptr>
+        static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
         {
-            alignedFree(p);
+            return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
         }
-    };
-}
 
-template<typename T>
-using aligned_array = std::unique_ptr<T[], detail::alignedDeleter>;
+        static inline void alignedFree(void* inPtr) noexcept
+        {
+            _aligned_free(inPtr);
+        }
 
-template<typename T>
-auto createAlignedArray(std::size_t inSize, std::size_t inAlignment)
-{
-    return aligned_array<double>(detail::alignedMalloc<T*>(inSize*sizeof(T), inAlignment));
-}
+        struct alignedDeleter final
+        {
+            void operator()(void* p) const noexcept
+            {
+                alignedFree(p);
+            }
+        };
 
-PML_NS_END
+    } // detail
+
+    template<typename T>
+    using aligned_array = std::unique_ptr<T[], detail::alignedDeleter>;
+
+    template<typename T>
+    auto createAlignedArray(std::size_t inSize, std::size_t inAlignment)
+    {
+        return aligned_array<double>(detail::alignedMalloc<T*>(inSize * sizeof(T), inAlignment));
+    }
+
+} // pml
 
 #endif

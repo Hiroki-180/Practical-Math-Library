@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\PML\Core\NamespaceMacros.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\PML\Core\CPUDispatcher.h">
       <Filter>Header</Filter>
     </ClInclude>

@@ -8,15 +8,15 @@
 
 TEST(TestNumericSIMD, InnerProd_AVX)
 {
-    if (!PMLNS::CPUDispatcher::isAVX()
-            && !PMLNS::CPUDispatcher::isAVX2())
+    if (!pml::CPUDispatcher::isAVX()
+            && !pml::CPUDispatcher::isAVX2())
     {
         return;
     }
 
     const std::size_t lSize = 100;
-    auto lAArray1 = PMLNS::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
-    auto lAArray2 = PMLNS::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray1 = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray2 = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
 
     for (auto i = 0U;i < lSize;++i)
     {
@@ -49,20 +49,20 @@ TEST(TestNumericSIMD, InnerProd_AVX)
     auto lInnerProdSIMD = 0.0;
     long long lSIMDElapsed(0);
     {
-        std::vector<double> lNotAVector1(lSize);
-        std::vector<double> lNotAVector2(lSize);
+        std::vector<double> lVector1(lSize);
+        std::vector<double> lVector2(lSize);
 
         for (auto i = 0U;i < lSize;++i)
         {
-            lNotAVector1[i] = 1.0;
-            lNotAVector2[i] = i;
+            lVector1[i] = 1.0;
+            lVector2[i] = i;
         }
 
         const auto lStart = std::chrono::system_clock::now();
         for (auto i = 0;i < lTestNum;++i)
         {
             lInnerProdSIMD = 0.0;
-            lInnerProdSIMD = PMLMathNumericSIMDNS::inner_prod_AVX(lNotAVector1, lNotAVector2);
+            lInnerProdSIMD = pml::inner_prod_AVX(lVector1, lVector2);
         }
         const auto lEnd = std::chrono::system_clock::now();
         lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -74,7 +74,7 @@ TEST(TestNumericSIMD, InnerProd_AVX)
     for (auto i = 0;i < lTestNum;++i)
     {
         lInnerProdSIMDAligned = 0.0;
-        lInnerProdSIMDAligned = PMLMathNumericSIMDNS::inner_prod_aligned_AVX(lAArray1, lAArray2, lSize);
+        lInnerProdSIMDAligned = pml::inner_prod_aligned_AVX(lAArray1, lAArray2, lSize);
     }
     const auto lSIMDEnd = std::chrono::system_clock::now();
     const auto lSIMDElapsedAligned = std::chrono::duration_cast<std::chrono::milliseconds>(lSIMDEnd - lSIMDStart).count();
@@ -102,14 +102,14 @@ TEST(TestNumericSIMD, InnerProd_AVX)
 
 TEST(TestNumericSIMD, Accumulate_AVX)
 {
-    if (!PMLNS::CPUDispatcher::isAVX()
-            && !PMLNS::CPUDispatcher::isAVX2())
+    if (!pml::CPUDispatcher::isAVX()
+            && !pml::CPUDispatcher::isAVX2())
     {
         return;
     }
 
     const std::size_t lSize = 100;
-    auto lAArray = PMLNS::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
 
     for (auto i = 0U;i < lSize;++i)
     {
@@ -152,7 +152,7 @@ TEST(TestNumericSIMD, Accumulate_AVX)
         for (auto i = 0;i < lTestNum;++i)
         {
             lSumSIMD = 0.0;
-            lSumSIMD = PMLMathNumericSIMDNS::accumulate_AVX(lVector);
+            lSumSIMD = pml::accumulate_AVX(lVector);
         }
         const auto lEnd = std::chrono::system_clock::now();
         lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -164,7 +164,7 @@ TEST(TestNumericSIMD, Accumulate_AVX)
     for (auto i = 0;i < lTestNum;++i)
     {
         lSumSIMDAligned = 0.0;
-        lSumSIMDAligned = PMLMathNumericSIMDNS::accumulate_aligned_AVX(lAArray, lSize);
+        lSumSIMDAligned = pml::accumulate_aligned_AVX(lAArray, lSize);
     }
     const auto lSIMDEnd = std::chrono::system_clock::now();
     const auto lSIMDElapsedAligned = std::chrono::duration_cast<std::chrono::milliseconds>(lSIMDEnd - lSIMDStart).count();
