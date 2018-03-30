@@ -1,5 +1,7 @@
 #include <PML/Core/CPUDispatcher.h>
 
+#include <intrin.h>
+
 PML_NS_BEGIN
 
 namespace CPUDispatcher {

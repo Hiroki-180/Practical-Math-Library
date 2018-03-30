@@ -3,10 +3,7 @@
 
 #pragma once
 
-#include <PML/Core/NamespaceMacros.h>
 #include <PML/Core/aligned_vector.h>
-
-#include <intrin.h>
 
 PML_MATH_NS_BEGIN
 

@@ -1,5 +1,7 @@
 #include <PML/Math/numeric_simd.h>
 
+#include <intrin.h>
+
 PML_MATH_NS_BEGIN
 
 namespace simd {

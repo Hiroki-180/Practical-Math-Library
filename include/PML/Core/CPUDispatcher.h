@@ -10,7 +10,6 @@
 #include <bitset>
 #include <array>
 #include <string>
-#include <intrin.h>
 
 PML_NS_BEGIN
 
