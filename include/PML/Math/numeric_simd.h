@@ -21,8 +21,8 @@ namespace simd {
     }
 
     inline double inner_prod_aligned_AVX(
-        const std::unique_ptr<double[], PMLNS::detail::alignedDeleter>& inA,
-        const std::unique_ptr<double[], PMLNS::detail::alignedDeleter>& inB,
+        const aligned_array<double>& inA,
+        const aligned_array<double>& inB,
         std::size_t inSize)
     {
         return detail::inner_prod_aligned_AVX(inA.get(), inB.get(), inSize);

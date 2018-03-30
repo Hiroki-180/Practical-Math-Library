@@ -41,9 +41,12 @@ namespace detail {
 }
 
 template<typename T>
+using aligned_array = std::unique_ptr<T[], detail::alignedDeleter>;
+
+template<typename T>
 auto createAlignedArray(std::size_t inSize, std::size_t inAlignment)
 {
-    return std::unique_ptr<T[], detail::alignedDeleter>(detail::alignedMalloc<T*>(inSize*sizeof(T), inAlignment));
+    return aligned_array<double>(detail::alignedMalloc<T*>(inSize*sizeof(T), inAlignment));
 }
 
 PML_NS_END
