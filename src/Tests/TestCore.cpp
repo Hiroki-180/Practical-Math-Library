@@ -6,7 +6,7 @@
 
 TEST(TestCore, CPUInfo)
 {
-    ASSERT_NO_THROW(PMLNS::CPUDispatcher::outputCPUInfo(std::cout));
+    EXPECT_NO_THROW(PMLNS::CPUDispatcher::outputCPUInfo(std::cout));
 }
 
 TEST(TestCore, aligned_array)
