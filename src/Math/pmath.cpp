@@ -18,8 +18,10 @@ namespace pml {
             const uint64_t mFractionBit = FRACTIONBIT;
 
             uint64_t mTable[1UL << EXPBIT];
-            const double mRounder = (3ULL << (FRACTIONBIT - 1));
-            const double mAlpha = (1UL << EXPBIT) / std::log(2.0);
+            const uint64_t mGuide = ((1UL << EXPBIT) - 1);
+
+            const double mRounder  = (3ULL << (FRACTIONBIT - 1));
+            const double mAlpha    = (1UL << EXPBIT) / std::log(2.0);
             const double mAlphaInv = std::log(2.0) / (1UL << EXPBIT);
 
             constexpr IEEE754ExpTable() : mTable()
@@ -41,7 +43,7 @@ namespace pml {
         di ldi;
         ldi._double = inX * gExpTblDbl.mAlpha + gExpTblDbl.mRounder;
 
-        const uint64_t lPower2 = gExpTblDbl.mTable[ldi._uint64_t & 2047];
+        const uint64_t lPower2 = gExpTblDbl.mTable[ldi._uint64_t & gExpTblDbl.mGuide];
 
         const double lt = ((ldi._double - gExpTblDbl.mRounder)*gExpTblDbl.mAlphaInv - inX);
         const uint64_t lPower1 = ((ldi._uint64_t >> gExpTblDbl.mExpBit) + gExpTblDbl.mExpAdj) << gExpTblDbl.mFractionBit;
