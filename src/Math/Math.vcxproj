@@ -21,9 +21,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\PML\Math\MathConstants.h" />
     <ClInclude Include="..\..\include\PML\Math\numeric_simd.h" />
+    <ClInclude Include="..\..\include\PML\Math\pmath.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="numeric_simd.cpp" />
+    <ClCompile Include="pmath.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

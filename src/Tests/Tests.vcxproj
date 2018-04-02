@@ -179,6 +179,7 @@
     <ClCompile Include="TestCore.cpp" />
     <ClCompile Include="TestMathConstants.cpp" />
     <ClCompile Include="TestNumericSIMD.cpp" />
+    <ClCompile Include="TestPMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">

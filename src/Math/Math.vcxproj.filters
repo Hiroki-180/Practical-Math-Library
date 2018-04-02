@@ -21,9 +21,15 @@
     <ClInclude Include="..\..\include\PML\Math\numeric_simd.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\PML\Math\pmath.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="numeric_simd.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="pmath.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

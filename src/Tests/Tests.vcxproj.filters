@@ -35,5 +35,8 @@
     <ClCompile Include="TestNumericSIMD.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="TestPMath.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
