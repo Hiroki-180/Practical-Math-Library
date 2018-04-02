@@ -48,7 +48,7 @@ namespace pml {
         const double lt = ((ldi._double - gExpTblDbl.mRounder)*gExpTblDbl.mAlphaInv - inX);
         const uint64_t lPower1 = ((ldi._uint64_t >> gExpTblDbl.mExpBit) + gExpTblDbl.mExpAdj) << gExpTblDbl.mFractionBit;
 
-        const double lTayorPart = (3.0000000027955394 - lt)*lt*lt*0.16666666685227835 - lt + 1;
+        const double lTayorPart = 1 - lt + (3.0000000027955394 - lt)*lt*lt*0.16666666685227835;
 
         ldi._uint64_t = (lPower1 | lPower2);
 
