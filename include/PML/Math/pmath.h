@@ -15,6 +15,8 @@ namespace pml{
     */
     double exp(double inX);
 
+    double sin(double inX);
+
 } // pml
 
 #endif

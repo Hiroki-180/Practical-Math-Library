@@ -60,3 +60,50 @@ TEST(TestPMath, exp_performance)
     EXPECT_LE(lElapsedPML, lElapsed);
 #endif
 }
+
+TEST(TestPMath, sin_performance)
+{
+    const auto lTestNum
+#ifdef NDEBUG
+        = 3000000;
+#else
+        = 100000;
+#endif
+
+    const auto lStride = 10.0 / lTestNum;
+
+    auto lSum = 0.0;
+    const auto lStart = std::chrono::system_clock::now();
+    for (auto i = 0;i < lTestNum;++i)
+    {
+        const auto lX = -5.0 + lStride * i;
+        lSum += std::sin(lX);
+    }
+    const auto lEnd = std::chrono::system_clock::now();
+    const auto lElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+
+    auto lSumPML = 0.0;
+    const auto lStartPML = std::chrono::system_clock::now();
+    for (auto i = 0;i < lTestNum;++i)
+    {
+        const auto lX = -5.0 + lStride * i;
+        lSumPML += pml::sin(lX);
+    }
+    const auto lEndPML = std::chrono::system_clock::now();
+    const auto lElapsedPML = std::chrono::duration_cast<std::chrono::milliseconds>(lEndPML - lStartPML).count();
+
+    EXPECT_DOUBLE_EQ(lSum, lSumPML);
+
+    std::cout
+#ifdef NDEBUG
+        << "---Release Mode---\n"
+#else
+        << "---Debud Mode---\n"
+#endif
+        << "STL:" << lElapsed << "[msec],\n"
+        << "PML:" << lElapsedPML << "[msec],\n";
+
+#ifdef NDEBUG
+    EXPECT_LE(lElapsedPML, lElapsed);
+#endif
+}

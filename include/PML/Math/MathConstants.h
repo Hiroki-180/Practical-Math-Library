@@ -13,7 +13,8 @@ namespace pml {
         inline double SqrtPIHalf() noexcept { return 1.253314137315500; }
         inline double SqrtTwoPI() noexcept { return 2.506628274631000; }
         inline double PISqrd() noexcept { return 9.869604401089358; }
-        inline double OneOverSqrtTwoPI() noexcept { return 0.3989422804014327; }
+        inline double _1OverTwoPI() noexcept { return 0.15915494309189535; }
+        inline double _1OverSqrtTwoPI() noexcept { return 0.3989422804014327; }
 
         inline double e() noexcept { return 2.718281828459045; }
 

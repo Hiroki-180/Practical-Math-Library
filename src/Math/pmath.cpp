@@ -22,16 +22,14 @@ namespace pml {
         * IEEE754 format class.
         * This class represents various values related to the IEEE754 format.
         *
-        * For instance, EXPBIT = 11 and FRACTIONBIT = 52 generate the following IEEE754 double format
+        * For instance, EXPBIT = 11 and FRACTIONBIT = 52 generates the following IEEE754 double format
         *
         *      | 1bit sign |---- 11bit exponet ----|-------- 52bit fraction --------|,
         *
         * which correspond to (sign)*2^{exponent - adjustment}*(1.fraction) with adjustment = (2^{10}-1).
         * The value of the adjustment is given by IEEE754Format<11, 52>::mExpAdj.
-        *
-        *
         */
-        template<int EXPBIT, int FRACTIONBIT>
+        template<uint64_t EXPBIT, uint64_t FRACTIONBIT>
         struct IEEE754Format final
         {
             const uint64_t mExpBit = EXPBIT;
@@ -85,4 +83,10 @@ namespace pml {
 
         return lTayorPart * ldi._double;
     }
+
+    double sin(double inX)
+    {
+        return std::sin(inX);
+    }
+
 }
