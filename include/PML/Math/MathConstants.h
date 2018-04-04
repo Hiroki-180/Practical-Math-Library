@@ -3,20 +3,32 @@
 
 #pragma once
 
+#define PML_CONST_PI             3.141592653589793
+#define PML_CONST_PIHALH         1.570796326794896
+#define PML_CONST_TWOPI          6.283185307179586
+#define PML_CONST_SQRTPI         1.772453850905515
+#define PML_CONST_SQRTPIHALF     1.253314137315500
+#define PML_CONST_SQRTTWOPI      2.506628274631000
+#define PML_CONST_PISQRD         9.869604401089358
+#define PML_CONST_1OVERPI        0.1591549430918953
+#define PML_CONST_1OVERSQRTTWOPI 0.3989422804014327
+
+#define PML_CONST_E 2.718281828459045
+
 namespace pml {
     namespace constants {
 
-        inline double PI() noexcept { return 3.141592653589793; }
-        inline double PIHalf() noexcept { return 1.570796326794896; }
-        inline double TwoPI() noexcept { return 6.283185307179586; }
-        inline double SqrtPI() noexcept { return 1.772453850905515; }
-        inline double SqrtPIHalf() noexcept { return 1.253314137315500; }
-        inline double SqrtTwoPI() noexcept { return 2.506628274631000; }
-        inline double PISqrd() noexcept { return 9.869604401089358; }
-        inline double _1OverTwoPI() noexcept { return 0.15915494309189535; }
-        inline double _1OverSqrtTwoPI() noexcept { return 0.3989422804014327; }
+        inline double PI() noexcept { return PML_CONST_PI; }
+        inline double PIHalf() noexcept { return PML_CONST_PIHALH; }
+        inline double TwoPI() noexcept { return PML_CONST_TWOPI; }
+        inline double SqrtPI() noexcept { return PML_CONST_SQRTPI; }
+        inline double SqrtPIHalf() noexcept { return PML_CONST_SQRTPIHALF; }
+        inline double SqrtTwoPI() noexcept { return PML_CONST_SQRTTWOPI; }
+        inline double PISqrd() noexcept { return PML_CONST_PISQRD; }
+        inline double _1OverTwoPI() noexcept { return PML_CONST_1OVERPI; }
+        inline double _1OverSqrtTwoPI() noexcept { return PML_CONST_1OVERSQRTTWOPI; }
 
-        inline double e() noexcept { return 2.718281828459045; }
+        inline double e() noexcept { return PML_CONST_E; }
 
         inline double SqrtOf2() noexcept { return 1.414213562373095; }
         inline double SqrtOf3() noexcept { return 1.732050807568877; }
