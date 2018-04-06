@@ -26,9 +26,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="TestMathConstants.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="TestCore.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -36,6 +33,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="TestPMath.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TestConstants.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
