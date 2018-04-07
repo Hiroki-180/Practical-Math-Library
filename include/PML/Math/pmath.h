@@ -9,7 +9,7 @@ namespace pml{
     * @fn double exp(double inX)
     *
     * @brief
-    * Exp-function implimented using look-up-table and Taylor expansion.
+    * Exp-function implimented by look-up-table and Taylor expansion.
     * This exp-function is implimented by the algorithm of the following fast math library,
     *  @auther herumi
     *  @url https://github.com/herumi/fmath
@@ -26,7 +26,7 @@ namespace pml{
     * @fn double sin(double inX)
     *
     * @brief
-    * Sin-function implimented using look-up-table and Taylor expansion.
+    * Sin-function implimented by look-up-table and Taylor expansion.
     *
     * @param[in] inX
     * argument
@@ -34,6 +34,19 @@ namespace pml{
     * @return sin(inX)
     */
     double sin(double inX);
+
+    /**
+    * @fn double sin(double inX)
+    *
+    * @brief
+    * Cos-function implimented by look-up-table and Taylor expansion.
+    *
+    * @param[in] inX
+    * argument
+    *
+    * @return cos(inX)
+    */
+    double cos(double inX);
 
 } // pml
 

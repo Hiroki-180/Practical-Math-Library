@@ -148,4 +148,37 @@ namespace pml {
         return lSign * (gDouble.mSinTable[(int)(ln)] * lMulToSin + gDouble.mCosTable[(int)(ln)] * lMulToCos);
     }
 
+    double cos(double inX)
+    {
+        inX = std::fabs(inX);
+
+        const auto lEighth = static_cast<uint64_t>(inX*PML_CONST_4OVERPI);
+        const uint64_t lArgIdx = ((lEighth + 1) >> 1);
+
+        const double lArg_0_45
+            = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
+                              - PART2_PIOVERTWO * lArgIdx)
+                              - PART3_PIOVERTWO * lArgIdx);
+
+        const uint64_t lResidu = (lEighth & 7);
+        const double lSign = (((lResidu < 2) | (lResidu > 5)) ? +1 : -1);
+
+        const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
+
+        const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
+        const double ldtSqrd = ldt * ldt;
+
+        double lMulToCos = (1.0 - 0.5*ldtSqrd);
+        double lMulToSin = ldt * (1.0 - pml::constants::Q::_1Over6()*ldtSqrd);
+
+        const bool lUseSinSumFormula = (lArgIdx & 1);
+        if (lUseSinSumFormula)
+        {
+            std::swap(lMulToSin, lMulToCos);
+            lMulToSin = -lMulToSin;
+        }
+
+        return lSign * (gDouble.mCosTable[(int)(ln)] * lMulToCos - gDouble.mSinTable[(int)(ln)] * lMulToSin);
+    }
+
 }

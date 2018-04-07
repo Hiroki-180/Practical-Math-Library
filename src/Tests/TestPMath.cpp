@@ -112,3 +112,55 @@ TEST(TestPMath, sin_performance)
     EXPECT_LE(lElapsedPML, lElapsed);
 #endif
 }
+
+TEST(TestPMath, cos_value)
+{
+    for (auto i = -20000;i < 20000;++i)
+    {
+        const auto lX = static_cast<double>(i);
+        EXPECT_DOUBLE_EQ(std::cos(lX), pml::cos(lX));
+    }
+}
+
+TEST(TestPMath, cos_performance)
+{
+    const auto lTestNum
+#ifdef NDEBUG
+        = 2000000;
+#else
+        = 100000;
+#endif
+
+    auto lSum = 0.0;
+    const auto lStart = std::chrono::system_clock::now();
+    for (auto i = 0;i < lTestNum;++i)
+    {
+        lSum += std::cos(static_cast<double>(i));
+    }
+    const auto lEnd = std::chrono::system_clock::now();
+    const auto lElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+
+    auto lSumPML = 0.0;
+    const auto lStartPML = std::chrono::system_clock::now();
+    for (auto i = 0;i < lTestNum;++i)
+    {
+        lSumPML += pml::cos(static_cast<double>(i));
+    }
+    const auto lEndPML = std::chrono::system_clock::now();
+    const auto lElapsedPML = std::chrono::duration_cast<std::chrono::milliseconds>(lEndPML - lStartPML).count();
+
+    EXPECT_NEAR(lSum, lSumPML, 1.0E-12);
+
+    std::cout
+#ifdef NDEBUG
+        << "---Release Mode---\n"
+#else
+        << "---Debud Mode---\n"
+#endif
+        << "STL:" << lElapsed << "[msec],\n"
+        << "PML:" << lElapsedPML << "[msec],\n";
+
+#ifdef NDEBUG
+    EXPECT_LE(lElapsedPML, lElapsed);
+#endif
+}
