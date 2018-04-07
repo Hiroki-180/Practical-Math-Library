@@ -36,15 +36,13 @@ namespace pml {
         {
             const uint64_t mExpBit = EXPBIT;
             const uint64_t mExpAdj = ((1UL << (EXPBIT - 1)) - 1);
-
             const uint64_t mFractionBit = FRACTIONBIT;
+            const double mRounder = (3ULL << (FRACTIONBIT - 1));
 
+            const double mExpAlpha    = (1UL << EXPBIT) / std::log(2.0);
+            const double mExpAlphaInv = std::log(2.0) / (1UL << EXPBIT);
             uint64_t mExpTable[1UL << EXPBIT];
             const uint64_t mGuide = ((1UL << EXPBIT) - 1);
-
-            const double mRounder  = (3ULL << (FRACTIONBIT - 1));
-            const double mAlpha    = (1UL << EXPBIT) / std::log(2.0);
-            const double mAlphaInv = std::log(2.0) / (1UL << EXPBIT);
 
             constexpr IEEE754Format() : mExpTable()
             {
@@ -73,12 +71,12 @@ namespace pml {
         }
 
         di ldi;
-        ldi._double = inX * gDouble.mAlpha + gDouble.mRounder;
+        ldi._double = inX * gDouble.mExpAlpha + gDouble.mRounder;
 
         const uint64_t lPower1 = ((ldi._uint64_t >> gDouble.mExpBit) + gDouble.mExpAdj) << gDouble.mFractionBit;
         const uint64_t lPower2 = gDouble.mExpTable[ldi._uint64_t & gDouble.mGuide];
 
-        const double lt = ((ldi._double - gDouble.mRounder)*gDouble.mAlphaInv - inX);
+        const double lt = ((ldi._double - gDouble.mRounder)*gDouble.mExpAlphaInv - inX);
         const double lTayorPart = 1 - lt + (3.0000000027955394 - lt)*lt*lt*0.16666666685227835;
 
         ldi._uint64_t = (lPower1 | lPower2);
