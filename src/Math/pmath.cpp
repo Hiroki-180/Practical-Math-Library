@@ -1,5 +1,14 @@
 #include <PML/Math/pmath.h>
 
+// One of parts of 2/pi
+#define PART1_PIOVERTWO 1.5707963109016418
+
+// One of parts of 2/pi
+#define PART2_PIOVERTWO 1.5893254712295857E-8
+
+// One of parts of 2/pi
+#define PART3_PIOVERTWO 6.123233995736766E-17
+
 namespace pml {
 
     namespace {

@@ -10,6 +10,14 @@
 #include <string>
 
 namespace pml {
+
+    /**
+    * @namespace CPUDispatcher
+    *
+    * @brief
+    * Some useful functions are prepared for CPU dispatching.
+    * For instance, isSSE() / isSSE2() / isSSE3() / isSSE41() / isSSE42() / isAVX() / isAVX512F() enebles the run-time dispatch of which SIMD verion is supported on your CPU.
+    */
     namespace CPUDispatcher {
 
         const std::string& getVendor();
