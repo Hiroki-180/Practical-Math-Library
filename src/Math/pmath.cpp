@@ -5,6 +5,7 @@ namespace pml {
     namespace {
 
         /**
+        * @union
         * Union of double and uint64_t.
         * This class makes bit manipulations simple.
         *
@@ -19,6 +20,7 @@ namespace pml {
         };
 
         /**
+        * @brief
         * IEEE754 format class.
         * This class represents various values related to the IEEE754 format.
         *
