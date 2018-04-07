@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include <PML/Core/aligned_vector.h>
-
 namespace pml{
 
     /**

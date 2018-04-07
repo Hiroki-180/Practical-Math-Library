@@ -1,4 +1,8 @@
+#include <PML/Core/aligned_vector.h>
 #include <PML/Math/pmath.h>
+#include <PML/Math/Constants.h>
+
+#include <intrin.h>
 
 // One of parts of 2/pi
 #define PART1_PIOVERTWO 1.5707963109016418
@@ -53,6 +57,11 @@ namespace pml {
             uint64_t mExpTable[1UL << EXPBIT];
             const uint64_t mGuide = ((1UL << EXPBIT) - 1);
 
+            const double mSinCosAlpha = ((1UL << EXPBIT)* PML_CONST_4OVERPI);
+            const double mSinCosAlphaInv = (PML_CONST_PIQUATER / (1UL << EXPBIT));
+            double mSinTable[(1UL << EXPBIT) + 1];
+            double mCosTable[(1UL << EXPBIT) + 1];
+
             constexpr IEEE754Format() : mExpTable()
             {
                 for (int i = 0;i < (1UL << EXPBIT);++i)
@@ -61,8 +70,17 @@ namespace pml {
                     ldi._double = std::pow(2.0, i / static_cast<double>(1UL << EXPBIT));
                     mExpTable[i] = (ldi._uint64_t & ((1ULL << FRACTIONBIT) - 1));
                 }
+
+                for (int i = 0;i < ((1UL << EXPBIT)+1);++i)
+                {
+                    mSinTable[i] = std::sin(i*mSinCosAlphaInv);
+                    mCosTable[i] = std::cos(i*mSinCosAlphaInv);
+                }
             }
         };
+
+        static const double gOne[2] = { 1.0,1.0 };
+        static const double gTaylorCoeff[2] = { 0.5, 1.0 / 6.0 };
 
         static const IEEE754Format<11, 52> gDouble;
     }
@@ -95,7 +113,39 @@ namespace pml {
 
     double sin(double inX)
     {
-        return std::sin(inX);
+        double lSign = 1.0;
+        if (std::signbit(inX))
+        {
+            lSign = -1.0;
+            inX = -inX;
+        }
+
+        const auto lEighth = static_cast<uint64_t>(inX*PML_CONST_4OVERPI);
+        const uint64_t lArgIdx = ((lEighth + 1) >> 1);
+
+        const double lArg_0_45
+            = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
+                              - PART2_PIOVERTWO * lArgIdx)
+                              - PART3_PIOVERTWO * lArgIdx);
+
+        lSign = (((lEighth & 7) < 4) ? lSign : -lSign);
+
+        const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
+
+        const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
+        const double ldtSqrd = ldt * ldt;        
+        
+        double lMulToSin = (1.0 - 0.5*ldtSqrd);
+        double lMulToCos = ldt * (1.0 - pml::constants::Q::_1Over6()*ldtSqrd);
+        
+        const bool lUseCosSumFormula = (lArgIdx & 1);
+        if (lUseCosSumFormula)
+        {
+            std::swap(lMulToSin, lMulToCos);
+            lMulToSin = -lMulToSin;
+        }
+
+        return lSign * (gDouble.mSinTable[(int)(ln)] * lMulToSin + gDouble.mCosTable[(int)(ln)] * lMulToCos);
     }
 
 }

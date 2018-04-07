@@ -65,7 +65,7 @@
 
 /**
 * @def PML_CONST_4OVERPI
-* Value of the two over PI, 4/PI.
+* Value of the four over PI, 4/PI.
 */
 #define PML_CONST_4OVERPI 1.2732395447351627
 

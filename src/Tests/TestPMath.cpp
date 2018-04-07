@@ -61,23 +61,29 @@ TEST(TestPMath, exp_performance)
 #endif
 }
 
+TEST(TestPMath, sin_value)
+{
+    for (auto i = -20000;i < 20000;++i)
+    {
+        const auto lX = static_cast<double>(i);
+        EXPECT_DOUBLE_EQ(std::sin(lX), pml::sin(lX));
+    }
+}
+
 TEST(TestPMath, sin_performance)
 {
     const auto lTestNum
 #ifdef NDEBUG
-        = 3000000;
+        = 2000000;
 #else
         = 100000;
 #endif
-
-    const auto lStride = 10.0 / lTestNum;
 
     auto lSum = 0.0;
     const auto lStart = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
-        const auto lX = -5.0 + lStride * i;
-        lSum += std::sin(lX);
+        lSum += std::sin(static_cast<double>(i));
     }
     const auto lEnd = std::chrono::system_clock::now();
     const auto lElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -86,13 +92,12 @@ TEST(TestPMath, sin_performance)
     const auto lStartPML = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
-        const auto lX = -5.0 + lStride * i;
-        lSumPML += pml::sin(lX);
+        lSumPML += pml::sin(static_cast<double>(i));
     }
     const auto lEndPML = std::chrono::system_clock::now();
     const auto lElapsedPML = std::chrono::duration_cast<std::chrono::milliseconds>(lEndPML - lStartPML).count();
 
-    EXPECT_DOUBLE_EQ(lSum, lSumPML);
+    EXPECT_NEAR(lSum, lSumPML, 1.0E-12);
 
     std::cout
 #ifdef NDEBUG
