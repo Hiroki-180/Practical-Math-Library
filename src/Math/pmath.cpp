@@ -160,8 +160,8 @@ namespace pml {
                               - PART2_PIOVERTWO * lArgIdx)
                               - PART3_PIOVERTWO * lArgIdx);
 
-        const uint64_t lResidu = (lEighth & 7);
-        const double lSign = (((lResidu < 2) | (lResidu > 5)) ? +1 : -1);
+        const uint64_t lResidue = (lEighth & 7);
+        const double lSign = (((lResidue < 2) | (lResidue > 5)) ? +1 : -1);
 
         const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
 
