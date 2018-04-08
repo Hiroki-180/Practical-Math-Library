@@ -6,7 +6,6 @@
 #include <type_traits>
 #include <memory>
 #include <stdexcept>
-#include <vector>
 
 #if defined(__cplusplus) && __cplusplus < 201103L
 #define PML_STATIC_ALLIGN(n) __declspec(align(n))
@@ -39,11 +38,29 @@ namespace pml {
 
     } // detail
 
+    /**
+    * @brief
+    * The unique pointer to the array that has proper custom deleter to the aligned data.
+    */
     template<typename T>
     using aligned_array = std::unique_ptr<T[], detail::alignedDeleter>;
 
+    /**
+    * @brief
+    * Inline function creating the unique pointer to the array that is just aligned on specified byte size boundaries.
+    * The deleter is proper one to the aligned data.
+    *
+    * @param[in] inSize
+    * Size of array.
+    *
+    * @param[in] inAlignment
+    * Alignment size in byte.
+    *
+    * @return
+    * pml::aligned_array<double>
+    */
     template<typename T>
-    auto createAlignedArray(std::size_t inSize, std::size_t inAlignment)
+    inline aligned_array<double> createAlignedArray(std::size_t inSize, std::size_t inAlignment)
     {
         return aligned_array<double>(detail::alignedMalloc<T*>(inSize * sizeof(T), inAlignment));
     }

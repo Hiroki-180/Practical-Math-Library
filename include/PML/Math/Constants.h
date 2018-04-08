@@ -5,84 +5,112 @@
 
 /**
 * @def PML_CONST_PI
+*
+* @brief
 * Value of PI.
 */
 #define PML_CONST_PI 3.141592653589793
 
 /**
 * @def PML_CONST_PIHALF
+*
+* @bries
 * Value of PI over 2, PI/2.
 */
 #define PML_CONST_PIHALF 1.570796326794896
 
 /**
 * @def PML_CONST_PIQUATER
+*
+* @brief
 * Value of PI over 4, PI/4.
 */
 #define PML_CONST_PIQUATER 0.7853981633974483
 
 /**
 * @def PML_CONST_TWOPI
+*
+* @brief
 * Value of 2 times PI, 2*PI.
 */
 #define PML_CONST_TWOPI 6.283185307179586
 
 /**
 * @def PML_CONST_SQRTPI
+*
+* @brief
 * Value of the square root of PI, sqrt(PI).
 */
 #define PML_CONST_SQRTPI 1.772453850905515
 
 /**
 * @def PML_CONST_SQRTPIHALF
+*
+* @brief
 * Value of the square root of PI over 2, sqrt(PI/2).
 */
 #define PML_CONST_SQRTPIHALF 1.253314137315500
 
 /**
 * @def PML_CONST_SQRTTWOPI
+*
+* @brief
 * Value of the square root of 2 times PI, sqrt(2*PI).
 */
 #define PML_CONST_SQRTTWOPI 2.506628274631000
 
 /**
 * @def PML_CONST_PISQRD
+*
+* @brief
 * Value of the PI squared, PI*PI.
 */
 #define PML_CONST_PISQRD 9.869604401089358
 
 /**
 * @def PML_CONST_1OVERPI
+*
+* @brief
 * Value of the one over PI, 1/PI.
 */
 #define PML_CONST_1OVERPI 0.3183098861837907
 
 /**
 * @def PML_CONST_2OVERPI
+*
+* @brief
 * Value of the two over PI, 2/PI.
 */
 #define PML_CONST_2OVERPI 0.6366197723675814
 
 /**
 * @def PML_CONST_4OVERPI
+*
+* @brief
 * Value of the four over PI, 4/PI.
 */
 #define PML_CONST_4OVERPI 1.2732395447351627
 
 /**
 * @def PML_CONST_1OVERTWOPI
+*
+* @brief
 * Value of the one over 2 times PI, 1/(2*PI).
 */
 #define PML_CONST_1OVERTWOPI 0.1591549430918953
 
 /**
 * @def PML_CONST_1OVERSQRTTWOPI
+*
+* @brief
 * Value of the one over square root of 2 times PI, 1/sqrt(2*PI).
 */
 #define PML_CONST_1OVERSQRTTWOPI 0.3989422804014327
 
 /**
 * @def PML_CONST_E
+*
+* @brief
 * Value of the Napire's number.
 */
 #define PML_CONST_E 2.718281828459045

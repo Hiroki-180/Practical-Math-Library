@@ -22,33 +22,6 @@ TEST(TestCore, aligned_array)
     }
 }
 
-TEST(TestCore, align2_vector)
-{
-    const std::size_t lSize = 100;
-    pml::align2_vector<double> lAVector(lSize);
-
-    EXPECT_EQ(lSize, lAVector.size());
-    EXPECT_EQ(0, (uintptr_t)(&(lAVector.data()[0])) % 2);
-}
-
-TEST(TestCore, align4_vector)
-{
-    const std::size_t lSize = 100;
-    pml::align4_vector<double> lAVector(lSize);
-
-    EXPECT_EQ(lSize, lAVector.size());
-    EXPECT_EQ(0, (uintptr_t)(&(lAVector.data()[0])) % 4);
-}
-
-TEST(TestCore, align8_vector)
-{
-    const std::size_t lSize = 100;
-    pml::align8_vector<double> lAVector(lSize);
-
-    EXPECT_EQ(lSize, lAVector.size());
-    EXPECT_EQ(0, (uintptr_t)(&(lAVector.data()[0])) % 8);
-}
-
 TEST(TestCore, align16_vector)
 {
     const std::size_t lSize = 100;

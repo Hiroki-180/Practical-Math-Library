@@ -5,6 +5,8 @@
 
 #include <PML/Core/aligned_array.h>
 
+#include <vector>
+
 namespace pml {
 
     namespace detail {
@@ -65,21 +67,27 @@ namespace pml {
 
     } // detail
 
-    template<typename T>
-    using align2_vector = std::vector<T, detail::aligned_allocator<T, 2>>;
-
-    template<typename T>
-    using align4_vector = std::vector<T, detail::aligned_allocator<T, 4>>;
-
-    template<typename T>
-    using align8_vector = std::vector<T, detail::aligned_allocator<T, 8>>;
-
+    /**
+    * @brief
+    * Customized STL vector that has proper custom allocator to the 16-byte aligned data.
+    * This is proper alignment for SSE/SSE2/SSE3/SSE4.1/SSE4.2.
+    */
     template<typename T>
     using align16_vector = std::vector<T, detail::aligned_allocator<T, 16>>;
 
+    /**
+    * @brief
+    * Customized STL vector that has proper custom allocator to the 32-byte aligned data.
+    * This is proper alignment for AVX/AVX2.
+    */
     template<typename T>
     using align32_vector = std::vector<T, detail::aligned_allocator<T, 32>>;
 
+    /**
+    * @brief
+    * Customized STL vector that has proper custom allocator to the 2-byte aligned data.
+    * This is proper alignment for AVX512 series.
+    */
     template<typename T>
     using align64_vector = std::vector<T, detail::aligned_allocator<T, 64>>;
 

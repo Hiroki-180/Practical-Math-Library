@@ -36,7 +36,7 @@ namespace pml{
     double sin(double inX);
 
     /**
-    * @fn double sin(double inX)
+    * @fn double cos(double inX)
     *
     * @brief
     * Cos-function implimented by look-up-table and Taylor expansion.
