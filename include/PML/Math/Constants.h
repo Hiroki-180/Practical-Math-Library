@@ -336,7 +336,7 @@ namespace pml {
             * @return
             * Value of 1.0/3.0.
             */
-            inline double _1Over3() noexcept { return 0.3333333333333333; }
+            inline double _1over3() noexcept { return 0.3333333333333333; }
 
             /**
             * @brief
@@ -345,7 +345,7 @@ namespace pml {
             * @return
             * Value of 1.0/6.0.
             */
-            inline double _1Over6() noexcept { return 0.1666666666666666; }
+            inline double _1over6() noexcept { return 0.1666666666666666; }
 
             /**
             * @brief
@@ -354,7 +354,7 @@ namespace pml {
             * @return
             * Value of 1.0/7.0.
             */
-            inline double _1Over7() noexcept { return 0.1428571428571428; }
+            inline double _1over7() noexcept { return 0.1428571428571428; }
 
             /**
             * @brief
@@ -363,7 +363,7 @@ namespace pml {
             * @return
             * Value of 1.0/9.0.
             */
-            inline double _1Over9() noexcept { return 0.1111111111111111; }
+            inline double _1over9() noexcept { return 0.1111111111111111; }
         }
 
     } // constants

@@ -133,7 +133,7 @@ namespace pml {
         const double ldtSqrd = ldt * ldt;        
         
         double lMulToSin = (1.0 - 0.5*ldtSqrd);
-        double lMulToCos = ldt * (1.0 - pml::constants::Q::_1Over6()*ldtSqrd);
+        double lMulToCos = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
         
         const bool lUseCosSumFormula = (lArgIdx & 1);
         if (lUseCosSumFormula)
@@ -166,7 +166,7 @@ namespace pml {
         const double ldtSqrd = ldt * ldt;
 
         double lMulToCos = (1.0 - 0.5*ldtSqrd);
-        double lMulToSin = ldt * (1.0 - pml::constants::Q::_1Over6()*ldtSqrd);
+        double lMulToSin = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
 
         const bool lUseSinSumFormula = (lArgIdx & 1);
         if (lUseSinSumFormula)
