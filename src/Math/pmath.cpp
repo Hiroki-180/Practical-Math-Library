@@ -79,9 +79,6 @@ namespace pml {
             }
         };
 
-        static const double gOne[2] = { 1.0,1.0 };
-        static const double gTaylorCoeff[2] = { 0.5, 1.0 / 6.0 };
-
         static const IEEE754Format<11, 52> gDouble;
     }
 
