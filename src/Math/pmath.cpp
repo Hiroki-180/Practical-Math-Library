@@ -83,10 +83,9 @@ namespace pml {
         template<typename T>
         double sinImpl(double inX)
         {
-            double lSign = 1.0;
-            if (std::signbit(inX))
+            bool lIsNegative = std::signbit(inX);
+            if (lIsNegative)
             {
-                lSign = -1.0;
                 inX = -inX;
             }
 
@@ -98,7 +97,7 @@ namespace pml {
                                   - PART2_PIOVERTWO * lArgIdx)
                                   - PART3_PIOVERTWO * lArgIdx);
 
-            lSign = (((lEighth & 7) < 4) ? lSign : -lSign);
+            lIsNegative = (lIsNegative ^ ((lEighth & 7) >= 4));
 
             const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
 
@@ -118,7 +117,9 @@ namespace pml {
             auto lIdx = (int)(ln);
             lIdx += lIdx;
 
-            return lSign * (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
+            const double lSinWithoutSign = (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
+
+            return (lIsNegative ? -lSinWithoutSign : +lSinWithoutSign);
         }
 
         template<typename T>
@@ -133,9 +134,6 @@ namespace pml {
                 = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
                                   - PART2_PIOVERTWO * lArgIdx)
                                   - PART3_PIOVERTWO * lArgIdx);
-
-            const T lResidue = (lEighth & 7);
-            const double lSign = (((lResidue < 2) | (lResidue > 5)) ? +1 : -1);
 
             const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
 
@@ -155,7 +153,11 @@ namespace pml {
             auto lIdx = (int)(ln);
             lIdx += lIdx;
 
-            return lSign * (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
+            const double lCosWithoutSign= (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
+
+            const T lResidue = (lEighth & 7);
+
+            return (((lResidue < 2) | (lResidue > 5)) ? +lCosWithoutSign : -lCosWithoutSign);
         }
     }
 
