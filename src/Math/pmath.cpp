@@ -61,6 +61,9 @@ namespace pml {
             const double mSinCosAlphaInv = (PML_CONST_PIQUATER / (1UL << EXPBIT));
             double mSinCosTable[2*((1UL << EXPBIT) + 1)];
 
+            PML_STATIC_ALLIGN(32) double mOne[4];
+            PML_STATIC_ALLIGN(32) double mTaylorCoeff[4];
+
             constexpr IEEE754Format() : mExpTable()
             {
                 for (int i = 0;i < (1UL << EXPBIT);++i)
@@ -75,6 +78,16 @@ namespace pml {
                     mSinCosTable[2*i  ] = std::sin(i*mSinCosAlphaInv);
                     mSinCosTable[2*i+1] = std::cos(i*mSinCosAlphaInv);
                 }
+
+                mOne[0] = 1.0;
+                mOne[1] = 1.0;
+                mOne[2] = 1.0;
+                mOne[3] = -1.0;
+
+                mTaylorCoeff[0] = 0.5;
+                mTaylorCoeff[1] = 0.5;
+                mTaylorCoeff[2] = 1.0 / 6.0;
+                mTaylorCoeff[3] = -1.0 / 6.0;
             }
         };
 
@@ -105,6 +118,32 @@ namespace pml {
             const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
             const double ldtSqrd = ldt * ldt;
 
+            
+            const __m256d ldtSqrd256 = _mm256_set_pd(ldtSqrd, ldtSqrd, ldtSqrd, ldtSqrd);
+            const __m256d lCoeff256  = _mm256_load_pd(gDouble.mTaylorCoeff);
+            const __m256d lOne256    = _mm256_load_pd(gDouble.mOne);
+            const __m256d lSinCos256 = _mm256_sub_pd(lOne256, _mm256_mul_pd(ldtSqrd256, lCoeff256));
+
+            auto lIdx = (int)(ln);
+            lIdx += lIdx;
+
+            const __m256d lSinCosTable256 = _mm256_set_pd(
+                gDouble.mSinCosTable[lIdx], gDouble.mSinCosTable[lIdx + 1], gDouble.mSinCosTable[lIdx + 1], gDouble.mSinCosTable[lIdx]);
+            const __m256d lSumRule = _mm256_mul_pd(lSinCosTable256, lSinCos256);
+
+            __m128d loDual = _mm256_extractf128_pd(lSumRule, 1);
+            const __m128d hiDual = _mm256_castpd256_pd128(lSumRule);
+
+            const __m128d lSinCorrection = _mm_set_pd(ldt, ldt);
+            loDual = _mm_mul_pd(loDual, lSinCorrection);
+
+            const __m128d lResult128 = _mm_add_pd(loDual, hiDual);
+
+            PML_STATIC_ALLIGN(16) double lResult[2] = { 0 };
+            _mm_store_pd(lResult, lResult128);
+            
+
+            /*
             double lMulToSin = (1.0 - 0.5*ldtSqrd);
             double lMulToCos = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
 
@@ -119,6 +158,10 @@ namespace pml {
             lIdx += lIdx;
 
             return lSign * (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
+            */
+            
+
+            return lSign * ((lArgIdx & 1) ? lResult[1] : lResult[0]);
         }
 
         template<typename T>
@@ -200,5 +243,4 @@ namespace pml {
                cosImpl<int>     (inX):
                cosImpl<uint64_t>(inX);
     }
-
 }
