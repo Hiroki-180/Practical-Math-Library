@@ -72,8 +72,8 @@ namespace pml {
 
                 for (int i = 0;i < ((1UL << EXPBIT)+1);++i)
                 {
-                    mSinCosTable[2*i  ] = std::sin(i*mSinCosAlphaInv);
-                    mSinCosTable[2*i+1] = std::cos(i*mSinCosAlphaInv);
+                    mSinCosTable[2*i  ] = 0.5*std::sin(i*mSinCosAlphaInv);
+                    mSinCosTable[2*i+1] = 0.5*std::cos(i*mSinCosAlphaInv);
                 }
             }
         };
@@ -105,8 +105,8 @@ namespace pml {
             const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
             const double ldtSqrd = ldt * ldt;
 
-            double lMulToSin = (1.0 - 0.5*ldtSqrd);
-            double lMulToCos = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
+            double lMulToSin = (2.0 - ldtSqrd);
+            double lMulToCos = ldt * (2.0 - pml::constants::Q::_1over3()*ldtSqrd);
 
             const bool lUseCosSumFormula = (lArgIdx & 1);
             if (lUseCosSumFormula)
@@ -142,8 +142,8 @@ namespace pml {
             const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
             const double ldtSqrd = ldt * ldt;
 
-            double lMulToCos = (1.0 - 0.5*ldtSqrd);
-            double lMulToSin = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
+            double lMulToCos = (2.0 - ldtSqrd);
+            double lMulToSin = ldt * (2.0 - pml::constants::Q::_1over3()*ldtSqrd);
 
             const bool lUseSinSumFormula = (lArgIdx & 1);
             if (lUseSinSumFormula)
