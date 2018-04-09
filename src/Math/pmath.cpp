@@ -79,6 +79,84 @@ namespace pml {
         };
 
         static const IEEE754Format<11, 52> gDouble;
+
+        template<typename T>
+        double sinImpl(double inX)
+        {
+            double lSign = 1.0;
+            if (std::signbit(inX))
+            {
+                lSign = -1.0;
+                inX = -inX;
+            }
+
+            const auto lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
+            const T lArgIdx = ((lEighth + 1) >> 1);
+
+            const double lArg_0_45
+                = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
+                                  - PART2_PIOVERTWO * lArgIdx)
+                                  - PART3_PIOVERTWO * lArgIdx);
+
+            lSign = (((lEighth & 7) < 4) ? lSign : -lSign);
+
+            const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
+
+            const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
+            const double ldtSqrd = ldt * ldt;
+
+            double lMulToSin = (1.0 - 0.5*ldtSqrd);
+            double lMulToCos = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
+
+            const bool lUseCosSumFormula = (lArgIdx & 1);
+            if (lUseCosSumFormula)
+            {
+                std::swap(lMulToSin, lMulToCos);
+                lMulToSin = -lMulToSin;
+            }
+
+            auto lIdx = (int)(ln);
+            lIdx += lIdx;
+
+            return lSign * (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
+        }
+
+        template<typename T>
+        double cosImpl(double inX)
+        {
+            inX = std::fabs(inX);
+
+            const auto lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
+            const T lArgIdx = ((lEighth + 1) >> 1);
+
+            const double lArg_0_45
+                = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
+                                  - PART2_PIOVERTWO * lArgIdx)
+                                  - PART3_PIOVERTWO * lArgIdx);
+
+            const T lResidue = (lEighth & 7);
+            const double lSign = (((lResidue < 2) | (lResidue > 5)) ? +1 : -1);
+
+            const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
+
+            const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
+            const double ldtSqrd = ldt * ldt;
+
+            double lMulToCos = (1.0 - 0.5*ldtSqrd);
+            double lMulToSin = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
+
+            const bool lUseSinSumFormula = (lArgIdx & 1);
+            if (lUseSinSumFormula)
+            {
+                std::swap(lMulToSin, lMulToCos);
+                lMulToSin = -lMulToSin;
+            }
+
+            auto lIdx = (int)(ln);
+            lIdx += lIdx;
+
+            return lSign * (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
+        }
     }
 
     double exp(double inX)
@@ -109,78 +187,18 @@ namespace pml {
 
     double sin(double inX)
     {
-        double lSign = 1.0;
-        if (std::signbit(inX))
-        {
-            lSign = -1.0;
-            inX = -inX;
-        }
-
-        const auto lEighth = static_cast<uint64_t>(inX*PML_CONST_4OVERPI);
-        const uint64_t lArgIdx = ((lEighth + 1) >> 1);
-
-        const double lArg_0_45
-            = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
-                              - PART2_PIOVERTWO * lArgIdx)
-                              - PART3_PIOVERTWO * lArgIdx);
-
-        lSign = (((lEighth & 7) < 4) ? lSign : -lSign);
-
-        const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
-
-        const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
-        const double ldtSqrd = ldt * ldt;        
-        
-        double lMulToSin = (1.0 - 0.5*ldtSqrd);
-        double lMulToCos = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
-        
-        const bool lUseCosSumFormula = (lArgIdx & 1);
-        if (lUseCosSumFormula)
-        {
-            std::swap(lMulToSin, lMulToCos);
-            lMulToSin = -lMulToSin;
-        }
-
-        auto lIdx = (int)(ln);
-        lIdx += lIdx;
-
-        return lSign * (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
+        return
+            ((std::numeric_limits<int>::min() < inX) && (inX < std::numeric_limits<int>::max())) ?
+               sinImpl<int>     (inX):
+               sinImpl<uint64_t>(inX);
     }
 
     double cos(double inX)
     {
-        inX = std::fabs(inX);
-
-        const auto lEighth = static_cast<uint64_t>(inX*PML_CONST_4OVERPI);
-        const uint64_t lArgIdx = ((lEighth + 1) >> 1);
-
-        const double lArg_0_45
-            = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
-                              - PART2_PIOVERTWO * lArgIdx)
-                              - PART3_PIOVERTWO * lArgIdx);
-
-        const uint64_t lResidue = (lEighth & 7);
-        const double lSign = (((lResidue < 2) | (lResidue > 5)) ? +1 : -1);
-
-        const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
-
-        const double ldt = (lArg_0_45 - ln * gDouble.mSinCosAlphaInv);
-        const double ldtSqrd = ldt * ldt;
-
-        double lMulToCos = (1.0 - 0.5*ldtSqrd);
-        double lMulToSin = ldt * (1.0 - pml::constants::Q::_1over6()*ldtSqrd);
-
-        const bool lUseSinSumFormula = (lArgIdx & 1);
-        if (lUseSinSumFormula)
-        {
-            std::swap(lMulToSin, lMulToCos);
-            lMulToSin = -lMulToSin;
-        }
-
-        auto lIdx = (int)(ln);
-        lIdx += lIdx;
-
-        return lSign * (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
+        return
+            ((std::numeric_limits<int>::min() < inX) && (inX < std::numeric_limits<int>::max())) ?
+               cosImpl<int>     (inX):
+               cosImpl<uint64_t>(inX);
     }
 
 }
