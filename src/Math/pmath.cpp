@@ -59,8 +59,7 @@ namespace pml {
 
             const double mSinCosAlpha = ((1UL << EXPBIT)* PML_CONST_4OVERPI);
             const double mSinCosAlphaInv = (PML_CONST_PIQUATER / (1UL << EXPBIT));
-            double mSinTable[(1UL << EXPBIT) + 1];
-            double mCosTable[(1UL << EXPBIT) + 1];
+            double mSinCosTable[2*((1UL << EXPBIT) + 1)];
 
             constexpr IEEE754Format() : mExpTable()
             {
@@ -73,8 +72,8 @@ namespace pml {
 
                 for (int i = 0;i < ((1UL << EXPBIT)+1);++i)
                 {
-                    mSinTable[i] = std::sin(i*mSinCosAlphaInv);
-                    mCosTable[i] = std::cos(i*mSinCosAlphaInv);
+                    mSinCosTable[2*i  ] = std::sin(i*mSinCosAlphaInv);
+                    mSinCosTable[2*i+1] = std::cos(i*mSinCosAlphaInv);
                 }
             }
         };
@@ -142,7 +141,10 @@ namespace pml {
             lMulToSin = -lMulToSin;
         }
 
-        return lSign * (gDouble.mSinTable[(int)(ln)] * lMulToSin + gDouble.mCosTable[(int)(ln)] * lMulToCos);
+        auto lIdx = (int)(ln);
+        lIdx += lIdx;
+
+        return lSign * (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
     }
 
     double cos(double inX)
@@ -175,7 +177,10 @@ namespace pml {
             lMulToSin = -lMulToSin;
         }
 
-        return lSign * (gDouble.mCosTable[(int)(ln)] * lMulToCos - gDouble.mSinTable[(int)(ln)] * lMulToSin);
+        auto lIdx = (int)(ln);
+        lIdx += lIdx;
+
+        return lSign * (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
     }
 
 }
