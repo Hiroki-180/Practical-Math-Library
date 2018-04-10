@@ -159,7 +159,7 @@ namespace pml {
 
             const double lCosWithoutSign= (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
 
-            const T lResidue = (lEighth & 7);
+            const auto lResidue = (lEighth & 7);
 
             return (((lResidue < 2) | (lResidue > 5)) ? +lCosWithoutSign : -lCosWithoutSign);
         }
