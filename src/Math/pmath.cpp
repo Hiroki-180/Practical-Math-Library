@@ -114,7 +114,7 @@ namespace pml {
                 lMulToSin = -lMulToSin;
             }
 
-            auto lIdx = (int)(ln);
+            auto lIdx = static_cast<int>(ln);
             lIdx += lIdx;
 
             const double lSinWithoutSign = (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
@@ -150,7 +150,7 @@ namespace pml {
                 lMulToSin = -lMulToSin;
             }
 
-            auto lIdx = (int)(ln);
+            auto lIdx = static_cast<int>(ln);
             lIdx += lIdx;
 
             const double lCosWithoutSign= (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
