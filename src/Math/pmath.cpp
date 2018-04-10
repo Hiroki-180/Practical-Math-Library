@@ -5,13 +5,13 @@
 #include <intrin.h>
 
 // One of parts of 2/pi
-#define PART1_PIOVERTWO 1.5707963109016418
+#define PIOVERTWO_PART1 1.5707963109016418
 
 // One of parts of 2/pi
-#define PART2_PIOVERTWO 1.5893254712295857E-8
+#define PIOVERTWO_PART2 1.5893254712295857E-8
 
 // One of parts of 2/pi
-#define PART3_PIOVERTWO 6.123233995736766E-17
+#define PIOVERTWO_PART3 6.123233995736766E-17
 
 namespace pml {
 
@@ -80,19 +80,26 @@ namespace pml {
 
         static const IEEE754Format<11, 52> gDouble;
 
+        static constexpr double gSinCosMaxArgChar  =  0.999999*PML_CONST_PIQUATER*std::numeric_limits<char>::max();
+        static constexpr double gSinCosMinArgChar  = -0.999999*PML_CONST_PIQUATER*std::numeric_limits<char>::max(); // not lowest
+        static constexpr double gSinCosMaxArgShort =  0.999999*PML_CONST_PIQUATER*std::numeric_limits<short>::max();
+        static constexpr double gSinCosMinArgShort = -0.999999*PML_CONST_PIQUATER*std::numeric_limits<short>::max();
+        static constexpr double gSinCosMaxArgInt   =  0.999999*PML_CONST_PIQUATER*std::numeric_limits<int>::max();
+        static constexpr double gSinCosMinArgInt   = -0.999999*PML_CONST_PIQUATER*std::numeric_limits<int>::max();
+
         template<typename T>
         double sinImpl(double inX)
         {
             bool lIsNegative = std::signbit(inX);
             inX = std::fabs(inX);
 
-            const auto lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
+            const T lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
             const T lArgIdx = ((lEighth + 1) >> 1);
 
             const double lArg_0_45
-                = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
-                                  - PART2_PIOVERTWO * lArgIdx)
-                                  - PART3_PIOVERTWO * lArgIdx);
+                = std::fabs(((inX - PIOVERTWO_PART1 * lArgIdx)
+                                  - PIOVERTWO_PART2 * lArgIdx)
+                                  - PIOVERTWO_PART3 * lArgIdx);
 
             lIsNegative = (lIsNegative ^ ((lEighth & 7) >= 4));
 
@@ -124,13 +131,13 @@ namespace pml {
         {
             inX = std::fabs(inX);
 
-            const auto lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
+            const T lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
             const T lArgIdx = ((lEighth + 1) >> 1);
 
             const double lArg_0_45
-                = std::fabs(((inX - PART1_PIOVERTWO * lArgIdx)
-                                  - PART2_PIOVERTWO * lArgIdx)
-                                  - PART3_PIOVERTWO * lArgIdx);
+                = std::fabs(((inX - PIOVERTWO_PART1 * lArgIdx)
+                                  - PIOVERTWO_PART2 * lArgIdx)
+                                  - PIOVERTWO_PART3 * lArgIdx);
 
             const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
 
@@ -186,18 +193,18 @@ namespace pml {
 
     double sin(double inX)
     {
-        return
-            ((std::numeric_limits<int>::min() < inX) && (inX < std::numeric_limits<int>::max())) ?
-               sinImpl<int>     (inX):
-               sinImpl<uint64_t>(inX);
+        return ((gSinCosMinArgChar  < inX) && (inX < gSinCosMaxArgChar) ) ? sinImpl<char>    (inX):
+               ((gSinCosMinArgShort < inX) && (inX < gSinCosMaxArgShort)) ? sinImpl<short>   (inX):
+               ((gSinCosMinArgInt   < inX) && (inX < gSinCosMaxArgInt)  ) ? sinImpl<int>     (inX):
+                                                                            sinImpl<uint64_t>(inX);
     }
 
     double cos(double inX)
     {
-        return
-            ((std::numeric_limits<int>::min() < inX) && (inX < std::numeric_limits<int>::max())) ?
-               cosImpl<int>     (inX):
-               cosImpl<uint64_t>(inX);
+        return ((gSinCosMinArgChar  < inX) && (inX < gSinCosMaxArgChar) ) ? cosImpl<char>    (inX):
+               ((gSinCosMinArgShort < inX) && (inX < gSinCosMaxArgShort)) ? cosImpl<short>   (inX):
+               ((gSinCosMinArgInt   < inX) && (inX < gSinCosMaxArgInt)  ) ? cosImpl<int>     (inX):
+                                                                            cosImpl<uint64_t>(inX);
     }
 
 }
