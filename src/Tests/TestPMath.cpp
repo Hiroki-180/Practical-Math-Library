@@ -54,7 +54,9 @@ TEST(TestPMath, exp_performance)
         << "---Debud Mode---\n"
 #endif
         << "STL:" << lElapsed << "[msec],\n"
-        << "PML:" << lElapsedPML << "[msec],\n";
+        << "PML:" << lElapsedPML << "[msec],\n"
+        << std::setprecision(3)
+        << "PML is " << (lElapsed / (double)(lElapsedPML)) << " faster than this compiler's STL implimentation.\n";
 
 #ifdef NDEBUG
     EXPECT_LE(lElapsedPML, lElapsed);
@@ -106,7 +108,9 @@ TEST(TestPMath, sin_performance)
         << "---Debud Mode---\n"
 #endif
         << "STL:" << lElapsed << "[msec],\n"
-        << "PML:" << lElapsedPML << "[msec],\n";
+        << "PML:" << lElapsedPML << "[msec],\n"
+        << std::setprecision(3)
+        << "PML is " << (lElapsed / (double)(lElapsedPML)) << " faster than this compiler's STL implimentation.\n";
 
 #ifdef NDEBUG
     EXPECT_LE(lElapsedPML, lElapsed);
@@ -158,7 +162,9 @@ TEST(TestPMath, cos_performance)
         << "---Debud Mode---\n"
 #endif
         << "STL:" << lElapsed << "[msec],\n"
-        << "PML:" << lElapsedPML << "[msec],\n";
+        << "PML:" << lElapsedPML << "[msec],\n"
+        << std::setprecision(3)
+        << "PML is " << (lElapsed / (double)(lElapsedPML)) << " faster than this compiler's STL implimentation.\n";
 
 #ifdef NDEBUG
     EXPECT_LE(lElapsedPML, lElapsed);
