@@ -84,10 +84,7 @@ namespace pml {
         double sinImpl(double inX)
         {
             bool lIsNegative = std::signbit(inX);
-            if (lIsNegative)
-            {
-                inX = -inX;
-            }
+            inX = std::fabs(inX);
 
             const auto lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
             const T lArgIdx = ((lEighth + 1) >> 1);
