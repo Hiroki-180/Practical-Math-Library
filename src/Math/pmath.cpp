@@ -129,15 +129,14 @@ namespace pml {
             auto lIdx = static_cast<int>(ln);
             lIdx += lIdx;
 
-            return (inIsNegative ? -1 : 1)*(gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
+            const double lSinWithoutSign = (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
+
+            return (inIsNegative ? -lSinWithoutSign : lSinWithoutSign);
         }
 
         /**
         * @param[in] inX
         * Absolute value of the argument.
-        *
-        * @param[in] inIsNegative
-        * Sign of the argument.
         *
         * @return cos((inIsNegative ? -1 : +1)*inX)
         */
@@ -173,7 +172,7 @@ namespace pml {
             auto lIdx = static_cast<int>(ln);
             lIdx += lIdx;
 
-            const double lCosWithoutSign= (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
+            const double lCosWithoutSign = (gDouble.mSinCosTable[lIdx + 1] * lMulToCos - gDouble.mSinCosTable[lIdx] * lMulToSin);
 
             const auto lResidue = (lEighth & 7);
 
@@ -209,7 +208,7 @@ namespace pml {
 
     double sin(double inX)
     {
-        const bool lIsNegative = std::signbit(inX);
+        const bool lIsNegative = (inX < 0);
         inX = std::fabs(inX);
 
         return (inX < gSinCosMaxArgChar ) ? sinImpl<char>    (inX, lIsNegative):
