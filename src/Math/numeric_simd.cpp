@@ -278,10 +278,11 @@ namespace pml {
     void positive_difference_AVX(
         const std::vector<double>& inA,
         const std::vector<double>& inB,
-        std::vector<double>& outC,
-        std::size_t inSize)
+        std::vector<double>& outC)
     {
-        return positive_difference_AVX(inA.data(), inB.data(), outC.data(), inSize);
+        outC.resize(inA.size());
+
+        return positive_difference_AVX(inA.data(), inB.data(), outC.data(), inA.size());
     }
 
     void positive_difference_aligned_AVX(

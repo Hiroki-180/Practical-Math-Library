@@ -243,7 +243,7 @@ TEST(TestNumericSIMD, positive_difference_AVX)
         const auto lStart = std::chrono::system_clock::now();
         for (auto i = 0;i < lTestNum;++i)
         {
-            pml::positive_difference_AVX(lVector1, lVector2, lVectorAnsSIMD, lSize);
+            pml::positive_difference_AVX(lVector1, lVector2, lVectorAnsSIMD);
         }
         const auto lEnd = std::chrono::system_clock::now();
         lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();

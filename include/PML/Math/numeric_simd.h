@@ -48,8 +48,7 @@ namespace pml{
     void positive_difference_AVX(
         const std::vector<double>& inA,
         const std::vector<double>& inB,
-        std::vector<double>& outC,
-        std::size_t inSize);
+        std::vector<double>& outC);
 
     void positive_difference_aligned_AVX(
         const aligned_array<double>& inA,
