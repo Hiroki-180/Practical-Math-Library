@@ -2,6 +2,8 @@
 #include <PML/Math/pmath.h>
 #include <PML/Math/Constants.h>
 
+#include <assert.h>
+#include <type_traits>
 #include <intrin.h>
 
 // One of parts of 2/pi
@@ -80,18 +82,24 @@ namespace pml {
 
         static const IEEE754Format<11, 52> gDouble;
 
-        static constexpr double gSinCosMaxArgChar  =  0.999999*PML_CONST_PIQUATER*std::numeric_limits<char>::max();
-        static constexpr double gSinCosMinArgChar  = -0.999999*PML_CONST_PIQUATER*std::numeric_limits<char>::max(); // not lowest
+        static constexpr double gSinCosMaxArgChar  =  0.999999*PML_CONST_PIQUATER*std::numeric_limits<char> ::max();
         static constexpr double gSinCosMaxArgShort =  0.999999*PML_CONST_PIQUATER*std::numeric_limits<short>::max();
-        static constexpr double gSinCosMinArgShort = -0.999999*PML_CONST_PIQUATER*std::numeric_limits<short>::max();
-        static constexpr double gSinCosMaxArgInt   =  0.999999*PML_CONST_PIQUATER*std::numeric_limits<int>::max();
-        static constexpr double gSinCosMinArgInt   = -0.999999*PML_CONST_PIQUATER*std::numeric_limits<int>::max();
+        static constexpr double gSinCosMaxArgInt   =  0.999999*PML_CONST_PIQUATER*std::numeric_limits<int>  ::max();
 
+        /**
+        * @param[in] inX
+        * Absolute value of the argument.
+        *
+        * @param[in] inIsNegative
+        * Sign of the argument.
+        *
+        * @return sin((inIsNegative ? -1 : +1)*inX)
+        */
         template<typename T>
-        double sinImpl(double inX)
+        typename std::enable_if<std::is_integral<T>::value, double>::type
+        sinImpl(double inX, bool inIsNegative)
         {
-            bool lIsNegative = std::signbit(inX);
-            inX = std::fabs(inX);
+            assert(inX >= 0.0);
 
             const T lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
             const T lArgIdx = ((lEighth + 1) >> 1);
@@ -101,7 +109,7 @@ namespace pml {
                                   - PIOVERTWO_PART2 * lArgIdx)
                                   - PIOVERTWO_PART3 * lArgIdx);
 
-            lIsNegative = (lIsNegative ^ ((lEighth & 7) >= 4));
+            inIsNegative = (inIsNegative ^ ((lEighth & 7) >= 4));
 
             const double ln = ((lArg_0_45*gDouble.mSinCosAlpha + gDouble.mRounder) - gDouble.mRounder);
 
@@ -121,15 +129,23 @@ namespace pml {
             auto lIdx = static_cast<int>(ln);
             lIdx += lIdx;
 
-            const double lSinWithoutSign = (gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
-
-            return (lIsNegative ? -lSinWithoutSign : +lSinWithoutSign);
+            return (inIsNegative ? -1 : 1)*(gDouble.mSinCosTable[lIdx] * lMulToSin + gDouble.mSinCosTable[lIdx + 1] * lMulToCos);
         }
 
+        /**
+        * @param[in] inX
+        * Absolute value of the argument.
+        *
+        * @param[in] inIsNegative
+        * Sign of the argument.
+        *
+        * @return cos((inIsNegative ? -1 : +1)*inX)
+        */
         template<typename T>
-        double cosImpl(double inX)
+        typename std::enable_if<std::is_integral<T>::value, double>::type
+        cosImpl(double inX)
         {
-            inX = std::fabs(inX);
+            assert(inX >= 0.0);
 
             const T lEighth = static_cast<T>(inX*PML_CONST_4OVERPI);
             const T lArgIdx = ((lEighth + 1) >> 1);
@@ -193,18 +209,23 @@ namespace pml {
 
     double sin(double inX)
     {
-        return ((gSinCosMinArgChar  < inX) && (inX < gSinCosMaxArgChar) ) ? sinImpl<char>    (inX):
-               ((gSinCosMinArgShort < inX) && (inX < gSinCosMaxArgShort)) ? sinImpl<short>   (inX):
-               ((gSinCosMinArgInt   < inX) && (inX < gSinCosMaxArgInt)  ) ? sinImpl<int>     (inX):
-                                                                            sinImpl<uint64_t>(inX);
+        const bool lIsNegative = std::signbit(inX);
+        inX = std::fabs(inX);
+
+        return (inX < gSinCosMaxArgChar ) ? sinImpl<char>    (inX, lIsNegative):
+               (inX < gSinCosMaxArgShort) ? sinImpl<short>   (inX, lIsNegative):
+               (inX < gSinCosMaxArgInt  ) ? sinImpl<int>     (inX, lIsNegative):
+                                            sinImpl<uint64_t>(inX, lIsNegative);
     }
 
     double cos(double inX)
     {
-        return ((gSinCosMinArgChar  < inX) && (inX < gSinCosMaxArgChar) ) ? cosImpl<char>    (inX):
-               ((gSinCosMinArgShort < inX) && (inX < gSinCosMaxArgShort)) ? cosImpl<short>   (inX):
-               ((gSinCosMinArgInt   < inX) && (inX < gSinCosMaxArgInt)  ) ? cosImpl<int>     (inX):
-                                                                            cosImpl<uint64_t>(inX);
+        inX = std::fabs(inX);
+
+        return (inX < gSinCosMaxArgChar ) ? cosImpl<char>    (inX):
+               (inX < gSinCosMaxArgShort) ? cosImpl<short>   (inX):
+               (inX < gSinCosMaxArgInt  ) ? cosImpl<int>     (inX):
+                                            cosImpl<uint64_t>(inX);
     }
 
 }
