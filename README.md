@@ -9,8 +9,8 @@ Supporting 64-bit environment or other compilers is important future task.
 
 ## Contents
  - Constants
-    - mathematical constants
-    - ~~physical constants~~
+    - Mathematical constants
+    - ~~Physical constants~~
     
  - Basic Functions
     - Trigonometrics
