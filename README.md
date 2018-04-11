@@ -14,7 +14,7 @@ Supporting 64-bit environment or other compilers is important future task.
     
  - Basic Functions
     - Trigonometrics
-    - exponental/logarithm
+    - Exponental/Logarithm
     - ~~Their vector versions~~
 
  - Differentiations
