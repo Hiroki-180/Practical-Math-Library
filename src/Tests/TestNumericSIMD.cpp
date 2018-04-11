@@ -188,3 +188,99 @@ TEST(TestNumericSIMD, InnerProd_AVX)
     EXPECT_LE(lSIMDElapsedAligned, lSIMDElapsed);
 #endif
 }
+
+TEST(TestNumericSIMD, positive_difference_AVX)
+{
+    if (!pml::CPUDispatcher::isAVX()
+            && !pml::CPUDispatcher::isAVX2())
+    {
+        return;
+    }
+
+    const std::size_t lSize = 100;
+    auto lAArray1 = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray2 = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+
+    for (auto i = 0U;i < lSize;++i)
+    {
+        lAArray1[i] = std::sin(static_cast<double>(i));
+        lAArray2[i] = std::cos(static_cast<double>(i));
+    }
+
+    const auto lTestNum
+#ifdef NDEBUG
+        = 500000;
+#else
+        = 10000;
+#endif
+
+    // naive calculation.
+    auto lAArrayAns = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    const auto lStart = std::chrono::system_clock::now();
+    for (auto i = 0;i < lTestNum;++i)
+    {
+        for (auto j = 0;j < lSize;++j)
+        {
+            lAArrayAns[j] = std::max(lAArray1[j] - lAArray2[j], 0.0);
+        }
+    }
+    const auto lEnd = std::chrono::system_clock::now();
+    const auto lElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+
+    // calculation using SIMD with std::vector
+    std::vector<double> lVectorAnsSIMD(lSize);
+    long long lSIMDElapsed(0);
+    {
+        std::vector<double> lVector1(lSize);
+        std::vector<double> lVector2(lSize);
+
+        for (auto i = 0U;i < lSize;++i)
+        {
+            lVector1[i] = std::sin(static_cast<double>(i));
+            lVector2[i] = std::cos(static_cast<double>(i));
+        }
+
+        const auto lStart = std::chrono::system_clock::now();
+        for (auto i = 0;i < lTestNum;++i)
+        {
+            pml::positive_difference_AVX(lVector1, lVector2, lVectorAnsSIMD, lSize);
+        }
+        const auto lEnd = std::chrono::system_clock::now();
+        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+    }
+
+    // calculation using SIMD with aligned array
+    auto lAArrayAnsSIMDAligned = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    const auto lSIMDStart = std::chrono::system_clock::now();
+    for (auto i = 0;i < lTestNum;++i)
+    {
+        pml::positive_difference_aligned_AVX(lAArray1, lAArray2, lAArrayAnsSIMDAligned, lSize);
+    }
+    const auto lSIMDEnd = std::chrono::system_clock::now();
+    const auto lSIMDElapsedAligned = std::chrono::duration_cast<std::chrono::milliseconds>(lSIMDEnd - lSIMDStart).count();
+
+    for (auto i = 0;i < lSize;++i)
+    {
+        EXPECT_NEAR(lAArrayAns[i], lVectorAnsSIMD[i], 1.0E-14);
+        EXPECT_DOUBLE_EQ(lAArrayAns[i], lAArrayAnsSIMDAligned[i]);
+    }
+
+    std::cout
+#ifdef NDEBUG
+        << "---Release Mode---\n"
+#else
+        << "---Debud Mode---\n"
+#endif
+        << lTestNum << "-times calculation,\n"
+        << "Naive:" << lElapsed     << "[msec],\n"
+        << "SIMD:"  << lSIMDElapsed << "[msec],\n"
+        << "Aligned SIMD:" << lSIMDElapsedAligned << "[msec].\n";
+
+#ifdef NDEBUG
+    std::cout.precision(16);
+    EXPECT_LT(lSIMDElapsed,        lElapsed);
+    EXPECT_LT(lSIMDElapsedAligned, lElapsed);
+    EXPECT_LE(lSIMDElapsedAligned, lSIMDElapsed);
+#endif
+
+}

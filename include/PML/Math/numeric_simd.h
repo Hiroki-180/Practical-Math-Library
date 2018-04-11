@@ -19,6 +19,7 @@ namespace pml{
 
     double accumulate_aligned_AVX(const align32_vector<double>& inA);
 
+
     double inner_prod_AVX(
         const double* inA,
         const double* inB,
@@ -36,6 +37,31 @@ namespace pml{
     double inner_prod_aligned_AVX(
         const align32_vector<double>& inA,
         const align32_vector<double>& inB);
+
+
+    void positive_difference_AVX(
+        const double* inA,
+        const double* inB,
+        double* outC,
+        std::size_t inSize);
+
+    void positive_difference_AVX(
+        const std::vector<double>& inA,
+        const std::vector<double>& inB,
+        std::vector<double>& outC,
+        std::size_t inSize);
+
+    void positive_difference_aligned_AVX(
+        const aligned_array<double>& inA,
+        const aligned_array<double>& inB,
+        aligned_array<double>& outC,
+        std::size_t inSize);
+
+    void positive_difference_aligned_AVX(
+        const align32_vector<double>& inA,
+        const align32_vector<double>& inB,
+        align32_vector<double>& outC,
+        std::size_t inSize);
 
 } // pml
 
