@@ -9,8 +9,13 @@ Supporting 64-bit environment or other compilers is important future task.
 
 ## Contents
  - Constants
-    - ~~mathematical constants~~
+    - mathematical constants
     - ~~physical constants~~
+    
+ - Basic Functions
+    - Trigonometrics
+    - exponental/logarithm
+    - ~~Their vector versions~~
 
  - Differentiations
     - ~~1st/2nd/3rd/4th derivatives with 1st/2nd/3rd/4th/5th accuracy by forward/central/backward finite difference~~
