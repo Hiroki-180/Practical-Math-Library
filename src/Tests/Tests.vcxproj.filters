@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source\TestCore">
+      <UniqueIdentifier>{c7275722-39f4-4bd6-978b-7766024d5bc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TestMath">
+      <UniqueIdentifier>{7a74a9fa-7c38-4eb0-bef7-3f68633c94e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -26,17 +32,17 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="TestCore.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="TestMath\TestConstants.cpp">
+      <Filter>Source\TestMath</Filter>
     </ClCompile>
-    <ClCompile Include="TestNumericSIMD.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="TestMath\TestNumericSIMD.cpp">
+      <Filter>Source\TestMath</Filter>
     </ClCompile>
-    <ClCompile Include="TestPMath.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="TestMath\TestPMath.cpp">
+      <Filter>Source\TestMath</Filter>
     </ClCompile>
-    <ClCompile Include="TestConstants.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="TestCore\TestCore.cpp">
+      <Filter>Source\TestCore</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

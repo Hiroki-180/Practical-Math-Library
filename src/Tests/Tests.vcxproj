@@ -176,10 +176,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestCore.cpp" />
-    <ClCompile Include="TestConstants.cpp" />
-    <ClCompile Include="TestNumericSIMD.cpp" />
-    <ClCompile Include="TestPMath.cpp" />
+    <ClCompile Include="TestCore\TestCore.cpp" />
+    <ClCompile Include="TestMath\TestConstants.cpp" />
+    <ClCompile Include="TestMath\TestNumericSIMD.cpp" />
+    <ClCompile Include="TestMath\TestPMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">
