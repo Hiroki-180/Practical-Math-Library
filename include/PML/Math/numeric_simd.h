@@ -169,7 +169,7 @@ namespace pml{
     * @param[in] inB
     * Pointer to the address of the first element of the 2nd array.
     *
-    * @param[in] outC
+    * @param[out] outC
     * (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inSize-1] - inB[inSize-1], 0)).
     *
     * @param[in] inSize
@@ -190,7 +190,7 @@ namespace pml{
     * @param[in] inA
     * 1st array as vector.
     *
-    * @param[in] inB
+    * @param[out] inB
     * 2nd array as vector.
     *
     * @param[in] outC
@@ -213,7 +213,7 @@ namespace pml{
     * @param[in] inB
     * 32-byte aligned 2nd array.
     *
-    * @param[in] outC
+    * @param[out] outC
     * 32-byte aligned resulted array, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inSize-1] - inB[inSize-1], 0)).
     *
     * @param[in] inSize
@@ -237,7 +237,7 @@ namespace pml{
     * @param[in] inB
     * 32-byte aligned 2nd array.
     *
-    * @param[in] outC
+    * @param[out] outC
     * 32-byte aligned resulted array, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
     *
     * @param[in] inSize
