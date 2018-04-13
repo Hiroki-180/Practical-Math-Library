@@ -112,8 +112,8 @@ namespace pml {
                 const std::size_t lUnrollEnd = (inSize - (inSize & 7));
                 for (std::size_t i = 1;i < lUnrollEnd;i += 8)
                 {
-                    __m256d lNum256  = _mm256_load_pd(&inA[i - 1]);
-                    __m256d lDen256  = _mm256_load_pd(&inA[i    ]);
+                    __m256d lNum256 = _mm256_load_pd(&inA[i - 1]);
+                    __m256d lDen256 = _mm256_load_pd(&inA[i    ]);
                     __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
                     _mm256_store_pd(&outB[i - 1], lDiv256);
 
@@ -126,8 +126,8 @@ namespace pml {
                 const std::size_t l256End = (inSize - (inSize & 3));
                 if (l256End != lUnrollEnd)
                 {
-                    const __m256d lNum256  = _mm256_load_pd(&inA[lUnrollEnd - 1]);
-                    const __m256d lDen256  = _mm256_load_pd(&inA[lUnrollEnd    ]);
+                    const __m256d lNum256 = _mm256_load_pd(&inA[lUnrollEnd - 1]);
+                    const __m256d lDen256 = _mm256_load_pd(&inA[lUnrollEnd    ]);
                     const __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
                     _mm256_store_pd(&outB[lUnrollEnd - 1], lDiv256);
                 }
@@ -303,20 +303,18 @@ namespace pml {
             return;
         }
 
-        outB[0] = inA[0] / inA[1];
-
         inSize -= 1;
 
         const std::size_t lUnrollEnd = (inSize - (inSize & 7));
         for (std::size_t i = 1;i < lUnrollEnd;i += 8)
         {
-            __m256d lNum256  = _mm256_loadu_pd(&inA[i - 1]);
-            __m256d lDen256  = _mm256_loadu_pd(&inA[i    ]);
+            __m256d lNum256 = _mm256_loadu_pd(&inA[i - 1]);
+            __m256d lDen256 = _mm256_loadu_pd(&inA[i    ]);
             __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
             _mm256_store_pd(&outB[i - 1], lDiv256);
 
-            lNum256  = _mm256_loadu_pd(&inA[i + 3]);
-            lDen256  = _mm256_loadu_pd(&inA[i + 4]);
+            lNum256 = _mm256_loadu_pd(&inA[i + 3]);
+            lDen256 = _mm256_loadu_pd(&inA[i + 4]);
             lDiv256 = _mm256_div_pd(lNum256, lDen256);
             _mm256_store_pd(&outB[i + 3], lDiv256);
         }
