@@ -43,6 +43,8 @@ namespace pml {
 
             pointer allocate(size_type n, typename std::allocator<void>::const_pointer hint = 0) const
             {
+                hint;
+
                 if (n > this->max_size())
                 {
                     throw std::bad_alloc(); //ToDo.

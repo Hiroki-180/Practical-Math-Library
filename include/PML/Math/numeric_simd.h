@@ -17,10 +17,10 @@ namespace pml{
     * Pointer to the address of the first element of the array.
     *
     * @param[in] inSize
-    * Size of the array.
+    * Size of the array inA.
     *
     * @return
-    * Sum of the elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
+    * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
     */
     double accumulate_AVX(
         const double* inA,
@@ -36,7 +36,7 @@ namespace pml{
     * Array as std::vector.
     *
     * @return
-    * Sum of the elements of the input array, inA[0] + inA[1] + ... + inA[inA.size()-1].
+    * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inA.size()-1].
     */
     double accumulate_AVX(const std::vector<double>& inA);
 
@@ -50,10 +50,10 @@ namespace pml{
     * 32-byte aligned array.
     *
     * @param[in] inSize
-    * Size of the array.
+    * Size of the array inA.
     *
     * @return
-    * Sum of the elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
+    * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
     */
     double accumulate_aligned_AVX(
         const aligned_array<double>& inA,
@@ -69,7 +69,7 @@ namespace pml{
     * 32-byte aligned vector.
     *
     * @return
-    * Sum of the elements of the input array, inA[0] + inA[1] + ... + inA[inA.size()-1].
+    * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inA.size()-1].
     */
     double accumulate_aligned_AVX(const align32_vector<double>& inA);
 
@@ -86,7 +86,7 @@ namespace pml{
     * Pointer to the address of the first element of the 2nd array.
     *
     * @param[in] inSize
-    * Size of the array.
+    * Size of the array inA and inB.
     *
     * @return
     * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inSize-1]*inB[inSize-1].
@@ -128,7 +128,7 @@ namespace pml{
     * 32-byte aligned 2nd array.
     *
     * @param[in] inSize
-    * Size of the array.
+    * Size of the array inA and inB.
     *
     * @return
     * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inSize-1]*inB[inSize-1].
@@ -158,6 +158,78 @@ namespace pml{
         const align32_vector<double>& inB);
 
     /**
+    * @fn adjacent_divide_AVX(const double* inA, double* outB, std::size_t inSize)
+    *
+    * @brief
+    * Dividing elements by the adjacent elements.
+    *
+    * @param[in] inA
+    * Pointer to the address of the first element of the 1st array.
+    *
+    * @param[out] outB
+    * Resulted array, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
+    *
+    * @param[in] inSize
+    * Size of the array inA and outB.
+    */
+    void adjacent_divide_AVX(
+        const double* inA,
+        double* outB,
+        std::size_t inSize);
+
+    /**
+    * @fn adjacent_divide_AVX(const std::vector<double>& inA, std::vector<double>& outB)
+    *
+    * @brief
+    * Dividing elements by the adjacent elements.
+    *
+    * @param[in] inA
+    * 1st array as vector.
+    *
+    * @param[out] outB
+    * Resulted array as vector, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inB[inSize-1], inA[inSize-1]).
+    */
+    void adjacent_divide_AVX(
+        const std::vector<double>& inA,
+        std::vector<double>& outB);
+
+    /**
+    * @fn adjacent_divide_aligned_AVX(const aligned_array<double>& inA, aligned_array<double>& outB, std::size_t inSize)
+    *
+    * @brief
+    * Dividing elements by the adjacent elements.
+    *
+    * @param[in] inA
+    * 32-byte aligned 1st array.
+    *
+    * @param[out] outB
+    * 32-byte aligned resulted array, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
+    *
+    * @param[in] inSize
+    * Size of the array inA and outB.
+    */
+    void adjacent_divide_aligned_AVX(
+        const aligned_array<double>& inA,
+        aligned_array<double>& outB,
+        std::size_t inSize);
+
+    /**
+    * @fn adjacent_divide_aligned_AVX(const aligned_array<double>& inA, aligned_array<double>& outB, std::size_t inSize)
+    *
+    * @brief
+    * Dividing elements by the adjacent elements.
+    *
+    * @param[in] inA
+    * 32-byte aligned 1st arrayas vector.
+    *
+    * @param[out] outB
+    * 32-byte aligned resulted array as vector, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
+    */
+    void adjacent_divide_aligned_AVX(
+        const align32_vector<double>& inA,
+        align32_vector<double>& outB);
+
+    /**
     * @fn positive_difference_AVX(const double* inA, const double* inB, double* outC, std::size_t inSize)
     *
     * @brief
@@ -170,10 +242,10 @@ namespace pml{
     * Pointer to the address of the first element of the 2nd array.
     *
     * @param[out] outC
-    * (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inSize-1] - inB[inSize-1], 0)).
+    * Resulted array, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inSize-1] - inB[inSize-1], 0)).
     *
     * @param[in] inSize
-    * Size of the array.
+    * Size of the array inA, inB and outC.
     */
     void positive_difference_AVX(
         const double* inA,
@@ -194,7 +266,7 @@ namespace pml{
     * 2nd array as vector.
     *
     * @param[in] outC
-    * (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
+    * Resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
     */
     void positive_difference_AVX(
         const std::vector<double>& inA,
@@ -217,7 +289,7 @@ namespace pml{
     * 32-byte aligned resulted array, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inSize-1] - inB[inSize-1], 0)).
     *
     * @param[in] inSize
-    * Size of the array.
+    * Size of the array inA, inB and outC.
     */
     void positive_difference_aligned_AVX(
         const aligned_array<double>& inA,
@@ -232,22 +304,18 @@ namespace pml{
     * Instruction of subtraction of two arrays and taking plus part.
     *
     * @param[in] inA
-    * 32-byte aligned 1st array.
+    * 32-byte aligned 1st array as vector.
     *
     * @param[in] inB
-    * 32-byte aligned 2nd array.
+    * 32-byte aligned 2nd array as vector.
     *
     * @param[out] outC
-    * 32-byte aligned resulted array, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
-    *
-    * @param[in] inSize
-    * Size of the array.
+    * 32-byte aligned resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
     */
     void positive_difference_aligned_AVX(
         const align32_vector<double>& inA,
         const align32_vector<double>& inB,
-        align32_vector<double>& outC,
-        std::size_t inSize);
+        align32_vector<double>& outC);
 
 } // pml
 
