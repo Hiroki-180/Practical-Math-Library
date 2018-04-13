@@ -164,7 +164,7 @@ namespace pml{
     * Dividing elements by the adjacent elements.
     *
     * @param[in] inA
-    * Pointer to the address of the first element of the 1st array.
+    * Pointer to the address of the first element of the input array.
     *
     * @param[out] outB
     * Resulted array, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
@@ -184,7 +184,7 @@ namespace pml{
     * Dividing elements by the adjacent elements.
     *
     * @param[in] inA
-    * 1st array as vector.
+    * Input array as vector.
     *
     * @param[out] outB
     * Resulted array as vector, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inB[inSize-1], inA[inSize-1]).
@@ -200,7 +200,7 @@ namespace pml{
     * Dividing elements by the adjacent elements.
     *
     * @param[in] inA
-    * 32-byte aligned 1st array.
+    * 32-byte aligned input array.
     *
     * @param[out] outB
     * 32-byte aligned resulted array, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
@@ -214,13 +214,13 @@ namespace pml{
         std::size_t inSize);
 
     /**
-    * @fn adjacent_divide_aligned_AVX(const aligned_array<double>& inA, aligned_array<double>& outB, std::size_t inSize)
+    * @fn adjacent_divide_aligned_AVX(const align32_vector<double>& inA, align32_vector<double>& outB)
     *
     * @brief
     * Dividing elements by the adjacent elements.
     *
     * @param[in] inA
-    * 32-byte aligned 1st arrayas vector.
+    * 32-byte aligned input array as vector.
     *
     * @param[out] outB
     * 32-byte aligned resulted array as vector, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
