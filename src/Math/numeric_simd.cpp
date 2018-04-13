@@ -114,15 +114,15 @@ namespace pml {
                 const std::size_t lUnrollEnd = (inSize - (inSize & 7));
                 for (std::size_t i = 1;i < lUnrollEnd;i += 8)
                 {
-                    const __m256d lNumF256  = _mm256_load_pd(&inA[i - 1]);
-                    const __m256d lDenF256  = _mm256_load_pd(&inA[i    ]);
-                    const __m256d lDeivF256 = _mm256_div_pd(lNumF256, lDenF256);
-                    _mm256_store_pd(&outB[i - 1], lDeivF256);
+                    __m256d lNum256  = _mm256_load_pd(&inA[i - 1]);
+                    __m256d lDen256  = _mm256_load_pd(&inA[i    ]);
+                    __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
+                    _mm256_store_pd(&outB[i - 1], lDiv256);
 
-                    const __m256d lNumB256  = _mm256_load_pd(&inA[i + 3]);
-                    const __m256d lDenB256  = _mm256_load_pd(&inA[i + 4]);
-                    const __m256d lDeivB256 = _mm256_div_pd(lNumB256, lDenB256);
-                    _mm256_store_pd(&outB[i + 3], lDeivB256);
+                    lNum256 = _mm256_load_pd(&inA[i + 3]);
+                    lDen256 = _mm256_load_pd(&inA[i + 4]);
+                    lDiv256 = _mm256_div_pd(lNum256, lDen256);
+                    _mm256_store_pd(&outB[i + 3], lDiv256);
                 }
 
                 const std::size_t l256End = (inSize - (inSize & 3));
@@ -130,8 +130,8 @@ namespace pml {
                 {
                     const __m256d lNum256  = _mm256_load_pd(&inA[lUnrollEnd - 1]);
                     const __m256d lDen256  = _mm256_load_pd(&inA[lUnrollEnd    ]);
-                    const __m256d lDeiv256 = _mm256_div_pd(lNum256, lDen256);
-                    _mm256_store_pd(&outB[lUnrollEnd - 1], lDeiv256);
+                    const __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
+                    _mm256_store_pd(&outB[lUnrollEnd - 1], lDiv256);
                 }
 
                 for (std::size_t i = l256End;i < inSize; ++i)
@@ -312,15 +312,15 @@ namespace pml {
         const std::size_t lUnrollEnd = (inSize - (inSize & 7));
         for (std::size_t i = 1;i < lUnrollEnd;i += 8)
         {
-            const __m256d lNumF256  = _mm256_loadu_pd(&inA[i - 1]);
-            const __m256d lDenF256  = _mm256_loadu_pd(&inA[i    ]);
-            const __m256d lDeivF256 = _mm256_div_pd(lNumF256, lDenF256);
-            _mm256_store_pd(&outB[i - 1], lDeivF256);
+            __m256d lNum256  = _mm256_loadu_pd(&inA[i - 1]);
+            __m256d lDen256  = _mm256_loadu_pd(&inA[i    ]);
+            __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
+            _mm256_store_pd(&outB[i - 1], lDiv256);
 
-            const __m256d lNumB256  = _mm256_loadu_pd(&inA[i + 3]);
-            const __m256d lDenB256  = _mm256_loadu_pd(&inA[i + 4]);
-            const __m256d lDeivB256 = _mm256_div_pd(lNumB256, lDenB256);
-            _mm256_store_pd(&outB[i + 3], lDeivB256);
+            lNum256  = _mm256_loadu_pd(&inA[i + 3]);
+            lDen256  = _mm256_loadu_pd(&inA[i + 4]);
+            lDiv256 = _mm256_div_pd(lNum256, lDen256);
+            _mm256_store_pd(&outB[i + 3], lDiv256);
         }
 
         const std::size_t l256End = (inSize - (inSize & 3));
