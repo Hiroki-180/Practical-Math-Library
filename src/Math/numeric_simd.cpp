@@ -107,8 +107,6 @@ namespace pml {
                     return;
                 }
 
-                outB[0] = inA[0] / inA[1];
-
                 inSize -= 1;
 
                 const std::size_t lUnrollEnd = (inSize - (inSize & 7));
