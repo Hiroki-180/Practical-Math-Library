@@ -15,56 +15,59 @@
 
 namespace pml {
 
-    namespace detail {
+    namespace aligned {
 
-        template<typename T = void*, typename std::enable_if<std::is_pointer<T>::value, std::nullptr_t>::type = nullptr>
-        static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
-        {
-            return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
-        }
+        namespace detail {
 
-        static inline void alignedFree(void* inPtr) noexcept
-        {
-            _aligned_free(inPtr);
-        }
-
-        struct alignedDeleter final
-        {
-            void operator()(void* p) const noexcept
+            template<typename T = void*, typename std::enable_if<std::is_pointer<T>::value, std::nullptr_t>::type = nullptr>
+            static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
             {
-                alignedFree(p);
+                return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
             }
-        };
 
-    } // detail
+            static inline void alignedFree(void* inPtr) noexcept
+            {
+                _aligned_free(inPtr);
+            }
 
-    /**
-    * @brief
-    * The unique pointer to the array that has proper custom deleter to the aligned data.
-    */
-    template<typename T>
-    using aligned_array = std::unique_ptr<T[], detail::alignedDeleter>;
+            struct alignedDeleter final
+            {
+                void operator()(void* p) const noexcept
+                {
+                    alignedFree(p);
+                }
+            };
 
-    /**
-    * @brief
-    * Inline function creating the unique pointer to the array that is just aligned on specified byte size boundaries.
-    * The deleter is proper one to the aligned data.
-    *
-    * @param[in] inSize
-    * Size of array.
-    *
-    * @param[in] inAlignment
-    * Alignment size in byte.
-    *
-    * @return
-    * pml::aligned_array<double>
-    */
-    template<typename T>
-    inline aligned_array<double> createAlignedArray(std::size_t inSize, std::size_t inAlignment)
-    {
-        return aligned_array<double>(detail::alignedMalloc<T*>(inSize * sizeof(T), inAlignment));
-    }
+        } // detail
 
+        /**
+        * @brief
+        * The unique pointer to the array that has proper custom deleter to the aligned data.
+        */
+        template<typename T>
+        using array = std::unique_ptr<T[], detail::alignedDeleter>;
+
+        /**
+        * @brief
+        * Inline function creating the unique pointer to the array that is just aligned on specified byte size boundaries.
+        * The deleter is proper one to the aligned data.
+        *
+        * @param[in] inSize
+        * Size of array.
+        *
+        * @param[in] inAlignment
+        * Alignment size in byte.
+        *
+        * @return
+        * pml::aligned::array<double>
+        */
+        template<typename T>
+        inline array<double> createArray(std::size_t inSize, std::size_t inAlignment)
+        {
+            return array<double>(detail::alignedMalloc<T*>(inSize * sizeof(T), inAlignment));
+        }
+
+    } // aligned
 } // pml
 
 #endif

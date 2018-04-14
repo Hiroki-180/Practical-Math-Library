@@ -55,7 +55,7 @@ namespace pml{
     namespace aligned {
 
         /**
-        * @fn positive_difference_aligned_AVX(const aligned_array<double>& inA, const aligned_array<double>& inB, aligned_array<double>& outC, std::size_t inSize)
+        * @fn positive_difference_aligned_AVX(const array<double>& inA, const array<double>& inB, array<double>& outC, std::size_t inSize)
         *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part.
@@ -73,13 +73,13 @@ namespace pml{
         * Size of the array inA, inB and outC.
         */
         void positive_difference_AVX(
-            const aligned_array<double>& inA,
-            const aligned_array<double>& inB,
-            aligned_array<double>& outC,
+            const array<double>& inA,
+            const array<double>& inB,
+            array<double>& outC,
             std::size_t inSize);
 
         /**
-        * @fn positive_difference_aligned_AVX(const align32_vector<double>& inA, const align32_vector<double>& inB, align32_vector<double>& outC)
+        * @fn positive_difference_aligned_AVX(const vector32<double>& inA, const vector32<double>& inB, vector32<double>& outC)
         *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part.
@@ -94,9 +94,9 @@ namespace pml{
         * 32-byte aligned resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
         */
         void positive_difference_AVX(
-            const align32_vector<double>& inA,
-            const align32_vector<double>& inB,
-            align32_vector<double>& outC);
+            const vector32<double>& inA,
+            const vector32<double>& inB,
+            vector32<double>& outC);
 
     } // aligned
 } // pml

@@ -119,18 +119,18 @@ namespace pml {
         }
 
         void adjacent_divide_AVX(
-            const aligned_array<double>& inA,
+            const array<double>& inA,
             double inShift,
-            aligned_array<double>& outB,
+            array<double>& outB,
             std::size_t inSize)
         {
             detail::adjacent_divide_AVX(inA.get(), inShift, outB.get(), inSize);
         }
 
         void adjacent_divide_AVX(
-            const align32_vector<double>& inA,
+            const vector32<double>& inA,
             double inShift,
-            align32_vector<double>& outB)
+            vector32<double>& outB)
         {
             outB.resize(inA.size());
             detail::adjacent_divide_AVX(inA.data(), inShift, outB.data(), inA.size());

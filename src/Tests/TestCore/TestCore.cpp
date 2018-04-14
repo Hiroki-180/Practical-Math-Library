@@ -16,34 +16,34 @@ TEST(TestCore, aligned_array)
 
     for (const auto& align_i : lAligns)
     {
-        const auto lAArray = pml::createAlignedArray<double>(lSize, align_i);
+        const auto lAArray = pml::aligned::createArray<double>(lSize, align_i);
 
         EXPECT_EQ(0, (uintptr_t)(lAArray.get()) % align_i);
     }
 }
 
-TEST(TestCore, align16_vector)
+TEST(TestCore, 16_Byte_alignment_vector)
 {
     const std::size_t lSize = 100;
-    pml::align16_vector<double> lAVector(lSize);
+    pml::aligned::vector16<double> lAVector(lSize);
 
     EXPECT_EQ(lSize, lAVector.size());
     EXPECT_EQ(0, (uintptr_t)(&(lAVector.data()[0])) % 16);
 }
 
-TEST(TestCore, align32_vector)
+TEST(TestCore, 32_Byte_alignment_vector)
 {
     const std::size_t lSize = 100;
-    pml::align32_vector<double> lAVector(lSize);
+    pml::aligned::vector32<double> lAVector(lSize);
 
     EXPECT_EQ(lSize, lAVector.size());
     EXPECT_EQ(0, (uintptr_t)(lAVector.data()) % 32);
 }
 
-TEST(TestCore, align64_vector)
+TEST(TestCore, 64_Byte_alignment_vector)
 {
     const std::size_t lSize = 100;
-    pml::align64_vector<double> lAVector(lSize);
+    pml::aligned::vector64<double> lAVector(lSize);
 
     EXPECT_EQ(lSize, lAVector.size());
     EXPECT_EQ(0, (uintptr_t)(lAVector.data()) % 64);

@@ -92,13 +92,13 @@ namespace pml {
         }
 
         double accumulate_AVX(
-            const aligned_array<double>& inA,
+            const array<double>& inA,
             std::size_t inSize)
         {
             return detail::accumulate_AVX(inA.get(), inSize);
         }
 
-        double accumulate_AVX(const align32_vector<double>& inA)
+        double accumulate_AVX(const vector32<double>& inA)
         {
             return detail::accumulate_AVX(inA.data(), inA.size());
         }

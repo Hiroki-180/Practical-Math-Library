@@ -53,7 +53,7 @@ namespace pml{
     namespace aligned {
 
         /**
-        * @fn inner_prod_aligned_AVX(const aligned_array<double>& inA, const aligned_array<double>& inB, std::size_t inSize)
+        * @fn inner_prod_aligned_AVX(const array<double>& inA, const array<double>& inB, std::size_t inSize)
         *
         * @brief
         * Accelerated version of std::inner_prod by AVX with memory aligned data.
@@ -71,12 +71,12 @@ namespace pml{
         * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inSize-1]*inB[inSize-1].
         */
         double inner_prod_AVX(
-            const aligned_array<double>& inA,
-            const aligned_array<double>& inB,
+            const array<double>& inA,
+            const array<double>& inB,
             std::size_t inSize);
 
         /**
-        * @fn inner_prod_aligned_AVX(const align32_vector<double>& inA, const align32_vector<double>& inB)
+        * @fn inner_prod_aligned_AVX(const vector32<double>& inA, const vector32<double>& inB)
         *
         * @brief
         * Accelerated version of std::inner_prod by AVX with memory aligned data.
@@ -91,8 +91,8 @@ namespace pml{
         * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inA.size()-1]*inB[inB.size()-1].
         */
         double inner_prod_AVX(
-            const align32_vector<double>& inA,
-            const align32_vector<double>& inB);
+            const vector32<double>& inA,
+            const vector32<double>& inB);
 
     } // aligned
 } // pml

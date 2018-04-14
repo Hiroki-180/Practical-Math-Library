@@ -95,18 +95,18 @@ namespace pml {
         }
 
         void positive_difference_AVX(
-            const aligned_array<double>& inA,
-            const aligned_array<double>& inB,
-            aligned_array<double>& outC,
+            const array<double>& inA,
+            const array<double>& inB,
+            array<double>& outC,
             std::size_t inSize)
         {
             detail::positive_difference_AVX(inA.get(), inB.get(), outC.get(), inSize);
         }
 
         void positive_difference_AVX(
-            const align32_vector<double>& inA,
-            const align32_vector<double>& inB,
-            align32_vector<double>& outC)
+            const vector32<double>& inA,
+            const vector32<double>& inB,
+            vector32<double>& outC)
         {
             outC.resize(inA.size());
             detail::positive_difference_AVX(inA.data(), inB.data(), outC.data(), inA.size());

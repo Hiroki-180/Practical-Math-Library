@@ -14,7 +14,7 @@ TEST(TestNumericSIMD, Accumulate_AVX)
     }
 
     const std::size_t lSize = 100;
-    auto lAArray = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
 
     for (auto i = 0U;i < lSize;++i)
     {
@@ -102,8 +102,8 @@ TEST(TestNumericSIMD, InnerProd_AVX)
     }
 
     const std::size_t lSize = 100;
-    auto lAArray1 = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
-    auto lAArray2 = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray1 = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray2 = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
 
     for (auto i = 0U;i < lSize;++i)
     {
@@ -195,7 +195,7 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
     }
 
     const std::size_t lSize = 100;
-    auto lAArray = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
 
     for (auto i = 0U;i < lSize;++i)
     {
@@ -210,7 +210,7 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
 #endif
 
     // naive calculation.
-    auto lAArrayAns = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArrayAns = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
     const auto lStart = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
@@ -245,7 +245,7 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
     }
 
     // calculation using SIMD with aligned array
-    auto lAArrayAnsSIMDAligned = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArrayAnsSIMDAligned = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
     const auto lSIMDStart = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
@@ -288,8 +288,8 @@ TEST(TestNumericSIMD, positive_difference_AVX)
     }
 
     const std::size_t lSize = 100;
-    auto lAArray1 = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
-    auto lAArray2 = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray1 = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArray2 = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
 
     for (auto i = 0U;i < lSize;++i)
     {
@@ -305,7 +305,7 @@ TEST(TestNumericSIMD, positive_difference_AVX)
 #endif
 
     // naive calculation.
-    auto lAArrayAns = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArrayAns = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
     const auto lStart = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
@@ -340,7 +340,7 @@ TEST(TestNumericSIMD, positive_difference_AVX)
     }
 
     // calculation using SIMD with aligned array
-    auto lAArrayAnsSIMDAligned = pml::createAlignedArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
+    auto lAArrayAnsSIMDAligned = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
     const auto lSIMDStart = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
