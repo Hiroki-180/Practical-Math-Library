@@ -10,6 +10,7 @@ namespace pml {
 
             void adjacent_divide_aligned_AVX(
                 const double* inA,
+                double inShift,
                 double* outB,
                 std::size_t inSize)
             {
@@ -32,12 +33,12 @@ namespace pml {
                 {
                     __m256d lNum256 = _mm256_load_pd(&inA[i - 1]);
                     __m256d lDen256 = _mm256_load_pd(&inA[i]);
-                    __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
+                    __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
                     _mm256_store_pd(&outB[i - 1], lDiv256);
 
                     lNum256 = _mm256_load_pd(&inA[i + 3]);
                     lDen256 = _mm256_load_pd(&inA[i + 4]);
-                    lDiv256 = _mm256_div_pd(lNum256, lDen256);
+                    lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
                     _mm256_store_pd(&outB[i + 3], lDiv256);
                 }
 
@@ -46,13 +47,13 @@ namespace pml {
                 {
                     const __m256d lNum256 = _mm256_load_pd(&inA[lUnrollEnd - 1]);
                     const __m256d lDen256 = _mm256_load_pd(&inA[lUnrollEnd]);
-                    const __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
+                    const __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
                     _mm256_store_pd(&outB[lUnrollEnd - 1], lDiv256);
                 }
 
                 for (std::size_t i = l256End;i < inSize; ++i)
                 {
-                    outB[i] = inA[i] / inA[i + 1];
+                    outB[i] = inA[i] / inA[i + 1] + inShift;
                 }
 
                 return;
@@ -63,6 +64,7 @@ namespace pml {
 
     void adjacent_divide_AVX(
         const double* inA,
+        double inShift,
         double* outB,
         std::size_t inSize)
     {
@@ -85,27 +87,27 @@ namespace pml {
         {
             __m256d lNum256 = _mm256_loadu_pd(&inA[i - 1]);
             __m256d lDen256 = _mm256_loadu_pd(&inA[i]);
-            __m256d lDiv256 = _mm256_div_pd(lNum256, lDen256);
+            __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
             _mm256_store_pd(&outB[i - 1], lDiv256);
 
             lNum256 = _mm256_loadu_pd(&inA[i + 3]);
             lDen256 = _mm256_loadu_pd(&inA[i + 4]);
-            lDiv256 = _mm256_div_pd(lNum256, lDen256);
+            lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
             _mm256_store_pd(&outB[i + 3], lDiv256);
         }
 
         const std::size_t l256End = (inSize - (inSize & 3));
         if (l256End != lUnrollEnd)
         {
-            const __m256d lNum256 = _mm256_loadu_pd(&inA[lUnrollEnd - 1]);
-            const __m256d lDen256 = _mm256_loadu_pd(&inA[lUnrollEnd]);
-            const __m256d lDeiv256 = _mm256_div_pd(lNum256, lDen256);
+            const __m256d lNum256  = _mm256_loadu_pd(&inA[lUnrollEnd - 1]);
+            const __m256d lDen256  = _mm256_loadu_pd(&inA[lUnrollEnd]);
+            const __m256d lDeiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
             _mm256_store_pd(&outB[lUnrollEnd - 1], lDeiv256);
         }
 
         for (std::size_t i = l256End;i < inSize; ++i)
         {
-            outB[i] = inA[i] / inA[i + 1];
+            outB[i] = inA[i] / inA[i + 1] + inShift;
         }
 
         return;
@@ -113,30 +115,33 @@ namespace pml {
 
     void adjacent_divide_AVX(
         const std::vector<double>& inA,
+        double inShift,
         std::vector<double>& outB)
     {
         outB.resize(inA.size());
-        adjacent_divide_AVX(inA.data(), outB.data(), inA.size());
+        adjacent_divide_AVX(inA.data(), inShift, outB.data(), inA.size());
 
         return;
     }
 
     void adjacent_divide_aligned_AVX(
         const aligned_array<double>& inA,
+        double inShift,
         aligned_array<double>& outB,
         std::size_t inSize)
     {
-        math::numeric_simd::adjacent_divide_aligned_AVX(inA.get(), outB.get(), inSize);
+        math::numeric_simd::adjacent_divide_aligned_AVX(inA.get(), inShift, outB.get(), inSize);
 
         return;
     }
 
     void adjacent_divide_aligned_AVX(
         const align32_vector<double>& inA,
+        double inShift,
         align32_vector<double>& outB)
     {
         outB.resize(inA.size());
-        math::numeric_simd::adjacent_divide_aligned_AVX(inA.data(), outB.data(), inA.size());
+        math::numeric_simd::adjacent_divide_aligned_AVX(inA.data(), inShift, outB.data(), inA.size());
 
         return;
     }

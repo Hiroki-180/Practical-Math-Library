@@ -38,10 +38,10 @@ namespace pml{
     * Instruction of subtraction of two arrays and taking plus part.
     *
     * @param[in] inA
-    * 1st array as vector.
+    * 1st array as std::vector.
     *
     * @param[out] inB
-    * 2nd array as vector.
+    * 2nd array as std::vector.
     *
     * @param[in] outC
     * Resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).

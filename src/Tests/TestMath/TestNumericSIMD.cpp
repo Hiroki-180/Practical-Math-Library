@@ -219,7 +219,7 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
     {
         for (auto j = 0;j < (lSize - 1);++j)
         {
-            lAArrayAns[j] = lAArray[j] / lAArray[j+1];
+            lAArrayAns[j] = lAArray[j] / lAArray[j + 1] - 1.0;
         }
 
         lAArrayAns[lSize - 1] = lAArray[lSize - 1];
@@ -241,7 +241,7 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
         const auto lStart = std::chrono::system_clock::now();
         for (auto i = 0;i < lTestNum;++i)
         {
-            pml::adjacent_divide_AVX(lVector, lVectorAnsSIMD);
+            pml::adjacent_divide_AVX(lVector, -1.0, lVectorAnsSIMD);
         }
         const auto lEnd = std::chrono::system_clock::now();
         lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -252,7 +252,7 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
     const auto lSIMDStart = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
-        pml::adjacent_divide_aligned_AVX(lAArray, lAArrayAnsSIMDAligned, lSize);
+        pml::adjacent_divide_aligned_AVX(lAArray, -1.0, lAArrayAnsSIMDAligned, lSize);
     }
     const auto lSIMDEnd = std::chrono::system_clock::now();
     const auto lSIMDElapsedAligned = std::chrono::duration_cast<std::chrono::milliseconds>(lSIMDEnd - lSIMDStart).count();

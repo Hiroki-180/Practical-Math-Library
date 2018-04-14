@@ -16,14 +16,18 @@ namespace pml{
     * @param[in] inA
     * Pointer to the address of the first element of the input array.
     *
+    * @param[in] inShift
+    * Shift value.
+    *
     * @param[out] outB
-    * Resulted array, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
+    * Resulted array, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
     *
     * @param[in] inSize
     * Size of the array inA and outB.
     */
     void adjacent_divide_AVX(
         const double* inA,
+        double inShift,
         double* outB,
         std::size_t inSize);
 
@@ -34,13 +38,17 @@ namespace pml{
     * Dividing elements by the adjacent elements.
     *
     * @param[in] inA
-    * Input array as vector.
+    * Input array as std::vector.
+    *
+    * @param[in] inShift
+    * Shift value.
     *
     * @param[out] outB
-    * Resulted array as vector, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inB[inSize-1], inA[inSize-1]).
+    * Resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
     */
     void adjacent_divide_AVX(
         const std::vector<double>& inA,
+        double inShift,
         std::vector<double>& outB);
 
     /**
@@ -52,14 +60,18 @@ namespace pml{
     * @param[in] inA
     * 32-byte aligned input array.
     *
+    * @param[in] inShift
+    * Shift value.
+    *
     * @param[out] outB
-    * 32-byte aligned resulted array, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
+    * 32-byte aligned resulted array, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
     *
     * @param[in] inSize
     * Size of the array inA and outB.
     */
     void adjacent_divide_aligned_AVX(
         const aligned_array<double>& inA,
+        double inShift,
         aligned_array<double>& outB,
         std::size_t inSize);
 
@@ -72,11 +84,15 @@ namespace pml{
     * @param[in] inA
     * 32-byte aligned input array as vector.
     *
+    * @param[in] inShift
+    * Shift value.
+    *
     * @param[out] outB
-    * 32-byte aligned resulted array as vector, (inA[0] / inA[1], inA[1] / inA[2], ..., inA[inSize-2] / inA[inSize-1], inA[inSize-1]).
+    * 32-byte aligned resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
     */
     void adjacent_divide_aligned_AVX(
         const align32_vector<double>& inA,
+        double inShift,
         align32_vector<double>& outB);
 
 } // pml
