@@ -51,50 +51,54 @@ namespace pml{
         double inShift,
         std::vector<double>& outB);
 
-    /**
-    * @fn adjacent_divide_aligned_AVX(const aligned_array<double>& inA, aligned_array<double>& outB, std::size_t inSize)
-    *
-    * @brief
-    * Dividing elements by the adjacent elements.
-    *
-    * @param[in] inA
-    * 32-byte aligned input array.
-    *
-    * @param[in] inShift
-    * Shift value.
-    *
-    * @param[out] outB
-    * 32-byte aligned resulted array, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
-    *
-    * @param[in] inSize
-    * Size of the array inA and outB.
-    */
-    void adjacent_divide_aligned_AVX(
-        const aligned_array<double>& inA,
-        double inShift,
-        aligned_array<double>& outB,
-        std::size_t inSize);
 
-    /**
-    * @fn adjacent_divide_aligned_AVX(const align32_vector<double>& inA, align32_vector<double>& outB)
-    *
-    * @brief
-    * Dividing elements by the adjacent elements.
-    *
-    * @param[in] inA
-    * 32-byte aligned input array as vector.
-    *
-    * @param[in] inShift
-    * Shift value.
-    *
-    * @param[out] outB
-    * 32-byte aligned resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
-    */
-    void adjacent_divide_aligned_AVX(
-        const align32_vector<double>& inA,
-        double inShift,
-        align32_vector<double>& outB);
+    namespace aligned {
 
+        /**
+        * @fn adjacent_divide_AVX(const aligned_array<double>& inA, aligned_array<double>& outB, std::size_t inSize)
+        *
+        * @brief
+        * Dividing elements by the adjacent elements.
+        *
+        * @param[in] inA
+        * 32-byte aligned input array.
+        *
+        * @param[in] inShift
+        * Shift value.
+        *
+        * @param[out] outB
+        * 32-byte aligned resulted array, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
+        *
+        * @param[in] inSize
+        * Size of the array inA and outB.
+        */
+        void adjacent_divide_AVX(
+            const aligned_array<double>& inA,
+            double inShift,
+            aligned_array<double>& outB,
+            std::size_t inSize);
+
+        /**
+        * @fn adjacent_divide_AVX(const align32_vector<double>& inA, align32_vector<double>& outB)
+        *
+        * @brief
+        * Dividing elements by the adjacent elements.
+        *
+        * @param[in] inA
+        * 32-byte aligned input array as vector.
+        *
+        * @param[in] inShift
+        * Shift value.
+        *
+        * @param[out] outB
+        * 32-byte aligned resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
+        */
+        void adjacent_divide_AVX(
+            const align32_vector<double>& inA,
+            double inShift,
+            align32_vector<double>& outB);
+
+    } // aligned
 } // pml
 
 #endif

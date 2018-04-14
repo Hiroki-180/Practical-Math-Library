@@ -69,7 +69,7 @@ TEST(TestNumericSIMD, Accumulate_AVX)
     for (auto i = 0;i < lTestNum;++i)
     {
         lSumSIMDAligned = 0.0;
-        lSumSIMDAligned = pml::accumulate_aligned_AVX(lAArray, lSize);
+        lSumSIMDAligned = pml::aligned::accumulate_AVX(lAArray, lSize);
     }
     const auto lSIMDEnd = std::chrono::system_clock::now();
     const auto lSIMDElapsedAligned = std::chrono::duration_cast<std::chrono::milliseconds>(lSIMDEnd - lSIMDStart).count();
@@ -161,7 +161,7 @@ TEST(TestNumericSIMD, InnerProd_AVX)
     for (auto i = 0;i < lTestNum;++i)
     {
         lInnerProdSIMDAligned = 0.0;
-        lInnerProdSIMDAligned = pml::inner_prod_aligned_AVX(lAArray1, lAArray2, lSize);
+        lInnerProdSIMDAligned = pml::aligned::inner_prod_AVX(lAArray1, lAArray2, lSize);
     }
     const auto lSIMDEnd = std::chrono::system_clock::now();
     const auto lSIMDElapsedAligned = std::chrono::duration_cast<std::chrono::milliseconds>(lSIMDEnd - lSIMDStart).count();
@@ -249,7 +249,7 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
     const auto lSIMDStart = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
-        pml::adjacent_divide_aligned_AVX(lAArray, -1.0, lAArrayAnsSIMDAligned, lSize);
+        pml::aligned::adjacent_divide_AVX(lAArray, -1.0, lAArrayAnsSIMDAligned, lSize);
     }
     const auto lSIMDEnd = std::chrono::system_clock::now();
     const auto lSIMDElapsedAligned = std::chrono::duration_cast<std::chrono::milliseconds>(lSIMDEnd - lSIMDStart).count();
@@ -344,7 +344,7 @@ TEST(TestNumericSIMD, positive_difference_AVX)
     const auto lSIMDStart = std::chrono::system_clock::now();
     for (auto i = 0;i < lTestNum;++i)
     {
-        pml::positive_difference_aligned_AVX(lAArray1, lAArray2, lAArrayAnsSIMDAligned, lSize);
+        pml::aligned::positive_difference_AVX(lAArray1, lAArray2, lAArrayAnsSIMDAligned, lSize);
     }
     const auto lSIMDEnd = std::chrono::system_clock::now();
     const auto lSIMDElapsedAligned = std::chrono::duration_cast<std::chrono::milliseconds>(lSIMDEnd - lSIMDStart).count();
