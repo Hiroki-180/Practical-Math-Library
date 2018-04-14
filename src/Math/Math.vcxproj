@@ -20,12 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\PML\Math\Constants.h" />
+    <ClInclude Include="..\..\include\PML\Math\numeric\accumulate.h" />
+    <ClInclude Include="..\..\include\PML\Math\numeric\adjacent_divide.h" />
+    <ClInclude Include="..\..\include\PML\Math\numeric\inner_prod.h" />
+    <ClInclude Include="..\..\include\PML\Math\numeric\positive_difference.h" />
     <ClInclude Include="..\..\include\PML\Math\numeric_simd.h" />
     <ClInclude Include="..\..\include\PML\Math\pmath.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="numeric_simd.cpp" />
+    <ClCompile Include="accumulate.cpp" />
+    <ClCompile Include="adjacent_divide.cpp" />
+    <ClCompile Include="inner_prod.cpp" />
     <ClCompile Include="pmath.cpp" />
+    <ClCompile Include="positive_difference.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

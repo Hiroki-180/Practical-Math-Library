@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source\numeric">
+      <UniqueIdentifier>{6e62b482-6c2d-4cc0-ab43-7b1d7f3b5014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\numeric">
+      <UniqueIdentifier>{326ab4ff-e3c6-4fd2-8c8d-56a61f7cc2a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\PML\Math\numeric_simd.h">
@@ -24,13 +30,34 @@
     <ClInclude Include="..\..\include\PML\Math\Constants.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\PML\Math\numeric\accumulate.h">
+      <Filter>Header\numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\PML\Math\numeric\inner_prod.h">
+      <Filter>Header\numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\PML\Math\numeric\adjacent_divide.h">
+      <Filter>Header\numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\PML\Math\numeric\positive_difference.h">
+      <Filter>Header\numeric</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="numeric_simd.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="pmath.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="accumulate.cpp">
+      <Filter>Source\numeric</Filter>
+    </ClCompile>
+    <ClCompile Include="inner_prod.cpp">
+      <Filter>Source\numeric</Filter>
+    </ClCompile>
+    <ClCompile Include="adjacent_divide.cpp">
+      <Filter>Source\numeric</Filter>
+    </ClCompile>
+    <ClCompile Include="positive_difference.cpp">
+      <Filter>Source\numeric</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
