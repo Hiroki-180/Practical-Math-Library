@@ -44,7 +44,7 @@ namespace pml{
     namespace aligned {
 
         /**
-        * @fn accumulate_aligned_AVX(const array<double>& inA, std::size_t inSize)
+        * @fn accumulate_AVX(const array<double>& inA, std::size_t inSize)
         *
         * @brief
         * Accelerated version of std::accumulate by AVX with memory aligned data.
@@ -63,7 +63,7 @@ namespace pml{
             std::size_t inSize);
 
         /**
-        * @fn accumulate_aligned_AVX(const vector32<double>& inA)
+        * @fn accumulate_AVX(const vector32<double>& inA)
         *
         * @brief
         * Accelerated version of std::accumulate by AVX with memory aligned data.

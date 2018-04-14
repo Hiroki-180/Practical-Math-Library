@@ -53,7 +53,7 @@ namespace pml{
     namespace aligned {
 
         /**
-        * @fn inner_prod_aligned_AVX(const array<double>& inA, const array<double>& inB, std::size_t inSize)
+        * @fn inner_prod_AVX(const array<double>& inA, const array<double>& inB, std::size_t inSize)
         *
         * @brief
         * Accelerated version of std::inner_prod by AVX with memory aligned data.
@@ -76,7 +76,7 @@ namespace pml{
             std::size_t inSize);
 
         /**
-        * @fn inner_prod_aligned_AVX(const vector32<double>& inA, const vector32<double>& inB)
+        * @fn inner_prod_AVX(const vector32<double>& inA, const vector32<double>& inB)
         *
         * @brief
         * Accelerated version of std::inner_prod by AVX with memory aligned data.

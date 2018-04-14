@@ -55,7 +55,7 @@ namespace pml{
     namespace aligned {
 
         /**
-        * @fn positive_difference_aligned_AVX(const array<double>& inA, const array<double>& inB, array<double>& outC, std::size_t inSize)
+        * @fn positive_difference_AVX(const array<double>& inA, const array<double>& inB, array<double>& outC, std::size_t inSize)
         *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part.
@@ -79,7 +79,7 @@ namespace pml{
             std::size_t inSize);
 
         /**
-        * @fn positive_difference_aligned_AVX(const vector32<double>& inA, const vector32<double>& inB, vector32<double>& outC)
+        * @fn positive_difference_AVX(const vector32<double>& inA, const vector32<double>& inB, vector32<double>& outC)
         *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part.
