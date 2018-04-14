@@ -1,7 +1,6 @@
 #include <PML/Math/numeric/accumulate.h>
 
 #include <intrin.h>
-#include <algorithm>
 
 namespace pml {
 

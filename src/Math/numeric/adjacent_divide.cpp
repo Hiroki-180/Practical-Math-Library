@@ -1,7 +1,6 @@
 #include <PML/Math/numeric/adjacent_divide.h>
 
 #include <intrin.h>
-#include <algorithm>
 
 namespace pml {
 

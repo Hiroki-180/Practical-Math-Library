@@ -1,7 +1,6 @@
 #include <PML/Math/numeric/inner_prod.h>
 
 #include <intrin.h>
-#include <algorithm>
 
 namespace pml {
 
