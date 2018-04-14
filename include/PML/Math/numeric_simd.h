@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include <PML/Core/aligned_vector.h>
-
 #include <PML/Math/numeric/accumulate.h>
 #include <PML/Math/numeric/inner_prod.h>
 #include <PML/Math/numeric/adjacent_divide.h>

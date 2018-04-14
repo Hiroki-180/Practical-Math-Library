@@ -4,7 +4,6 @@
 
 #include <assert.h>
 #include <type_traits>
-#include <intrin.h>
 #include <cmath>
 
 // One of parts of 2/pi
