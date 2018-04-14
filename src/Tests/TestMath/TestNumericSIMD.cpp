@@ -8,8 +8,7 @@
 
 TEST(TestNumericSIMD, Accumulate_AVX)
 {
-    if (!pml::CPUDispatcher::isAVX()
-            && !pml::CPUDispatcher::isAVX2())
+    if (!pml::CPUDispatcher::isAVX())
     {
         return;
     }
@@ -97,8 +96,7 @@ TEST(TestNumericSIMD, Accumulate_AVX)
 
 TEST(TestNumericSIMD, InnerProd_AVX)
 {
-    if (!pml::CPUDispatcher::isAVX()
-            && !pml::CPUDispatcher::isAVX2())
+    if (!pml::CPUDispatcher::isAVX())
     {
         return;
     }
@@ -191,8 +189,7 @@ TEST(TestNumericSIMD, InnerProd_AVX)
 
 TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
 {
-    if (!pml::CPUDispatcher::isAVX()
-            && !pml::CPUDispatcher::isAVX2())
+    if (!pml::CPUDispatcher::isAVX())
     {
         return;
     }
@@ -285,8 +282,7 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
 
 TEST(TestNumericSIMD, positive_difference_AVX)
 {
-    if (!pml::CPUDispatcher::isAVX()
-            && !pml::CPUDispatcher::isAVX2())
+    if (!pml::CPUDispatcher::isAVX())
     {
         return;
     }
