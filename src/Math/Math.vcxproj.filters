@@ -47,16 +47,16 @@
     <ClCompile Include="pmath.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="accumulate.cpp">
+    <ClCompile Include="numeric\accumulate.cpp">
       <Filter>Source\numeric</Filter>
     </ClCompile>
-    <ClCompile Include="inner_prod.cpp">
+    <ClCompile Include="numeric\adjacent_divide.cpp">
       <Filter>Source\numeric</Filter>
     </ClCompile>
-    <ClCompile Include="adjacent_divide.cpp">
+    <ClCompile Include="numeric\inner_prod.cpp">
       <Filter>Source\numeric</Filter>
     </ClCompile>
-    <ClCompile Include="positive_difference.cpp">
+    <ClCompile Include="numeric\positive_difference.cpp">
       <Filter>Source\numeric</Filter>
     </ClCompile>
   </ItemGroup>

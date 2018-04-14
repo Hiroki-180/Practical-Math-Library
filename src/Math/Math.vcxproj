@@ -28,11 +28,11 @@
     <ClInclude Include="..\..\include\PML\Math\pmath.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="accumulate.cpp" />
-    <ClCompile Include="adjacent_divide.cpp" />
-    <ClCompile Include="inner_prod.cpp" />
+    <ClCompile Include="numeric\accumulate.cpp" />
+    <ClCompile Include="numeric\adjacent_divide.cpp" />
+    <ClCompile Include="numeric\inner_prod.cpp" />
+    <ClCompile Include="numeric\positive_difference.cpp" />
     <ClCompile Include="pmath.cpp" />
-    <ClCompile Include="positive_difference.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
