@@ -23,6 +23,27 @@ namespace pml{
     double exp(double inX);
 
     /**
+    * @fn double expv(const double* inX, double* outY, std::size_t inSize)
+    *
+    * @brief
+    * Vector function of exp implimented by look-up-table and Taylor expansion.
+    * This exp-function is implimented by the algorithm of the following fast math library,
+    *  @auther herumi
+    *  @url https://github.com/herumi/fmath
+    *  @note BSD-3-Clause license.
+    *
+    * @param[in] inX
+    * Array of arguments
+    *
+    * @param[out] outY
+    * Result, (exp(inX[0]), exp(inX[1]), ..., exp(inX[inSize-1])).
+    *
+    * @param[in] inSize
+    * Size of array.
+    */
+    void expv(const double* inX, double* outY, std::size_t inSize);
+
+    /**
     * @fn double sin(double inX)
     *
     * @brief

@@ -1,10 +1,12 @@
 #include <PML/Core/aligned_vector.h>
+#include <PML/Core/CPUDispatcher.h>
 #include <PML/Math/pmath.h>
 #include <PML/Math/Constants.h>
 
 #include <assert.h>
 #include <type_traits>
 #include <cmath>
+#include <intrin.h>
 
 // One of parts of 2/pi
 #define PIOVERTWO_PART1 1.5707963109016418
@@ -205,6 +207,69 @@ namespace pml {
         ldi._uint64_t = (lPower1 | lPower2);
 
         return lTayorPart * ldi._double;
+    }
+
+    void expv(const double* inX, double* outY, std::size_t inSize)
+    {
+        if (CPUDispatcher::isAVX2())
+        {
+            const __m256d lExpMin256 = _mm256_set1_pd(-708.39641853226408);
+            const __m256d lExpMax256 = _mm256_set1_pd(709.78271289338397);
+            const __m256d lAlpha256 = _mm256_set1_pd(gDouble.mExpAlpha);
+            const __m256d lAlphaInv256 = _mm256_set1_pd(gDouble.mExpAlphaInv);
+            const __m256d lRounder256 = _mm256_set1_pd(gDouble.mRounder);
+
+            const __m256i lExpAdj256 = _mm256_set1_epi64x((int)gDouble.mExpAdj);
+            const __m256i lMask256 = _mm256_set1_epi64x((int)gDouble.mGuide);
+
+            const __m256d lLeading = _mm256_set1_pd(1.0);
+            const __m256d l2ndFactor = _mm256_set1_pd(3.0000000027955394);
+            const __m256d l3rdCoeff = _mm256_set1_pd(0.16666666685227835);
+
+            const std::size_t l256End = (inSize - (inSize & 3));
+            for (std::size_t i = 0;i < l256End;i += 4)
+            {
+                __m256d lX256 = _mm256_load_pd(&inX[i]);
+                lX256 = _mm256_max_pd(lExpMin256, _mm256_min_pd(lExpMax256, lX256));
+
+                const __m256d ldi = _mm256_add_pd(_mm256_sub_pd(lAlpha256, lX256), lRounder256);
+
+                auto u = _mm256_castpd_si256(ldi);
+                __m256i lPower1 = _mm256_srli_epi64(u /*_mm256_castpd_si256(ldi)*/, 11/*(int)gDouble.mExpBit*/);
+                lPower1 = _mm256_add_epi64(lPower1, lExpAdj256);
+                lPower1 = _mm256_slli_epi64(lPower1, 52/*(int)gDouble.mFractionBit*/);
+
+                const __m256i lResidue = _mm256_and_si256(_mm256_castpd_si256(ldi), lMask256);
+                const __m256i lPower2 = _mm256_i64gather_epi64((const long long*)gDouble.mExpTable, lResidue, 8);
+
+                const __m256d lt = _mm256_sub_pd(_mm256_mul_pd(_mm256_sub_pd(ldi, lRounder256), lAlphaInv256), lX256);
+                __m256d lTaylorPart = _mm256_mul_pd(_mm256_sub_pd(lt, l2ndFactor), _mm256_mul_pd(lt, lt));
+                lTaylorPart = _mm256_mul_pd(lTaylorPart, l3rdCoeff);
+                lTaylorPart = _mm256_add_pd(lLeading, _mm256_sub_pd(lTaylorPart, lt));
+
+                const __m256i lPower = _mm256_or_si256(lPower1, lPower2);
+
+                _mm256_store_pd(outY, _mm256_mul_pd(lTaylorPart, _mm256_castsi256_pd(lPower)));
+            }
+
+            for (std::size_t i = l256End; i < inSize; ++i)
+            {
+                outY[i] = pml::exp(inX[i]);
+            }
+        }
+        else if (CPUDispatcher::isAVX())
+        {
+            // ToDo.
+            for (std::size_t i = 0;i < inSize;++i)
+            {
+                outY[i] = pml::exp(inX[i]);
+            }
+        }
+
+        for (std::size_t i = 0;i < inSize;++i)
+        {
+            outY[i] = pml::exp(inX[i]);
+        }
     }
 
     double sin(double inX)

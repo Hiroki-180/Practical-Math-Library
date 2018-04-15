@@ -63,6 +63,24 @@ TEST(TestPMath, exp_performance)
 #endif
 }
 
+TEST(TestPMath, expv_value)
+{
+    std::vector<double> lExponent;
+
+    for (auto i = 0;i < 200;++i)
+    {
+        lExponent.push_back(-5.0 + 0.05*i);
+    }
+
+    std::vector<double> lResult(lExponent.size());
+    pml::expv(lExponent.data(), lResult.data(), lExponent.size());
+
+    for (auto i = 0;i < 200;++i)
+    {
+        EXPECT_DOUBLE_EQ(std::exp(lExponent[i]), lResult[i]);
+    }
+}
+
 TEST(TestPMath, sin_value)
 {
     for (auto i = -20000;i < 20000;++i)
