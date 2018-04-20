@@ -53,14 +53,14 @@ TEST(TestNumericSIMD, Accumulate_AVX)
             lVector[i] = i;
         }
 
-        const auto lStart = std::chrono::system_clock::now();
+        const auto lStartSIMD = std::chrono::system_clock::now();
         for (auto i = 0;i < lTestNum;++i)
         {
             lSumSIMD = 0.0;
             lSumSIMD = pml::accumulate_AVX(lVector);
         }
-        const auto lEnd = std::chrono::system_clock::now();
-        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+        const auto lEndSIMD = std::chrono::system_clock::now();
+        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEndSIMD - lStartSIMD).count();
     }
 
     // calculation using SIMD with aligned array
@@ -145,14 +145,14 @@ TEST(TestNumericSIMD, InnerProd_AVX)
             lVector2[i] = i;
         }
 
-        const auto lStart = std::chrono::system_clock::now();
+        const auto lStartSIMD = std::chrono::system_clock::now();
         for (auto i = 0;i < lTestNum;++i)
         {
             lInnerProdSIMD = 0.0;
             lInnerProdSIMD = pml::inner_prod_AVX(lVector1, lVector2);
         }
-        const auto lEnd = std::chrono::system_clock::now();
-        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+        const auto lEndSIMD = std::chrono::system_clock::now();
+        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEndSIMD - lStartSIMD).count();
     }
 
     // calculation using SIMD with aligned array
@@ -235,13 +235,13 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
             lVector[i] = lAArray[i];
         }
 
-        const auto lStart = std::chrono::system_clock::now();
+        const auto lStartSIMD = std::chrono::system_clock::now();
         for (auto i = 0;i < lTestNum;++i)
         {
             pml::adjacent_divide_AVX(lVector, -1.0, lVectorAnsSIMD);
         }
-        const auto lEnd = std::chrono::system_clock::now();
-        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+        const auto lEndSIMD = std::chrono::system_clock::now();
+        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEndSIMD - lStartSIMD).count();
     }
 
     // calculation using SIMD with aligned array
@@ -330,13 +330,13 @@ TEST(TestNumericSIMD, positive_difference_AVX)
             lVector2[i] = std::cos(static_cast<double>(i));
         }
 
-        const auto lStart = std::chrono::system_clock::now();
+        const auto lStartSIMD = std::chrono::system_clock::now();
         for (auto i = 0;i < lTestNum;++i)
         {
             pml::positive_difference_AVX(lVector1, lVector2, lVectorAnsSIMD);
         }
-        const auto lEnd = std::chrono::system_clock::now();
-        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+        const auto lEndSIMD = std::chrono::system_clock::now();
+        lSIMDElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEndSIMD - lStartSIMD).count();
     }
 
     // calculation using SIMD with aligned array
