@@ -15,8 +15,6 @@ namespace pml {
                 f_1_EDX_{ 0 },
                 f_7_EBX_{ 0 },
                 f_7_ECX_{ 0 },
-                f_81_ECX_{ 0 },
-                f_81_EDX_{ 0 },
                 data_{},
                 extdata_{}
             {
@@ -76,13 +74,6 @@ namespace pml {
                 {
                     __cpuidex(cpui.data(), i, 0);
                     extdata_.push_back(cpui);
-                }
-
-                // load bitset with flags for function 0x80000001
-                if (nExIds_ >= 0x80000001)
-                {
-                    f_81_ECX_ = extdata_[1][2];
-                    f_81_EDX_ = extdata_[1][3];
                 }
 
                 // Interpret CPU brand string if reported
