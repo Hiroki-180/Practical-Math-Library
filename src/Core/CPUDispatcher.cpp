@@ -102,63 +102,21 @@ namespace pml {
         const std::string& getVendor() { return detail::gCPUData.vendor_; }
         const std::string& getBrand() { return detail::gCPUData.brand_; }
 
-        bool isSSE3() { return detail::gCPUData.f_1_ECX_[0]; }
-        bool isPCLMULQDQ() { return detail::gCPUData.f_1_ECX_[1]; }
-        bool isMONITOR() { return detail::gCPUData.f_1_ECX_[3]; }
+		bool isSSE() { return detail::gCPUData.f_1_EDX_[25]; }
+		bool isSSE2() { return detail::gCPUData.f_1_EDX_[26]; }
+		bool isSSE3() { return detail::gCPUData.f_1_ECX_[0]; }
         bool isSSSE3() { return detail::gCPUData.f_1_ECX_[9]; }
+		bool isSSE41() { return detail::gCPUData.f_1_ECX_[19]; }
+		bool isSSE42() { return detail::gCPUData.f_1_ECX_[20]; }
+
         bool isFMA() { return detail::gCPUData.f_1_ECX_[12]; }
-        bool isCMPXCHG16B() { return detail::gCPUData.f_1_ECX_[13]; }
-        bool isSSE41() { return detail::gCPUData.f_1_ECX_[19]; }
-        bool isSSE42() { return detail::gCPUData.f_1_ECX_[20]; }
-        bool isMOVBE() { return detail::gCPUData.f_1_ECX_[22]; }
-        bool isPOPCNT() { return detail::gCPUData.f_1_ECX_[23]; }
-        bool isAES() { return detail::gCPUData.f_1_ECX_[25]; }
-        bool isXSAVE() { return detail::gCPUData.f_1_ECX_[26]; }
-        bool isOSXSAVE() { return detail::gCPUData.f_1_ECX_[27]; }
         bool isAVX() { return detail::gCPUData.f_1_ECX_[28]; }
-        bool isF16C() { return detail::gCPUData.f_1_ECX_[29]; }
-        bool isRDRAND() { return detail::gCPUData.f_1_ECX_[30]; }
-
-        bool isMSR() { return detail::gCPUData.f_1_EDX_[5]; }
-        bool isCX8() { return detail::gCPUData.f_1_EDX_[8]; }
-        bool isSEP() { return detail::gCPUData.f_1_EDX_[11]; }
-        bool isCMOV() { return detail::gCPUData.f_1_EDX_[15]; }
-        bool isCLFSH() { return detail::gCPUData.f_1_EDX_[19]; }
-        bool isMMX() { return detail::gCPUData.f_1_EDX_[23]; }
-        bool isFXSR() { return detail::gCPUData.f_1_EDX_[24]; }
-        bool isSSE() { return detail::gCPUData.f_1_EDX_[25]; }
-        bool isSSE2() { return detail::gCPUData.f_1_EDX_[26]; }
-
-        bool isFSGSBASE() { return detail::gCPUData.f_7_EBX_[0]; }
-        bool isBMI1() { return detail::gCPUData.f_7_EBX_[3]; }
-        bool isHLE() { return (detail::gCPUData.isIntel_ && detail::gCPUData.f_7_EBX_[4]); }
         bool isAVX2() { return detail::gCPUData.f_7_EBX_[5]; }
-        bool isBMI2() { return detail::gCPUData.f_7_EBX_[8]; }
-        bool isERMS() { return detail::gCPUData.f_7_EBX_[9]; }
-        bool isINVPCID() { return detail::gCPUData.f_7_EBX_[10]; }
-        bool isRTM() { return (detail::gCPUData.isIntel_ && detail::gCPUData.f_7_EBX_[11]); }
+
         bool isAVX512F() { return detail::gCPUData.f_7_EBX_[16]; }
-        bool isRDSEED() { return detail::gCPUData.f_7_EBX_[18]; }
-        bool isADX() { return detail::gCPUData.f_7_EBX_[19]; }
         bool isAVX512PF() { return detail::gCPUData.f_7_EBX_[26]; }
         bool isAVX512ER() { return detail::gCPUData.f_7_EBX_[27]; }
         bool isAVX512CD() { return detail::gCPUData.f_7_EBX_[28]; }
-        bool isSHA() { return detail::gCPUData.f_7_EBX_[29]; }
-
-        bool isPREFETCHWT1() { return detail::gCPUData.f_7_ECX_[0]; }
-
-        bool isLAHF() { return detail::gCPUData.f_81_ECX_[0]; }
-        bool isLZCNT() { return (detail::gCPUData.isIntel_ && detail::gCPUData.f_81_ECX_[5]); }
-        bool isABM() { return (detail::gCPUData.isAMD_ && detail::gCPUData.f_81_ECX_[5]); }
-        bool isSSE4a() { return (detail::gCPUData.isAMD_ && detail::gCPUData.f_81_ECX_[6]); }
-        bool isXOP() { return (detail::gCPUData.isAMD_ && detail::gCPUData.f_81_ECX_[11]); }
-        bool isTBM() { return (detail::gCPUData.isAMD_ && detail::gCPUData.f_81_ECX_[21]); }
-
-        bool isSYSCALL() { return (detail::gCPUData.isIntel_ && detail::gCPUData.f_81_EDX_[11]); }
-        bool isRDTSCP() { return (detail::gCPUData.isIntel_ && detail::gCPUData.f_81_EDX_[27]); }
-        bool isMMXEXT() { return (detail::gCPUData.isAMD_ && detail::gCPUData.f_81_EDX_[22]); }
-        bool is3DNOWEXT() { return (detail::gCPUData.isAMD_ && detail::gCPUData.f_81_EDX_[30]); }
-        bool is3DNOW() { return (detail::gCPUData.isAMD_ && detail::gCPUData.f_81_EDX_[31]); }
 
         /**
         * Print out supported instruction set extensions
@@ -173,57 +131,22 @@ namespace pml {
                 outStream << isa_feature << "," << (is_supported ? " supported" : " not supported") << std::endl;
             };
 
-            support_message("3DNOW", CPUDispatcher::is3DNOW());
-            support_message("3DNOWEXT", CPUDispatcher::is3DNOWEXT());
-            support_message("ABM", CPUDispatcher::isABM());
-            support_message("ADX", CPUDispatcher::isADX());
-            support_message("AES", CPUDispatcher::isAES());
-            support_message("AVX", CPUDispatcher::isAVX());
-            support_message("AVX2", CPUDispatcher::isAVX2());
-            support_message("AVX512CD", CPUDispatcher::isAVX512CD());
-            support_message("AVX512ER", CPUDispatcher::isAVX512ER());
-            support_message("AVX512F", CPUDispatcher::isAVX512F());
-            support_message("AVX512PF", CPUDispatcher::isAVX512PF());
-            support_message("BMI1", CPUDispatcher::isBMI1());
-            support_message("BMI2", CPUDispatcher::isBMI2());
-            support_message("CLFSH", CPUDispatcher::isCLFSH());
-            support_message("CMPXCHG16B", CPUDispatcher::isCMPXCHG16B());
-            support_message("CX8", CPUDispatcher::isCX8());
-            support_message("ERMS", CPUDispatcher::isERMS());
-            support_message("F16C", CPUDispatcher::isF16C());
-            support_message("FMA", CPUDispatcher::isFMA());
-            support_message("FSGSBASE", CPUDispatcher::isFSGSBASE());
-            support_message("FXSR", CPUDispatcher::isFXSR());
-            support_message("HLE", CPUDispatcher::isHLE());
-            support_message("INVPCID", CPUDispatcher::isINVPCID());
-            support_message("LAHF", CPUDispatcher::isLAHF());
-            support_message("LZCNT", CPUDispatcher::isLZCNT());
-            support_message("MMX", CPUDispatcher::isMMX());
-            support_message("MMXEXT", CPUDispatcher::isMMXEXT());
-            support_message("MONITOR", CPUDispatcher::isMONITOR());
-            support_message("MOVBE", CPUDispatcher::isMOVBE());
-            support_message("MSR", CPUDispatcher::isMSR());
-            support_message("OSXSAVE", CPUDispatcher::isOSXSAVE());
-            support_message("PCLMULQDQ", CPUDispatcher::isPCLMULQDQ());
-            support_message("POPCNT", CPUDispatcher::isPOPCNT());
-            support_message("PREFETCHWT1", CPUDispatcher::isPREFETCHWT1());
-            support_message("RDRAND", CPUDispatcher::isRDRAND());
-            support_message("RDSEED", CPUDispatcher::isRDSEED());
-            support_message("RDTSCP", CPUDispatcher::isRDTSCP());
-            support_message("RTM", CPUDispatcher::isRTM());
-            support_message("SEP", CPUDispatcher::isSEP());
-            support_message("SHA", CPUDispatcher::isSHA());
             support_message("SSE", CPUDispatcher::isSSE());
             support_message("SSE2", CPUDispatcher::isSSE2());
             support_message("SSE3", CPUDispatcher::isSSE3());
-            support_message("SSE4.1", CPUDispatcher::isSSE41());
+			support_message("SSSE3", CPUDispatcher::isSSSE3());
+			support_message("SSE4.1", CPUDispatcher::isSSE41());
             support_message("SSE4.2", CPUDispatcher::isSSE42());
-            support_message("SSE4a", CPUDispatcher::isSSE4a());
-            support_message("SSSE3", CPUDispatcher::isSSSE3());
-            support_message("SYSCALL", CPUDispatcher::isSYSCALL());
-            support_message("TBM", CPUDispatcher::isTBM());
-            support_message("XOP", CPUDispatcher::isXOP());
-            support_message("XSAVE", CPUDispatcher::isXSAVE());
+
+			support_message("FMA", CPUDispatcher::isFMA());
+			support_message("AVX", CPUDispatcher::isAVX());
+			support_message("AVX2", CPUDispatcher::isAVX2());
+
+			support_message("AVX512F", CPUDispatcher::isAVX512F());
+			support_message("AVX512PF", CPUDispatcher::isAVX512PF());
+			support_message("AVX512ER", CPUDispatcher::isAVX512ER());
+			support_message("AVX512CD", CPUDispatcher::isAVX512CD());
+
         }
 
     } // CPUDispatcher
