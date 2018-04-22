@@ -4,8 +4,15 @@ project(Core CXX)
 
 include_directories(../../include)
 
-set(CMAKE_CXX_FLAGS_RELEASE "/MT /W4")
-set(CMAKE_CXX_FLAGS_DEBUG "/MTd /W4")
+set(CMAKE_CXX_STANDARD 14)
+
+if(MSVC)
+ set(CMAKE_CXX_FLAGS_RELEASE "/MT /W4")
+ set(CMAKE_CXX_FLAGS_DEBUG "/MTd /W4")
+else(MSVC)
+ set(CMAKE_CXX_FLAGS_RELEASE "/W4")
+ set(CMAKE_CXX_FLAGS_DEBUG "/W4") 
+endif(MSVC)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)

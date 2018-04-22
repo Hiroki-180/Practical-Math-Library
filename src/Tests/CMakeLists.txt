@@ -4,15 +4,20 @@ project(Tests CXX)
 
 add_dependencies(Core Math)
 
-
-
 include_directories(../../include)
 include_directories(./)
 
 link_directories(../../lib/googletest)
 
-set(CMAKE_CXX_FLAGS_RELEASE "/MT /W4 /DNDEBUG")
-set(CMAKE_CXX_FLAGS_DEBUG "/MTd /W4")
+set(CMAKE_CXX_STANDARD 14)
+
+if(MSVC)
+ set(CMAKE_CXX_FLAGS_RELEASE "/MT /W4 /DNDEBUG")
+ set(CMAKE_CXX_FLAGS_DEBUG "/MTd /W4")
+else(MSVC)
+ set(CMAKE_CXX_FLAGS_RELEASE "/W4 /DNDEBUG")
+ set(CMAKE_CXX_FLAGS_DEBUG "/W4")
+endif(MSVC)
 
 add_executable(
  Tests
