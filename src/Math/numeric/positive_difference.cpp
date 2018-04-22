@@ -1,6 +1,6 @@
+#include <PML/Core/cross_intrin.h>
 #include <PML/Math/numeric/positive_difference.h>
 
-#include <intrin.h>
 #include <algorithm>
 
 namespace pml {

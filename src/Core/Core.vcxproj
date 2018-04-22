@@ -22,6 +22,7 @@
     <ClInclude Include="..\..\include\PML\Core\CPUDispatcher.h" />
     <ClInclude Include="..\..\include\PML\Core\aligned_vector.h" />
     <ClInclude Include="..\..\include\PML\Core\aligned_array.h" />
+    <ClInclude Include="..\..\include\PML\Core\cross_intrin.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPUDispatcher.cpp" />

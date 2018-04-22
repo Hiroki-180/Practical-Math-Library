@@ -1,6 +1,5 @@
+#include <PML/Core/cross_intrin.h>
 #include <PML/Core/CPUDispatcher.h>
-
-#include <intrin.h>
 
 namespace pml {
     namespace CPUDispatcher {

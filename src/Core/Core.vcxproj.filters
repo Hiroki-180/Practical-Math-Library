@@ -24,6 +24,9 @@
     <ClInclude Include="..\..\include\PML\Core\aligned_array.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\PML\Core\cross_intrin.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPUDispatcher.cpp">

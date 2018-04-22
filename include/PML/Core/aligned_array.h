@@ -26,7 +26,8 @@ namespace pml {
 #ifdef _MSC_VER
 				return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
 #else
-				return reinterpret_cast<T>(std::align_alloc(inSize, inAlignment));
+				void* lp;
+				return reinterpret_cast<T>(posix_memalign(&lp, inAlignment, inSize) == 0 ? lp : nullptr);
 #endif
             }
 
