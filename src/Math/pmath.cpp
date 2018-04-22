@@ -1,3 +1,4 @@
+#include <PML/Core/cross_intrin.h>
 #include <PML/Core/aligned_vector.h>
 #include <PML/Core/CPUDispatcher.h>
 #include <PML/Math/pmath.h>
@@ -6,7 +7,6 @@
 #include <assert.h>
 #include <type_traits>
 #include <cmath>
-#include <intrin.h>
 
 // One of parts of 2/pi
 #define PIOVERTWO_PART1 1.5707963109016418

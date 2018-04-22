@@ -36,7 +36,7 @@ namespace pml {
 #ifdef _MSC_VER
 				_aligned_free(inPtr);
 #else
-				std::free(p);
+				std::free(inPtr);
 #endif
 			}
 
