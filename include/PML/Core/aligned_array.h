@@ -45,7 +45,7 @@ namespace pml {
         * The unique pointer to the array that has proper custom deleter to the aligned data.
         */
         template<typename T>
-        using array = std::unique_ptr<T[], detail::alignedDeleter>;
+        using alarray = std::unique_ptr<T[], detail::alignedDeleter>;
 
         /**
         * @brief
@@ -62,9 +62,9 @@ namespace pml {
         * pml::aligned::array<double>
         */
         template<typename T>
-        inline array<double> createArray(std::size_t inSize, std::size_t inAlignment)
+        inline alarray<double> createArray(std::size_t inSize, std::size_t inAlignment)
         {
-            return array<double>(detail::alignedMalloc<T*>(inSize * sizeof(T), inAlignment));
+            return alarray<double>(detail::alignedMalloc<T*>(inSize * sizeof(T), inAlignment));
         }
 
     } // aligned

@@ -73,9 +73,9 @@ namespace pml{
         * Size of the array inA and outB.
         */
         void adjacent_divide_AVX(
-            const array<double>& inA,
+            const alarray<double>& inA,
             double inShift,
-            array<double>& outB,
+			alarray<double>& outB,
             std::size_t inSize);
 
         /**

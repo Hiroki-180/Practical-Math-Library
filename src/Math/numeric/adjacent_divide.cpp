@@ -118,9 +118,9 @@ namespace pml {
         }
 
         void adjacent_divide_AVX(
-            const array<double>& inA,
+            const alarray<double>& inA,
             double inShift,
-            array<double>& outB,
+			alarray<double>& outB,
             std::size_t inSize)
         {
             detail::adjacent_divide_AVX(inA.get(), inShift, outB.get(), inSize);

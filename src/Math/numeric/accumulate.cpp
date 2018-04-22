@@ -91,7 +91,7 @@ namespace pml {
         }
 
         double accumulate_AVX(
-            const array<double>& inA,
+            const alarray<double>& inA,
             std::size_t inSize)
         {
             return detail::accumulate_AVX(inA.get(), inSize);

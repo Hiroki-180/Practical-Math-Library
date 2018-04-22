@@ -73,9 +73,9 @@ namespace pml{
         * Size of the array inA, inB and outC.
         */
         void positive_difference_AVX(
-            const array<double>& inA,
-            const array<double>& inB,
-            array<double>& outC,
+            const alarray<double>& inA,
+            const alarray<double>& inB,
+			alarray<double>& outC,
             std::size_t inSize);
 
         /**

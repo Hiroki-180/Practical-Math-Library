@@ -71,8 +71,8 @@ namespace pml{
         * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inSize-1]*inB[inSize-1].
         */
         double inner_prod_AVX(
-            const array<double>& inA,
-            const array<double>& inB,
+            const alarray<double>& inA,
+            const alarray<double>& inB,
             std::size_t inSize);
 
         /**
