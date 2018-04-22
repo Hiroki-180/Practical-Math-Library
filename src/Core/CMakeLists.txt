@@ -18,6 +18,7 @@ add_library(
  Core
  STATIC
  CPUDispatcher.cpp
+ ../../include/PML/Core/cross_intrin.h
  ../../include/PML/Core/aligned_array.h
  ../../include/PML/Core/aligned_vector.h
  ../../include/PML/Core/CPUDispatcher.h)
