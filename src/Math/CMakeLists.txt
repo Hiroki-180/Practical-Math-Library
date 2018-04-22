@@ -6,10 +6,21 @@ include_directories(../../include)
 
 set(CMAKE_CXX_STANDARD 17)
 
-if(MSVC)
- set(CMAKE_CXX_FLAGS_RELEASE "/MT /W4")
- set(CMAKE_CXX_FLAGS_DEBUG "/MTd /W4")
-endif(MSVC)
+#Clang or AppleClang
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+ set(CMAKE_CXX_FLAGS_RELEASE "-fno-aligned-allocation -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2")
+ set(CMAKE_CXX_FLAGS_DEBUG   "-fno-aligned-allocation -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2")
+endif()
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+ #GCC
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+ #Intel Compiler
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+ #Microsoft Visual C++
+ set(CMAKE_CXX_FLAGS_RELEASE "/MT  /W4")
+ set(CMAKE_CXX_FLAGS_DEBUG   "/MTd /W4")
+endif()
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)
