@@ -9,7 +9,7 @@ include_directories(./)
 
 link_directories(../../lib/googletest)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 if(MSVC)
  set(CMAKE_CXX_FLAGS_RELEASE "/MT /W4 /DNDEBUG")

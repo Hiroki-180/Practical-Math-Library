@@ -6,6 +6,7 @@
 #include <type_traits>
 #include <memory>
 #include <stdexcept>
+#include <cstdlib>
 
 #if defined(__cplusplus) && __cplusplus < 201103L
 #define PML_STATIC_ALLIGN(n) __declspec(align(n))
@@ -22,19 +23,27 @@ namespace pml {
             template<typename T = void*, typename std::enable_if<std::is_pointer<T>::value, std::nullptr_t>::type = nullptr>
             static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
             {
-                return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
+#ifdef _MSC_VER
+				return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
+#else
+				return reinterpret_cast<T>(std::align_alloc(inSize, inAlignment));
+#endif
             }
 
             static inline void alignedFree(void* inPtr) noexcept
             {
-                _aligned_free(inPtr);
-            }
+#ifdef _MSC_VER
+				_aligned_free(inPtr);
+#else
+				std::free(p);
+#endif
+			}
 
             struct alignedDeleter final
             {
                 void operator()(void* p) const noexcept
                 {
-                    alignedFree(p);
+					alignedFree(p);
                 }
             };
 
