@@ -9,8 +9,6 @@ namespace pml {
             CPUData::CPUData()
                 : nIds_{ 0 },
                 nExIds_{ 0 },
-                isIntel_{ false },
-                isAMD_{ false },
                 f_1_ECX_{ 0 },
                 f_1_EDX_{ 0 },
                 f_7_EBX_{ 0 },
@@ -38,14 +36,6 @@ namespace pml {
                 *reinterpret_cast<int*>(vendor + 4) = data_[0][3];
                 *reinterpret_cast<int*>(vendor + 8) = data_[0][2];
                 vendor_ = vendor;
-                if (vendor_ == "GenuineIntel")
-                {
-                    isIntel_ = true;
-                }
-                else if (vendor_ == "AuthenticAMD")
-                {
-                    isAMD_ = true;
-                }
 
                 // load bitset with flags for function 0x00000001
                 if (nIds_ >= 1)

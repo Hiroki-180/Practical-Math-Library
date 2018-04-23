@@ -52,8 +52,6 @@ namespace pml {
                 int nExIds_;
                 std::string vendor_;
                 std::string brand_;
-                bool isIntel_;
-                bool isAMD_;
                 std::bitset<32> f_1_ECX_;
                 std::bitset<32> f_1_EDX_;
                 std::bitset<32> f_7_EBX_;
