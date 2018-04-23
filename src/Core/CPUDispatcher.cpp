@@ -14,7 +14,6 @@ namespace pml {
                 f_1_ECX_{ 0 },
                 f_1_EDX_{ 0 },
                 f_7_EBX_{ 0 },
-                f_7_ECX_{ 0 },
                 data_{},
                 extdata_{}
             {
@@ -59,7 +58,6 @@ namespace pml {
                 if (nIds_ >= 7)
                 {
                     f_7_EBX_ = data_[7][1];
-                    f_7_ECX_ = data_[7][2];
                 }
 
                 // Calling __cpuid with 0x80000000 as the function_id argument

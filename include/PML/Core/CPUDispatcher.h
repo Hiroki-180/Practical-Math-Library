@@ -57,7 +57,6 @@ namespace pml {
                 std::bitset<32> f_1_ECX_;
                 std::bitset<32> f_1_EDX_;
                 std::bitset<32> f_7_EBX_;
-                std::bitset<32> f_7_ECX_;
                 std::vector<std::array<int, 4>> data_;
                 std::vector<std::array<int, 4>> extdata_;
             };
