@@ -1,4 +1,4 @@
-#ifndef MATH_CONSTANTS_H
+﻿#ifndef MATH_CONSTANTS_H
 #define MATH_CONSTANTS_H
 
 #pragma once
