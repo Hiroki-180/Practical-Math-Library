@@ -7,7 +7,23 @@ add_dependencies(Core Math)
 include_directories(../../include)
 include_directories(./)
 
-link_directories(../../lib/googletest)
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+ # Clang
+ # ToDo
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+ # AppleClang
+ link_directories(../../lib/googletest/AppleClang_9.1.0)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+ # GCC
+ # ToDo
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+ # Intel Compiler
+ # ToDo
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+ # Microsoft Visual C++
+ link_directories(../../lib/googletest/MSVC_2017_Community)
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 
