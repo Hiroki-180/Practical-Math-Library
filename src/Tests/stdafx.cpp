@@ -1,4 +1,4 @@
-// stdafx.cpp : 標準インクルード [!output PROJECT_NAME].pch のみを
+﻿// stdafx.cpp : 標準インクルード [!output PROJECT_NAME].pch のみを
 // Tests.pch はプリコンパイル済みヘッダーになります
 // stdafx.obj にはプリコンパイル済み型情報が含まれます。
 

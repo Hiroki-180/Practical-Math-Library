@@ -392,7 +392,7 @@ namespace pml {
             * Value of 1.0/9.0.
             */
             inline double _1over9() noexcept { return 0.1111111111111111; }
-        }
+        }// Q
 
     } // constants
 } //pml

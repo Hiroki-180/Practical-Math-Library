@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include <gtest/gtest.h>
 #include <PML/Math/numeric_simd.h>
