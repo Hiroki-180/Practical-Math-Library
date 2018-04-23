@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 
 #include <gtest/gtest.h>
 #include <PML/Core/CPUDispatcher.h>
