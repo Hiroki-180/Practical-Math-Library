@@ -49,12 +49,12 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
  # AppleClang
  set(
   LINK_LIBRARIES_GTEST
-  optimized libgtest
-  debug libgtestd)
+  optimized libgtest.a
+  debug libgtestd.a)
  set(
   LINK_LIBRARIES_GTEST_MAIN
-  optimized libgtest_main
-  debug libgtest_maind)
+  optimized libgtest_main.a
+  debug libgtest_maind.a)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
  # GCC
  # ToDo

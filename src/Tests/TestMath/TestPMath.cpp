@@ -1,9 +1,10 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 
 #include <gtest/gtest.h>
 #include <PML/Math/pmath.h>
 
 #include <chrono>
+#include <cmath>
 
 TEST(TestPMath, exp_value)
 {

@@ -1,10 +1,11 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 
 #include <gtest/gtest.h>
 #include <PML/Math/numeric_simd.h>
 #include <PML/Core/CPUDispatcher.h>
 
 #include <chrono>
+#include <cmath>
 
 TEST(TestNumericSIMD, Accumulate_AVX)
 {
