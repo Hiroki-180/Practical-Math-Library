@@ -90,8 +90,8 @@ namespace pml {
                     char vendor[0x20];
                     memset(vendor, 0, sizeof(vendor));
                     *reinterpret_cast<int*>(vendor) = vender.reg[0];
-                    *reinterpret_cast<int*>(vendor + 4) = vender.reg[2];
-                    *reinterpret_cast<int*>(vendor + 8) = vender.reg[1];
+                    *reinterpret_cast<int*>(vendor + 4) = vender.reg[1];
+                    *reinterpret_cast<int*>(vendor + 8) = vender.reg[2];
                     vendor_ = vendor;
                 }
                 
