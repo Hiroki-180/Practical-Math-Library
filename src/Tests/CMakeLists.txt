@@ -25,7 +25,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
  link_directories(../../lib/googletest/MSVC_2017_Community)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 if(MSVC)
  set(CMAKE_CXX_FLAGS_RELEASE "/MT /W4 /DNDEBUG")
@@ -47,6 +47,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
  # ToDo
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
  # AppleClang
+ set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3")
  set(
   LINK_LIBRARIES_GTEST
   optimized libgtest.a

@@ -11,7 +11,7 @@ namespace pml{
     * @brief
     * Exp-function implimented by look-up-table and Taylor expansion.
     * This exp-function is implimented by the algorithm of the following fast math library,
-    *  @auther herumi
+    *  @author herumi
     *  @url https://github.com/herumi/fmath
     *  @note BSD-3-Clause license.
     *
@@ -28,7 +28,7 @@ namespace pml{
     * @brief
     * Vector function of exp implimented by look-up-table and Taylor expansion.
     * This exp-function is implimented by the algorithm of the following fast math library,
-    *  @auther herumi
+    *  @author herumi
     *  @url https://github.com/herumi/fmath
     *  @note BSD-3-Clause license.
     *
