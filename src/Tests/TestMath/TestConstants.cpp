@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include <gtest/gtest.h>
-#include <PML/Math/Constants.h>
+#include <PML/Math/constants.h>
 
 #include <cmath>
 

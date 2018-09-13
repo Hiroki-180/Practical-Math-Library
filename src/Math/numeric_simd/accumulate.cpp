@@ -96,7 +96,7 @@ namespace pml {
             return detail::accumulate_AVX(inA.get(), inSize);
         }
 
-        double accumulate_AVX(const vector32<double>& inA)
+        double accumulate_AVX(const alvector32<double>& inA)
         {
             return detail::accumulate_AVX(inA.data(), inA.size());
         }

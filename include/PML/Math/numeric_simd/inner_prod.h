@@ -91,8 +91,8 @@ namespace pml{
         * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inA.size()-1]*inB[inB.size()-1].
         */
         double inner_prod_AVX(
-            const vector32<double>& inA,
-            const vector32<double>& inB);
+            const alvector32<double>& inA,
+            const alvector32<double>& inB);
 
     } // aligned
 } // pml

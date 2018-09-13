@@ -126,9 +126,9 @@ namespace pml {
         }
 
         void adjacent_divide_AVX(
-            const vector32<double>& inA,
+            const alvector32<double>& inA,
             double inShift,
-            vector32<double>& outB)
+            alvector32<double>& outB)
         {
             outB.resize(inA.size());
             detail::adjacent_divide_AVX(inA.data(), inShift, outB.data(), inA.size());

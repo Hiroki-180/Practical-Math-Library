@@ -4,6 +4,19 @@
 #include <PML/Core/CPUDispatcher.h>
 #include <PML/Core/aligned_vector.h>
 
+namespace {
+
+	template<typename T>
+	void test_alvector(unsigned int inAlignmentByte)
+	{
+		const std::size_t lSize = 100;
+		T lAVector(lSize);
+
+		EXPECT_EQ(lSize, lAVector.size());
+		EXPECT_EQ(0U, (uintptr_t)(&(lAVector.data()[0])) % inAlignmentByte);
+	}
+}
+
 TEST(TestCore, CPUInfo)
 {
     EXPECT_NO_THROW(pml::CPUDispatcher::outputCPUInfo(std::cout));
@@ -18,33 +31,13 @@ TEST(TestCore, aligned_array)
     {
         const auto lAArray = pml::aligned::createArray<double>(lSize, align_i);
 
-        EXPECT_EQ(0, (uintptr_t)(lAArray.get()) % align_i);
+        EXPECT_EQ(0U, (uintptr_t)(lAArray.get()) % align_i);
     }
 }
 
-TEST(TestCore, 16_Byte_alignment_vector)
+TEST(TestCore, aligned_vector)
 {
-    const std::size_t lSize = 100;
-    pml::aligned::vector16<double> lAVector(lSize);
-
-    EXPECT_EQ(lSize, lAVector.size());
-    EXPECT_EQ(0, (uintptr_t)(&(lAVector.data()[0])) % 16);
-}
-
-TEST(TestCore, 32_Byte_alignment_vector)
-{
-    const std::size_t lSize = 100;
-    pml::aligned::vector32<double> lAVector(lSize);
-
-    EXPECT_EQ(lSize, lAVector.size());
-    EXPECT_EQ(0, (uintptr_t)(lAVector.data()) % 32);
-}
-
-TEST(TestCore, 64_Byte_alignment_vector)
-{
-    const std::size_t lSize = 100;
-    pml::aligned::vector64<double> lAVector(lSize);
-
-    EXPECT_EQ(lSize, lAVector.size());
-    EXPECT_EQ(0, (uintptr_t)(lAVector.data()) % 64);
+	test_alvector<pml::aligned::alvector16<double>>(16);
+	test_alvector<pml::aligned::alvector32<double>>(32);
+	test_alvector<pml::aligned::alvector64<double>>(64);
 }

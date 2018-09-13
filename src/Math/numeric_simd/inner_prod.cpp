@@ -98,8 +98,8 @@ namespace pml {
         }
 
         double inner_prod_AVX(
-            const vector32<double>& inA,
-            const vector32<double>& inB)
+            const alvector32<double>& inA,
+            const alvector32<double>& inB)
         {
             return detail::inner_prod_AVX(inA.data(), inB.data(), inA.size());
         }

@@ -94,9 +94,9 @@ namespace pml{
         * 32-byte aligned resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
         */
         void adjacent_divide_AVX(
-            const vector32<double>& inA,
+            const alvector32<double>& inA,
             double inShift,
-            vector32<double>& outB);
+            alvector32<double>& outB);
 
     } // aligned
 } // pml

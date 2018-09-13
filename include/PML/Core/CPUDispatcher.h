@@ -2,7 +2,15 @@
 #define CORE_CPUDISPATCHER_H
 
 #pragma once
-  
+
+/**
+* @file
+* public header provided by PML.
+*
+* @brief
+* CPU Dispatcher.
+*/
+
 #include <iostream>
 #include <vector>
 #include <bitset>

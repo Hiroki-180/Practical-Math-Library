@@ -74,7 +74,7 @@ namespace pml{
         * @return
         * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inA.size()-1].
         */
-        double accumulate_AVX(const vector32<double>& inA);
+        double accumulate_AVX(const alvector32<double>& inA);
 
     } // aligned
 } // pml

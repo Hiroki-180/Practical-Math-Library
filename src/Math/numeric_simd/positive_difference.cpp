@@ -103,10 +103,10 @@ namespace pml {
             detail::positive_difference_AVX(inA.get(), inB.get(), outC.get(), inSize);
         }
 
-        void positive_difference_AVX(
-            const vector32<double>& inA,
-            const vector32<double>& inB,
-            vector32<double>& outC)
+		void positive_difference_AVX(
+			const alvector32<double>& inA,
+			const alvector32<double>& inB,
+            alvector32<double>& outC)
         {
             outC.resize(inA.size());
             detail::positive_difference_AVX(inA.data(), inB.data(), outC.data(), inA.size());

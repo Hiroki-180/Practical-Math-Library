@@ -3,8 +3,15 @@
 
 #pragma once
 
-#include <PML/Core/aligned_array.h>
+/**
+* @file
+* public header provided by PML.
+*
+* @brief
+* Memory aligned std::vectors, vector16, vector32, and vector64.
+*/
 
+#include <PML/Core/aligned_array.h>
 #include <vector>
 
 namespace pml {
@@ -77,7 +84,7 @@ namespace pml {
         * This is proper alignment for SSE/SSE2/SSE3/SSE4.1/SSE4.2.
         */
         template<typename T>
-        using vector16 = std::vector<T, detail::aligned_allocator<T, 16>>;
+        using alvector16 = std::vector<T, detail::aligned_allocator<T, 16>>;
 
         /**
         * @brief
@@ -85,7 +92,7 @@ namespace pml {
         * This is proper alignment for AVX/AVX2.
         */
         template<typename T>
-        using vector32 = std::vector<T, detail::aligned_allocator<T, 32>>;
+        using alvector32 = std::vector<T, detail::aligned_allocator<T, 32>>;
 
         /**
         * @brief
@@ -93,7 +100,7 @@ namespace pml {
         * This is proper alignment for AVX512 series.
         */
         template<typename T>
-        using vector64 = std::vector<T, detail::aligned_allocator<T, 64>>;
+        using alvector64 = std::vector<T, detail::aligned_allocator<T, 64>>;
 
     } // aligned
 } // pml

@@ -3,6 +3,14 @@
 
 #pragma once
 
+/**
+* @file
+* public header provided by PML.
+*
+* @brief
+* Memory aligned array creator.
+*/
+
 #include <type_traits>
 #include <memory>
 #include <stdexcept>
@@ -13,7 +21,7 @@
 /**
 * @brief
 * Macro to create the static array that is just aligned on specified byte size boundaries.
-* For instance, PML_STATIC_ALLIGN(32) double vec[5] = { 0 }; create size 5 aligned double array.
+* For instance, PML_STATIC_ALLIGN(32) double vec[5]; create 32-byte aligned double array with 5 doubles.
 *
 * @param[in] n
 * Alignment size in byte.

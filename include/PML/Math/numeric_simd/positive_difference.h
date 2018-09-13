@@ -94,9 +94,9 @@ namespace pml{
         * 32-byte aligned resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
         */
         void positive_difference_AVX(
-            const vector32<double>& inA,
-            const vector32<double>& inB,
-            vector32<double>& outC);
+            const alvector32<double>& inA,
+            const alvector32<double>& inB,
+            alvector32<double>& outC);
 
     } // aligned
 } // pml
