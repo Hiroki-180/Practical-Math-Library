@@ -8,7 +8,7 @@
 * public header provided by PML.
 *
 * @brief
-* Memory aligned array creator.
+* Memory aligned array pml::aligned::alarray.
 */
 
 #include <type_traits>

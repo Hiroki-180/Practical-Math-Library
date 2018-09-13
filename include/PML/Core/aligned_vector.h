@@ -8,7 +8,7 @@
 * public header provided by PML.
 *
 * @brief
-* Memory aligned std::vectors, vector16, vector32, and vector64.
+* Memory aligned customized STL vectors pml::aligned::vector16/32/64.
 */
 
 #include <PML/Core/aligned_array.h>
