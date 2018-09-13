@@ -7,12 +7,46 @@
 #include <chrono>
 #include <cmath>
 
+namespace {
+
+	void escapeIfAVSIsNotSupported()
+	{
+		if (!pml::CPUDispatcher::isAVX())
+		{
+			std::cout << "AVX is not supported." << std::endl;
+			return;
+		}
+	}
+
+	void outputResult(
+		int inTestNum,
+		double inElapsedTimeNaive,
+		double inElapsedTimeSIMD,
+		double inElapsedTimeSIMDAligned)
+	{
+		std::cout
+#ifdef NDEBUG
+			<< "---Release Mode---\n"
+#else
+			<< "---Debud Mode---\n"
+#endif
+			<< inTestNum << "-times calculation,\n"
+			<< "Naive:" << inElapsedTimeNaive << "[msec],\n"
+			<< "SIMD:" << inElapsedTimeSIMD << "[msec],\n"
+			<< "Aligned SIMD:" << inElapsedTimeSIMDAligned << "[msec].\n";
+
+#ifdef NDEBUG
+		std::cout.precision(16);
+		EXPECT_LT(inElapsedTimeSIMD, inElapsedTimeNaive);
+		EXPECT_LT(inElapsedTimeSIMDAligned, inElapsedTimeNaive);
+		EXPECT_LE(inElapsedTimeSIMDAligned, inElapsedTimeSIMD);
+#endif
+	}
+}
+
 TEST(TestNumericSIMD, Accumulate_AVX)
 {
-    if (!pml::CPUDispatcher::isAVX())
-    {
-        return;
-    }
+	escapeIfAVSIsNotSupported();
 
     const std::size_t lSize = 100;
     auto lAArray = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
@@ -78,29 +112,12 @@ TEST(TestNumericSIMD, Accumulate_AVX)
     EXPECT_EQ(lSum, lSumSIMD);
     EXPECT_EQ(lSum, lSumSIMDAligned);
 
-    std::cout
-#ifdef NDEBUG
-        << "---Release Mode---\n"
-#else
-        << "---Debud Mode---\n"
-#endif
-        << lTestNum << "-times calculation,\n"
-        << "Naive:" << lElapsed << "[msec],\n"
-        << "SIMD:" << lSIMDElapsed << "[msec],\n"
-        << "Aligned SIMD:" << lSIMDElapsedAligned << "[msec].\n";
-
-#ifdef NDEBUG
-    EXPECT_LT(lSIMDElapsed, lElapsed);
-    EXPECT_LT(lSIMDElapsedAligned, lElapsed);
-#endif
+	outputResult(lTestNum, lElapsed, lSIMDElapsed, lSIMDElapsedAligned);
 }
 
 TEST(TestNumericSIMD, InnerProd_AVX)
 {
-    if (!pml::CPUDispatcher::isAVX())
-    {
-        return;
-    }
+	escapeIfAVSIsNotSupported();
 
     const std::size_t lSize = 100;
     auto lAArray1 = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
@@ -170,30 +187,12 @@ TEST(TestNumericSIMD, InnerProd_AVX)
     EXPECT_EQ(lInnerProd, lInnerProdSIMDAligned);
     EXPECT_EQ(lInnerProd, lInnerProdSIMD);
 
-    std::cout
-#ifdef NDEBUG
-        << "---Release Mode---\n"
-#else
-        << "---Debud Mode---\n"
-#endif
-        << lTestNum << "-times calculation,\n"
-        << "Naive:" << lElapsed     << "[msec],\n"
-        << "SIMD:"  << lSIMDElapsed << "[msec],\n"
-        << "Aligned SIMD:" << lSIMDElapsedAligned << "[msec].\n";
-
-#ifdef NDEBUG
-    EXPECT_LT(lSIMDElapsed,        lElapsed);
-    EXPECT_LT(lSIMDElapsedAligned, lElapsed);
-    EXPECT_LE(lSIMDElapsedAligned, lSIMDElapsed);
-#endif
+	outputResult(lTestNum, lElapsed, lSIMDElapsed, lSIMDElapsedAligned);
 }
 
 TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
 {
-    if (!pml::CPUDispatcher::isAVX())
-    {
-        return;
-    }
+	escapeIfAVSIsNotSupported();
 
     const std::size_t lSize = 100;
     auto lAArray = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
@@ -261,32 +260,12 @@ TEST(TestNumericSIMD, adjacent_divide_aligned_AVX)
         EXPECT_DOUBLE_EQ(lAArrayAns[i], lAArrayAnsSIMDAligned[i]) << i <<std::endl;
     }
 
-    std::cout
-#ifdef NDEBUG
-        << "---Release Mode---\n"
-#else
-        << "---Debud Mode---\n"
-#endif
-        << lTestNum << "-times calculation,\n"
-        << "Naive:" << lElapsed << "[msec],\n"
-        << "SIMD:" << lSIMDElapsed << "[msec],\n"
-        << "Aligned SIMD:" << lSIMDElapsedAligned << "[msec].\n";
-
-#ifdef NDEBUG
-    std::cout.precision(16);
-    EXPECT_LT(lSIMDElapsed, lElapsed);
-    EXPECT_LT(lSIMDElapsedAligned, lElapsed);
-    EXPECT_LE(lSIMDElapsedAligned, lSIMDElapsed);
-#endif
-
+	outputResult(lTestNum, lElapsed, lSIMDElapsed, lSIMDElapsedAligned);
 }
 
 TEST(TestNumericSIMD, positive_difference_AVX)
 {
-    if (!pml::CPUDispatcher::isAVX())
-    {
-        return;
-    }
+	escapeIfAVSIsNotSupported();
 
     const std::size_t lSize = 100;
     auto lAArray1 = pml::aligned::createArray<double>(lSize, 32); // ToDo: automatic detection of alignment size
@@ -356,22 +335,5 @@ TEST(TestNumericSIMD, positive_difference_AVX)
         EXPECT_DOUBLE_EQ(lAArrayAns[i], lAArrayAnsSIMDAligned[i]);
     }
 
-    std::cout
-#ifdef NDEBUG
-        << "---Release Mode---\n"
-#else
-        << "---Debud Mode---\n"
-#endif
-        << lTestNum << "-times calculation,\n"
-        << "Naive:" << lElapsed     << "[msec],\n"
-        << "SIMD:"  << lSIMDElapsed << "[msec],\n"
-        << "Aligned SIMD:" << lSIMDElapsedAligned << "[msec].\n";
-
-#ifdef NDEBUG
-    std::cout.precision(16);
-    EXPECT_LT(lSIMDElapsed,        lElapsed);
-    EXPECT_LT(lSIMDElapsedAligned, lElapsed);
-    EXPECT_LE(lSIMDElapsedAligned, lSIMDElapsed);
-#endif
-
+	outputResult(lTestNum, lElapsed, lSIMDElapsed, lSIMDElapsedAligned);
 }
