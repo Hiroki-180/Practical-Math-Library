@@ -1,5 +1,5 @@
 #include <PML/Core/cross_intrin.h>
-#include <PML/Math/numeric/adjacent_divide.h>
+#include <PML/Math/numeric_simd/adjacent_divide.h>
 
 namespace pml {
 

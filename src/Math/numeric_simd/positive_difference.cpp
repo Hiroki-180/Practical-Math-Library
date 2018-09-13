@@ -1,5 +1,5 @@
 #include <PML/Core/cross_intrin.h>
-#include <PML/Math/numeric/positive_difference.h>
+#include <PML/Math/numeric_simd/positive_difference.h>
 
 #include <algorithm>
 

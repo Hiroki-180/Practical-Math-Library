@@ -4,6 +4,14 @@
 #pragma once
 
 /**
+* @file
+* public header provided by PML.
+*
+* @brief
+* List of mathematical constants.
+*/
+
+/**
 * @def PML_CONST_PI
 *
 * @brief

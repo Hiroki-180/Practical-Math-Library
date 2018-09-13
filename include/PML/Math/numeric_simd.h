@@ -3,9 +3,17 @@
 
 #pragma once
 
-#include <PML/Math/numeric/accumulate.h>
-#include <PML/Math/numeric/inner_prod.h>
-#include <PML/Math/numeric/adjacent_divide.h>
-#include <PML/Math/numeric/positive_difference.h>
+/**
+* @file
+* public header provided by PML.
+*
+* @brief
+* numeric manipulation implemented by SIMD operations.
+*/
+
+#include <PML/Math/numeric_simd/accumulate.h>
+#include <PML/Math/numeric_simd/inner_prod.h>
+#include <PML/Math/numeric_simd/adjacent_divide.h>
+#include <PML/Math/numeric_simd/positive_difference.h>
 
 #endif

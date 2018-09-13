@@ -1,5 +1,5 @@
 #include <PML/Core/cross_intrin.h>
-#include <PML/Math/numeric/inner_prod.h>
+#include <PML/Math/numeric_simd/inner_prod.h>
 
 namespace pml {
 

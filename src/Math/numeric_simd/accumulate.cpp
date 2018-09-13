@@ -1,5 +1,5 @@
 #include <PML/Core/cross_intrin.h>
-#include <PML/Math/numeric/accumulate.h>
+#include <PML/Math/numeric_simd/accumulate.h>
 
 namespace pml {
 

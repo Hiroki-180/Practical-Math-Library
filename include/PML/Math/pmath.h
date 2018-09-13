@@ -3,6 +3,14 @@
 
 #pragma once
 
+/**
+* @file
+* public header provided by PML.
+*
+* @brief
+* Basic math functions.
+*/
+
 namespace pml{
 
     /**

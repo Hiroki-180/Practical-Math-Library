@@ -9,7 +9,17 @@
 #include <cstdlib>
 
 #if defined(__cplusplus) && __cplusplus < 201103L
+
+/**
+* @brief
+* Macro to create the static array that is just aligned on specified byte size boundaries.
+* For instance, PML_STATIC_ALLIGN(32) double vec[5] = { 0 }; create size 5 aligned double array.
+*
+* @param[in] n
+* Alignment size in byte.
+*/
 #define PML_STATIC_ALLIGN(n) __declspec(align(n))
+
 #else
 #define PML_STATIC_ALLIGN(n) alignas(n)
 #endif

@@ -31,19 +31,34 @@ endif()
 
 include_directories(../../include)
 
+SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON) 
+
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)
 
 add_library(
   Math
   STATIC
-  numeric/accumulate.cpp
-  numeric/adjacent_divide.cpp
-  numeric/inner_prod.cpp
-  numeric/positive_difference.cpp
+  numeric_simd/accumulate.cpp
+  numeric_simd/adjacent_divide.cpp
+  numeric_simd/inner_prod.cpp
+  numeric_simd/positive_difference.cpp
   pmath.cpp
-  ../../include/PML/Math/numeric/accumulate.h
-  ../../include/PML/Math/numeric/adjacent_divide.h
-  ../../include/PML/Math/numeric/inner_prod.h
-  ../../include/PML/Math/numeric/positive_difference.h
+  ../../include/PML/Math/numeric_simd.h
+  ../../include/PML/Math/constants.h
+  ../../include/PML/Math/pmath.h
+  ../../include/PML/Math/numeric_simd/accumulate.h
+  ../../include/PML/Math/numeric_simd/adjacent_divide.h
+  ../../include/PML/Math/numeric_simd/inner_prod.h
+  ../../include/PML/Math/numeric_simd/positive_difference.h
   ../../include/PML/Math/pmath.h)
+
+SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/accumulate.h)
+SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/adjacent_divide.h)
+SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/inner_prod.h)
+SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/positive_difference.h)
+
+SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/accumulate.cpp)
+SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/adjacent_divide.cpp)
+SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/inner_prod.cpp)
+SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/positive_difference.cpp)
