@@ -11,7 +11,7 @@ namespace pml {
 
         __m128d lSum128 = _mm_setzero_pd();
 
-        for (std::size_t i = 0;i < inSize;i += 4)
+        for (std::size_t i = 0; i < inSize; i += 4)
         {
             // lA256 = ( A[i],  A[i+1],  A[i+2],  A[i+3] )
             __m256d lA256 = _mm256_loadu_pd(&inA[i]);
@@ -33,7 +33,7 @@ namespace pml {
         auto lSum = lPartialSum[0] + lPartialSum[1];
 
         const std::size_t lOffset = (inSize - inSize % 4);
-        for (std::size_t i = lOffset;i < inSize; ++i)
+        for (std::size_t i = lOffset; i < inSize; ++i)
         {
             lSum += inA[i];
         }
@@ -58,7 +58,7 @@ namespace pml {
                 __m256d lSum256 = _mm256_setzero_pd();
 
                 const std::size_t lUnrollEnd = (inSize - (inSize & 7));
-                for (std::size_t i = 0;i < lUnrollEnd;i += 8)
+                for (std::size_t i = 0; i < lUnrollEnd; i += 8)
                 {
                     const __m256d lF256 = _mm256_load_pd(&inA[i]);
                     const __m256d lB256 = _mm256_load_pd(&inA[i + 4]);
@@ -80,7 +80,7 @@ namespace pml {
                 _mm_store_pd(lPartialSum, lSum128);
                 auto lSum = lPartialSum[0] + lPartialSum[1];
 
-                for (std::size_t i = l256End;i < inSize; ++i)
+                for (std::size_t i = l256End; i < inSize; ++i)
                 {
                     lSum += inA[i];
                 }

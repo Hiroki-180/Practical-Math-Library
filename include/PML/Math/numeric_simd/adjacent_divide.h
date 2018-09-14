@@ -5,7 +5,7 @@
 
 #include <PML/Core/aligned_vector.h>
 
-namespace pml{
+namespace pml {
 
     /**
     * @fn adjacent_divide_AVX(const double* inA, double* outB, std::size_t inSize)
@@ -75,7 +75,7 @@ namespace pml{
         void adjacent_divide_AVX(
             const alarray<double>& inA,
             double inShift,
-			alarray<double>& outB,
+            alarray<double>& outB,
             std::size_t inSize);
 
         /**

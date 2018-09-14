@@ -5,7 +5,7 @@
 
 #include <PML/Core/aligned_vector.h>
 
-namespace pml{
+namespace pml {
 
     /**
     * @fn accumulate_AVX(const double* inA, std::size_t inSize)

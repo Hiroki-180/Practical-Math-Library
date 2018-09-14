@@ -5,7 +5,7 @@
 
 #include <PML/Core/aligned_vector.h>
 
-namespace pml{
+namespace pml {
 
     /**
     * @fn positive_difference_AVX(const double* inA, const double* inB, double* outC, std::size_t inSize)
@@ -75,7 +75,7 @@ namespace pml{
         void positive_difference_AVX(
             const alarray<double>& inA,
             const alarray<double>& inB,
-			alarray<double>& outC,
+            alarray<double>& outC,
             std::size_t inSize);
 
         /**

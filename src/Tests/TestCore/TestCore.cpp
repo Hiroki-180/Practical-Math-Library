@@ -6,15 +6,15 @@
 
 namespace {
 
-	template<typename T>
-	void test_alvector(unsigned int inAlignmentByte)
-	{
-		const std::size_t lSize = 100;
-		T lAVector(lSize);
+    template<typename T>
+    void test_alvector(unsigned int inAlignmentByte)
+    {
+        const std::size_t lSize = 100;
+        T lAVector(lSize);
 
-		EXPECT_EQ(lSize, lAVector.size());
-		EXPECT_EQ(0U, (uintptr_t)(&(lAVector.data()[0])) % inAlignmentByte);
-	}
+        EXPECT_EQ(lSize, lAVector.size());
+        EXPECT_EQ(0U, (uintptr_t)(&(lAVector.data()[0])) % inAlignmentByte);
+    }
 }
 
 TEST(TestCore, CPUInfo)
@@ -37,7 +37,7 @@ TEST(TestCore, aligned_array)
 
 TEST(TestCore, aligned_vector)
 {
-	test_alvector<pml::aligned::alvector16<double>>(16);
-	test_alvector<pml::aligned::alvector32<double>>(32);
-	test_alvector<pml::aligned::alvector64<double>>(64);
+    test_alvector<pml::aligned::alvector16<double>>(16);
+    test_alvector<pml::aligned::alvector32<double>>(32);
+    test_alvector<pml::aligned::alvector64<double>>(64);
 }

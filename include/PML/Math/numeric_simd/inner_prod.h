@@ -5,7 +5,7 @@
 
 #include <PML/Core/aligned_vector.h>
 
-namespace pml{
+namespace pml {
 
     /**
     * @fn inner_prod_AVX(const double* inA, const double* inB, std::size_t inSize)

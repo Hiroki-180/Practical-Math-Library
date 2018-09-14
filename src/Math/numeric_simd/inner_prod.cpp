@@ -10,7 +10,7 @@ namespace pml {
     {
         __m256d lSum256 = _mm256_setzero_pd();
 
-        for (std::size_t i = 0;i < inSize;i += 4)
+        for (std::size_t i = 0; i < inSize; i += 4)
         {
             __m256d lA256 = _mm256_loadu_pd(&inA[i]);
             __m256d lB256 = _mm256_loadu_pd(&inB[i]);
@@ -23,7 +23,7 @@ namespace pml {
         auto lSum = lPartialSum[0] + lPartialSum[1] + lPartialSum[2] + lPartialSum[3];
 
         const std::size_t lOffset = (inSize - inSize % 4);
-        for (std::size_t i = lOffset;i < inSize; ++i)
+        for (std::size_t i = lOffset; i < inSize; ++i)
         {
             lSum += inA[i] * inB[i];
         }
@@ -51,7 +51,7 @@ namespace pml {
                 __m256d lSum256 = _mm256_setzero_pd();
 
                 const std::size_t lUnrollEnd = (inSize - (inSize & 7));
-                for (std::size_t i = 0;i < lUnrollEnd;i += 8)
+                for (std::size_t i = 0; i < lUnrollEnd; i += 8)
                 {
                     const __m256d lAF256 = _mm256_load_pd(&inA[i]);
                     const __m256d lAB256 = _mm256_load_pd(&inA[i + 4]);
@@ -72,15 +72,15 @@ namespace pml {
                     lSum256 = _mm256_add_pd(lSum256, _mm256_mul_pd(lA256, lB256));
                 }
 
-                const __m128d hiDual  = _mm256_extractf128_pd(lSum256, 1);
-                const __m128d loDual  = _mm256_castpd256_pd128(lSum256);
+                const __m128d hiDual = _mm256_extractf128_pd(lSum256, 1);
+                const __m128d loDual = _mm256_castpd256_pd128(lSum256);
                 const __m128d lSum128 = _mm_add_pd(loDual, hiDual);
 
                 PML_STATIC_ALLIGN(16) double lPartialSum[2] = { 0 };
                 _mm_store_pd(lPartialSum, lSum128);
                 auto lSum = lPartialSum[0] + lPartialSum[1];
 
-                for (std::size_t i = l256End;i < inSize; ++i)
+                for (std::size_t i = l256End; i < inSize; ++i)
                 {
                     lSum += inA[i] * inB[i];
                 }

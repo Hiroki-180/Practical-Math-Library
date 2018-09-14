@@ -7,7 +7,7 @@
 
 TEST(TestMathConstants, PI)
 {
-	EXPECT_DOUBLE_EQ(acos(-1.0), pml::constants::PI());
+    EXPECT_DOUBLE_EQ(acos(-1.0), pml::constants::PI());
 }
 
 TEST(TestMathConstants, PI_Relations)
@@ -57,20 +57,20 @@ TEST(TestMathConstants, GoldenRatio)
 
 TEST(TestMathConstants, Apery)
 {
-	double lRiemannZeta3 = 0.0;
-	for (auto i = 20000000;i > 0;--i) {
-		const double lDen = (static_cast<double>(i)*i*i);
-		lRiemannZeta3 += 1.0 / lDen;
-	}
+    double lRiemannZeta3 = 0.0;
+    for (auto i = 20000000; i > 0; --i) {
+        const double lDen = (static_cast<double>(i)*i*i);
+        lRiemannZeta3 += 1.0 / lDen;
+    }
 
-	EXPECT_DOUBLE_EQ(lRiemannZeta3, pml::constants::Apery());
+    EXPECT_DOUBLE_EQ(lRiemannZeta3, pml::constants::Apery());
 }
 
 TEST(TestMathConstants, UniversalParabolicP)
 {
-	EXPECT_DOUBLE_EQ(
-		std::log(1.0 + pml::constants::SqrtOf2()) + pml::constants::SqrtOf2(),
-		pml::constants::UniversalParabolicP());
+    EXPECT_DOUBLE_EQ(
+        std::log(1.0 + pml::constants::SqrtOf2()) + pml::constants::SqrtOf2(),
+        pml::constants::UniversalParabolicP());
 }
 
 TEST(TestMathConstants, RationalNumbers)

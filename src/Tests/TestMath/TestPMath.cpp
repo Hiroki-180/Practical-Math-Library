@@ -8,7 +8,7 @@
 
 TEST(TestPMath, exp_value)
 {
-    for (auto i = 0;i < 200;++i)
+    for (auto i = 0; i < 200; ++i)
     {
         const auto lX = -5.0 + 0.05*i;
         EXPECT_DOUBLE_EQ(std::exp(lX), pml::exp(lX));
@@ -28,9 +28,9 @@ TEST(TestPMath, exp_performance)
 
     auto lSum = 0.0;
     const auto lStart = std::chrono::system_clock::now();
-    for (auto i = 0;i < lTestNum;++i)
+    for (auto i = 0; i < lTestNum; ++i)
     {
-        const auto lX = -5.0 + lStride *i;
+        const auto lX = -5.0 + lStride * i;
         lSum += std::exp(lX);
     }
     const auto lEnd = std::chrono::system_clock::now();
@@ -38,9 +38,9 @@ TEST(TestPMath, exp_performance)
 
     auto lSumPML = 0.0;
     const auto lStartPML = std::chrono::system_clock::now();
-    for (auto i = 0;i < lTestNum;++i)
+    for (auto i = 0; i < lTestNum; ++i)
     {
-        const auto lX = -5.0 + lStride *i;
+        const auto lX = -5.0 + lStride * i;
         lSumPML += pml::exp(lX);
     }
     const auto lEndPML = std::chrono::system_clock::now();
@@ -68,7 +68,7 @@ TEST(TestPMath, expv_value)
 {
     std::vector<double> lExponent;
 
-    for (auto i = 0;i < 200;++i)
+    for (auto i = 0; i < 200; ++i)
     {
         lExponent.push_back(-5.0 + 0.05*i);
     }
@@ -76,7 +76,7 @@ TEST(TestPMath, expv_value)
     std::vector<double> lResult(lExponent.size());
     pml::expv(lExponent.data(), lResult.data(), lExponent.size());
 
-    for (auto i = 0;i < 200;++i)
+    for (auto i = 0; i < 200; ++i)
     {
         EXPECT_DOUBLE_EQ(std::exp(lExponent[i]), lResult[i]);
     }
@@ -84,7 +84,7 @@ TEST(TestPMath, expv_value)
 
 TEST(TestPMath, sin_value)
 {
-    for (auto i = -20000;i < 20000;++i)
+    for (auto i = -20000; i < 20000; ++i)
     {
         const auto lX = static_cast<double>(i);
         EXPECT_DOUBLE_EQ(std::sin(lX), pml::sin(lX));
@@ -102,7 +102,7 @@ TEST(TestPMath, sin_performance)
 
     auto lSum = 0.0;
     const auto lStart = std::chrono::system_clock::now();
-    for (auto i = 0;i < lTestNum;++i)
+    for (auto i = 0; i < lTestNum; ++i)
     {
         lSum += std::sin(static_cast<double>(i));
     }
@@ -111,7 +111,7 @@ TEST(TestPMath, sin_performance)
 
     auto lSumPML = 0.0;
     const auto lStartPML = std::chrono::system_clock::now();
-    for (auto i = 0;i < lTestNum;++i)
+    for (auto i = 0; i < lTestNum; ++i)
     {
         lSumPML += pml::sin(static_cast<double>(i));
     }
@@ -138,7 +138,7 @@ TEST(TestPMath, sin_performance)
 
 TEST(TestPMath, cos_value)
 {
-    for (auto i = -20000;i < 20000;++i)
+    for (auto i = -20000; i < 20000; ++i)
     {
         const auto lX = static_cast<double>(i);
         EXPECT_DOUBLE_EQ(std::cos(lX), pml::cos(lX));
@@ -156,7 +156,7 @@ TEST(TestPMath, cos_performance)
 
     auto lSum = 0.0;
     const auto lStart = std::chrono::system_clock::now();
-    for (auto i = 0;i < lTestNum;++i)
+    for (auto i = 0; i < lTestNum; ++i)
     {
         lSum += std::cos(static_cast<double>(i));
     }
@@ -165,7 +165,7 @@ TEST(TestPMath, cos_performance)
 
     auto lSumPML = 0.0;
     const auto lStartPML = std::chrono::system_clock::now();
-    for (auto i = 0;i < lTestNum;++i)
+    for (auto i = 0; i < lTestNum; ++i)
     {
         lSumPML += pml::cos(static_cast<double>(i));
     }
