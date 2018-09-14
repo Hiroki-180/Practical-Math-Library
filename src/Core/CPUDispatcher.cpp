@@ -81,9 +81,9 @@ namespace pml {
                     union {
                         char text[16];
                         uint32_t reg[4];
-                    } vender = {.text = {0}};
+                    } vender = { .text = {0} };
                     uint32_t idmax = 0;
-                
+
                     // id=0: idmax=eax, VenderID:ebx.edx.ecx
                     __cpuid(0, idmax, vender.reg[0], vender.reg[2], vender.reg[1]);
 
@@ -94,39 +94,39 @@ namespace pml {
                     *reinterpret_cast<int*>(vendor + 8) = vender.reg[2];
                     vendor_ = vendor;
                 }
-                
+
                 {
                     union {
                         struct {
-                        uint8_t step: 4;
-                        uint8_t model: 4;
-                        uint8_t family: 4;
-                        uint8_t type: 2;
-                        uint8_t pad1: 2;
-                        uint8_t emodel: 4;
-                        uint8_t efamily: 8;
-                        uint8_t pad2: 4;
+                            uint8_t step : 4;
+                            uint8_t model : 4;
+                            uint8_t family : 4;
+                            uint8_t type : 2;
+                            uint8_t pad1 : 2;
+                            uint8_t emodel : 4;
+                            uint8_t efamily : 8;
+                            uint8_t pad2 : 4;
                         };
                         uint32_t reg;
-                    } eax = {.reg = 1};
-                
+                    } eax = { .reg = 1 };
+
                     uint32_t ebx = 0;
                     __cpuid(1, eax.reg, ebx, f_1_ECX_, f_1_EDX_);
                 }
-                
+
                 {
                     union {
                         struct {
-                            uint8_t prefetchwt1: 1;
-                            uint8_t avx512vbmi: 1;
-                            uint32_t reserved: 30;
+                            uint8_t prefetchwt1 : 1;
+                            uint8_t avx512vbmi : 1;
+                            uint32_t reserved : 30;
                         };
                         uint32_t reg;
-                    } ecx = {.reg=0};
-                    
+                    } ecx = { .reg = 0 };
+
                     uint32_t edx = 0;
                     uint32_t eax = 7;
-                    
+
                     __cpuid(7, eax, f_7_EBX_, ecx.reg, edx);
                 }
 #endif
@@ -139,12 +139,12 @@ namespace pml {
         const std::string& getVendor() { return detail::gCPUData.vendor_; }
         const std::string& getBrand() { return detail::gCPUData.brand_; }
 
-		bool isSSE() { return detail::gCPUData.f_1_EDX_[25]; }
-		bool isSSE2() { return detail::gCPUData.f_1_EDX_[26]; }
-		bool isSSE3() { return detail::gCPUData.f_1_ECX_[0]; }
+        bool isSSE() { return detail::gCPUData.f_1_EDX_[25]; }
+        bool isSSE2() { return detail::gCPUData.f_1_EDX_[26]; }
+        bool isSSE3() { return detail::gCPUData.f_1_ECX_[0]; }
         bool isSSSE3() { return detail::gCPUData.f_1_ECX_[9]; }
-		bool isSSE41() { return detail::gCPUData.f_1_ECX_[19]; }
-		bool isSSE42() { return detail::gCPUData.f_1_ECX_[20]; }
+        bool isSSE41() { return detail::gCPUData.f_1_ECX_[19]; }
+        bool isSSE42() { return detail::gCPUData.f_1_ECX_[20]; }
 
         bool isFMA() { return detail::gCPUData.f_1_ECX_[12]; }
         bool isAVX() { return detail::gCPUData.f_1_ECX_[28]; }
@@ -171,18 +171,18 @@ namespace pml {
             support_message("SSE", CPUDispatcher::isSSE());
             support_message("SSE2", CPUDispatcher::isSSE2());
             support_message("SSE3", CPUDispatcher::isSSE3());
-			support_message("SSSE3", CPUDispatcher::isSSSE3());
-			support_message("SSE4.1", CPUDispatcher::isSSE41());
+            support_message("SSSE3", CPUDispatcher::isSSSE3());
+            support_message("SSE4.1", CPUDispatcher::isSSE41());
             support_message("SSE4.2", CPUDispatcher::isSSE42());
 
-			support_message("FMA", CPUDispatcher::isFMA());
-			support_message("AVX", CPUDispatcher::isAVX());
-			support_message("AVX2", CPUDispatcher::isAVX2());
+            support_message("FMA", CPUDispatcher::isFMA());
+            support_message("AVX", CPUDispatcher::isAVX());
+            support_message("AVX2", CPUDispatcher::isAVX2());
 
-			support_message("AVX512F", CPUDispatcher::isAVX512F());
-			support_message("AVX512PF", CPUDispatcher::isAVX512PF());
-			support_message("AVX512ER", CPUDispatcher::isAVX512ER());
-			support_message("AVX512CD", CPUDispatcher::isAVX512CD());
+            support_message("AVX512F", CPUDispatcher::isAVX512F());
+            support_message("AVX512PF", CPUDispatcher::isAVX512PF());
+            support_message("AVX512ER", CPUDispatcher::isAVX512ER());
+            support_message("AVX512CD", CPUDispatcher::isAVX512CD());
         }
 
     } // CPUDispatcher

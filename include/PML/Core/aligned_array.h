@@ -42,27 +42,27 @@ namespace pml {
             static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
             {
 #ifdef _MSC_VER
-				return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
+                return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
 #else
-				void* lp;
-				return reinterpret_cast<T>(posix_memalign(&lp, inAlignment, inSize) == 0 ? lp : nullptr);
+                void* lp;
+                return reinterpret_cast<T>(posix_memalign(&lp, inAlignment, inSize) == 0 ? lp : nullptr);
 #endif
             }
 
             static inline void alignedFree(void* inPtr) noexcept
             {
 #ifdef _MSC_VER
-				_aligned_free(inPtr);
+                _aligned_free(inPtr);
 #else
-				std::free(inPtr);
+                std::free(inPtr);
 #endif
-			}
+            }
 
             struct alignedDeleter final
             {
                 void operator()(void* p) const noexcept
                 {
-					alignedFree(p);
+                    alignedFree(p);
                 }
             };
 

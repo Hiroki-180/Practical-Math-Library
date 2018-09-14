@@ -63,7 +63,6 @@ namespace pml {
 
 
     namespace aligned {
-
         namespace detail {
 
             void adjacent_divide_AVX(

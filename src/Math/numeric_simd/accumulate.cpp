@@ -48,7 +48,6 @@ namespace pml {
 
 
     namespace aligned {
-
         namespace detail {
 
             double accumulate_AVX(

@@ -40,7 +40,6 @@ namespace pml {
 
 
     namespace aligned {
-
         namespace detail {
 
             double inner_prod_AVX(

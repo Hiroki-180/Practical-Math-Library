@@ -53,7 +53,6 @@ namespace pml {
 
 
     namespace aligned {
-
         namespace detail {
 
             void positive_difference_AVX(
