@@ -8,10 +8,12 @@
 * public header provided by PML.
 *
 * @brief
-* Memory aligned customized STL vectors pml::aligned::vector16/32/64.
+* Automatically memory aligned customized STL vector pml::aligned::alvector.
 */
 
+#include <PML/Core/CPUDispatcher.h>
 #include <PML/Core/aligned_array.h>
+#include <type_traits>
 #include <vector>
 
 namespace pml {
@@ -19,7 +21,35 @@ namespace pml {
 
         namespace detail {
 
-            template <class T, int N>
+            template<typename T = void*, typename std::enable_if<std::is_pointer<T>::value, std::nullptr_t>::type = nullptr>
+            static inline T alignedMalloc(std::size_t inSize, std::size_t inAlignment) noexcept
+            {
+#ifdef _MSC_VER
+                return reinterpret_cast<T>(_aligned_malloc(inSize, inAlignment));
+#else
+                void* lp;
+                return reinterpret_cast<T>(posix_memalign(&lp, inAlignment, inSize) == 0 ? lp : nullptr);
+#endif
+            }
+
+            static inline void alignedFree(void* inPtr) noexcept
+            {
+#ifdef _MSC_VER
+                _aligned_free(inPtr);
+#else
+                std::free(inPtr);
+#endif
+            }
+
+            struct alignedDeleter final
+            {
+                void operator()(void* p) const noexcept
+                {
+                    alignedFree(p);
+                }
+            };
+
+            template <class T>
             class aligned_allocator final
             {
             public:
@@ -35,14 +65,14 @@ namespace pml {
                 template <class U>
                 struct rebind
                 {
-                    typedef aligned_allocator<U, N> other;
+                    typedef aligned_allocator<U> other;
                 };
 
                 inline aligned_allocator() noexcept {}
                 inline aligned_allocator(const aligned_allocator&) noexcept {}
 
                 template <class U>
-                inline aligned_allocator(const aligned_allocator<U, N>&) noexcept {}
+                inline aligned_allocator(const aligned_allocator<U>&) noexcept {}
 
                 inline ~aligned_allocator() noexcept {}
 
@@ -58,7 +88,12 @@ namespace pml {
                         throw std::bad_alloc(); //ToDo.
                     }
 
-                    return pml::aligned::detail::alignedMalloc<pointer>(n * sizeof(T), N);
+                    const std::size_t align = CPUDispatcher::isAVX512F() ? 64 :
+                                              CPUDispatcher::isAVX2()    ? 32 :
+                                              CPUDispatcher::isAVX()     ? 32 :
+                                                                           16 ;
+
+                    return pml::aligned::detail::alignedMalloc<pointer>(n * sizeof(T), align);
                 }
 
                 void deallocate(pointer p, size_type) const noexcept
@@ -74,32 +109,14 @@ namespace pml {
                 inline bool operator==(const aligned_allocator&) { return true; }
                 inline bool operator!=(const aligned_allocator& rhs) { return !operator==(rhs); }
             };
-
         } // detail
 
         /**
         * @brief
-        * Customized STL vector that has proper custom allocator to the 16-byte aligned data.
-        * This is proper alignment for SSE/SSE2/SSE3/SSE4.1/SSE4.2.
+        * Customized STL vector that has runtime-optimal aligment allocator.
         */
         template<typename T>
-        using alvector16 = std::vector<T, detail::aligned_allocator<T, 16>>;
-
-        /**
-        * @brief
-        * Customized STL vector that has proper custom allocator to the 32-byte aligned data.
-        * This is proper alignment for AVX/AVX2.
-        */
-        template<typename T>
-        using alvector32 = std::vector<T, detail::aligned_allocator<T, 32>>;
-
-        /**
-        * @brief
-        * Customized STL vector that has proper custom allocator to the 2-byte aligned data.
-        * This is proper alignment for AVX512 series.
-        */
-        template<typename T>
-        using alvector64 = std::vector<T, detail::aligned_allocator<T, 64>>;
+        using alvector = std::vector<T, detail::aligned_allocator<T>>;
 
     } // aligned
 } // pml

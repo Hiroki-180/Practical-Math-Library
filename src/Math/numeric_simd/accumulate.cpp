@@ -1,5 +1,6 @@
 #include <PML/Core/cross_intrin.h>
 #include <PML/Math/numeric_simd/accumulate.h>
+#include <cassert>
 
 namespace pml {
 
@@ -54,6 +55,8 @@ namespace pml {
                 const double* inA,
                 std::size_t inSize)
             {
+                assert((uintptr_t)(&(inA[0])) % 32 == 0U);
+
                 __m256d lSum256 = _mm256_setzero_pd();
 
                 const std::size_t lUnrollEnd = (inSize - (inSize & 7));
@@ -88,7 +91,7 @@ namespace pml {
             }
         }
 
-        double accumulate_AVX(const alvector32<double>& inA)
+        double accumulate_AVX(const alvector<double>& inA)
         {
             return detail::accumulate_AVX(inA.data(), inA.size());
         }

@@ -155,7 +155,7 @@ TEST(TestNumericSIMD, accumulate)
     auto lSumAVXAV = 0.0;
     long long lAVXAVElapsed = 0;
     {
-        auto lAVector = pml::aligned::alvector32<double>(lSize);
+        auto lAVector = pml::aligned::alvector<double>(lSize);
         lInitializer(lAVector);
 
         // calculation using automatically selected optimal SIMD with std::vector
@@ -276,8 +276,8 @@ TEST(TestNumericSIMD, inner_product)
     auto lSumAVXAV = 0.0;
     long long lAVXAVElapsed = 0;
     {
-        auto lAVector1 = pml::aligned::alvector32<double>(lSize);
-        auto lAVector2 = pml::aligned::alvector32<double>(lSize);
+        auto lAVector1 = pml::aligned::alvector<double>(lSize);
+        auto lAVector2 = pml::aligned::alvector<double>(lSize);
         lInitializer(lAVector1, lAVector2);
 
         // calculation using automatically selected optimal SIMD with std::vector
@@ -395,37 +395,37 @@ TEST(TestNumericSIMD, positive_difference)
 
     // In case of the memory alignent is guaranteed.
     // automatically selected optimal SIMD with aligned vector.
-    auto lAnsOptSIMDAV32 = pml::aligned::alvector32<double>(lSize);
+    auto lAnsOptSIMDAVAligned = pml::aligned::alvector<double>(lSize);
     auto lAnsOptSIMDAV = std::vector<double>(lSize);
     long long lOptSIMDAVElapsed = 0;
     // AVX with aligned vector.
-    auto lAnsAVXAV32 = pml::aligned::alvector32<double>(lSize);
+    auto lAnsAVXAVAligned = pml::aligned::alvector<double>(lSize);
     auto lAnsAVXAV = std::vector<double>(lSize);
     long long lAVXAVElapsed = 0;
     {
-        auto lAVector1 = pml::aligned::alvector32<double>(lSize);
-        auto lAVector2 = pml::aligned::alvector32<double>(lSize);
+        auto lAVector1 = pml::aligned::alvector<double>(lSize);
+        auto lAVector2 = pml::aligned::alvector<double>(lSize);
         lInitializer(lAVector1, lAVector2);
 
         // calculation using automatically selected optimal SIMD with std::vector
         auto lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            pml::aligned::positive_difference_SIMD(lAVector1, lAVector2, lAnsOptSIMDAV32);
+            pml::aligned::positive_difference_SIMD(lAVector1, lAVector2, lAnsOptSIMDAVAligned);
         }
         auto lEnd = std::chrono::system_clock::now();
         lOptSIMDAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
-        lAnsOptSIMDAV.assign(lAnsOptSIMDAV32.cbegin(), lAnsOptSIMDAV32.cend());
+        lAnsOptSIMDAV.assign(lAnsOptSIMDAVAligned.cbegin(), lAnsOptSIMDAVAligned.cend());
 
         // calculation using AVX with std::vector
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            pml::aligned::positive_difference_AVX(lAVector1, lAVector2, lAnsAVXAV32);
+            pml::aligned::positive_difference_AVX(lAVector1, lAVector2, lAnsAVXAVAligned);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
-        lAnsAVXAV.assign(lAnsAVXAV32.cbegin(), lAnsAVXAV32.cend());
+        lAnsAVXAV.assign(lAnsAVXAVAligned.cbegin(), lAnsAVXAVAligned.cend());
     }
 
     outputResult(lTestNum,

@@ -137,7 +137,7 @@ namespace pml {
     namespace aligned {
 
         /**
-        * @fn accumulate_SIMD(const vector32<double>& inA)
+        * @fn accumulate_SIMD(const pml::aligned::alvector<double>& inA)
         *
         * @brief
         * Accelerated version of std::accumulate by automatically selected optimal SIMD with memory aligned data.
@@ -148,13 +148,13 @@ namespace pml {
         * @return
         * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inA.size()-1].
         */
-        double accumulate_SIMD(const alvector32<double>& inA);
+        double accumulate_SIMD(const pml::aligned::alvector<double>& inA);
 
         /**
-        * @fn inner_product_SIMD(const vector32<double>& inA, const vector32<double>& inB)
+        * @fn inner_product_SIMD(const pml::aligned::alvector<double>& inA, const pml::aligned::alvector<double>& inB)
         *
         * @brief
-        * Accelerated version of std::inner_prod by automatically selected optimal SIMD with memory aligned data.
+        * Accelerated version of std::inner_product by automatically selected optimal SIMD with memory aligned data.
         *
         * @param[in] inA
         * Aligned 1st vector.
@@ -166,11 +166,11 @@ namespace pml {
         * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inA.size()-1]*inB[inB.size()-1].
         */
         double inner_product_SIMD(
-            const alvector32<double>& inA,
-            const alvector32<double>& inB);
+            const pml::aligned::alvector<double>& inA,
+            const pml::aligned::alvector<double>& inB);
 
         /**
-        * @fn positive_difference_SIMD(const vector32<double>& inA, const vector32<double>& inB, vector32<double>& outC)
+        * @fn positive_difference_SIMD(const pml::aligned::alvector<double>& inA, const pml::aligned::alvector<double>& inB, pml::aligned::alvector<double>& outC)
         *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part by automatically selected optimal SIMD with memory aligned data.
@@ -185,9 +185,9 @@ namespace pml {
         * Aligned resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
         */
         void positive_difference_SIMD(
-            const alvector32<double>& inA,
-            const alvector32<double>& inB,
-            alvector32<double>& outC);
+            const pml::aligned::alvector<double>& inA,
+            const pml::aligned::alvector<double>& inB,
+            pml::aligned::alvector<double>& outC);
 
     } // aligned
 } // pml

@@ -1,6 +1,6 @@
 #include <PML/Core/cross_intrin.h>
 #include <PML/Math/numeric_simd/positive_difference.h>
-
+#include <cassert>
 #include <algorithm>
 
 namespace pml {
@@ -61,6 +61,8 @@ namespace pml {
                 double* outC,
                 std::size_t inSize)
             {
+                assert((uintptr_t)(&(inA[0])) % 32 == 0U);
+
                 const __m256d lZero256 = _mm256_setzero_pd();
 
                 const std::size_t lUnrollEnd = (inSize - (inSize & 7));
@@ -94,9 +96,9 @@ namespace pml {
         }
 
         void positive_difference_AVX(
-            const alvector32<double>& inA,
-            const alvector32<double>& inB,
-            alvector32<double>& outC)
+            const alvector<double>& inA,
+            const alvector<double>& inB,
+            alvector<double>& outC)
         {
             outC.resize(inA.size());
             detail::positive_difference_AVX(inA.data(), inB.data(), outC.data(), inA.size());
