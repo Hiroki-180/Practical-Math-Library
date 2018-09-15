@@ -44,25 +44,6 @@ namespace pml {
     namespace aligned {
 
         /**
-        * @fn accumulate_AVX(const array<double>& inA, std::size_t inSize)
-        *
-        * @brief
-        * Accelerated version of std::accumulate by AVX with memory aligned data.
-        *
-        * @param[in] inA
-        * 32-byte aligned array.
-        *
-        * @param[in] inSize
-        * Size of the array inA.
-        *
-        * @return
-        * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
-        */
-        double accumulate_AVX(
-            const alarray<double>& inA,
-            std::size_t inSize);
-
-        /**
         * @fn accumulate_AVX(const vector32<double>& inA)
         *
         * @brief

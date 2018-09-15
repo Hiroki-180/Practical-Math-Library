@@ -94,15 +94,6 @@ namespace pml {
         }
 
         void positive_difference_AVX(
-            const alarray<double>& inA,
-            const alarray<double>& inB,
-            alarray<double>& outC,
-            std::size_t inSize)
-        {
-            detail::positive_difference_AVX(inA.get(), inB.get(), outC.get(), inSize);
-        }
-
-        void positive_difference_AVX(
             const alvector32<double>& inA,
             const alvector32<double>& inB,
             alvector32<double>& outC)

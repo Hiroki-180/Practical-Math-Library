@@ -88,13 +88,6 @@ namespace pml {
             }
         }
 
-        double accumulate_AVX(
-            const alarray<double>& inA,
-            std::size_t inSize)
-        {
-            return detail::accumulate_AVX(inA.get(), inSize);
-        }
-
         double accumulate_AVX(const alvector32<double>& inA)
         {
             return detail::accumulate_AVX(inA.data(), inA.size());

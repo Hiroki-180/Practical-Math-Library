@@ -33,7 +33,6 @@
 #endif
 
 namespace pml {
-
     namespace aligned {
 
         namespace detail {

@@ -15,7 +15,6 @@
 #include <vector>
 
 namespace pml {
-
     namespace aligned {
 
         namespace detail {

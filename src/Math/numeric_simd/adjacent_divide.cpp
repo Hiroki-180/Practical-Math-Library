@@ -85,20 +85,23 @@ namespace pml {
 
                 inSize -= 1;
 
-                const std::size_t lUnrollEnd = (inSize - (inSize & 7));
-                for (std::size_t i = 1; i < lUnrollEnd; i += 8)
+                const std::size_t lUnrollEnd = (inSize - (inSize & 3));
+                for (std::size_t i = 1; i < lUnrollEnd; i += 4)
                 {
-                    __m256d lNum256 = _mm256_load_pd(&inA[i - 1]);
-                    __m256d lDen256 = _mm256_load_pd(&inA[i]);
-                    __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
+                    const __m256d lNum256 = _mm256_load_pd(&inA[i - 1]);
+                    const __m256d lDen256 = _mm256_load_pd(&inA[i]);
+                    const __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
                     _mm256_store_pd(&outB[i - 1], lDiv256);
 
+                    /*
                     lNum256 = _mm256_load_pd(&inA[i + 3]);
                     lDen256 = _mm256_load_pd(&inA[i + 4]);
                     lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
                     _mm256_store_pd(&outB[i + 3], lDiv256);
+                    */
                 }
 
+                /*
                 const std::size_t l256End = (inSize - (inSize & 3));
                 if (l256End != lUnrollEnd)
                 {
@@ -107,21 +110,13 @@ namespace pml {
                     const __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
                     _mm256_store_pd(&outB[lUnrollEnd - 1], lDiv256);
                 }
+                */
 
-                for (std::size_t i = l256End; i < inSize; ++i)
+                for (std::size_t i = lUnrollEnd; i < inSize; ++i)
                 {
                     outB[i] = inA[i] / inA[i + 1] + inShift;
                 }
             }
-        }
-
-        void adjacent_divide_AVX(
-            const alarray<double>& inA,
-            double inShift,
-            alarray<double>& outB,
-            std::size_t inSize)
-        {
-            detail::adjacent_divide_AVX(inA.get(), inShift, outB.get(), inSize);
         }
 
         void adjacent_divide_AVX(
