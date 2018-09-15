@@ -100,6 +100,8 @@ namespace pml {
             const alvector<double>& inB,
             alvector<double>& outC)
         {
+            assert(inA.size() == inB.size());
+
             outC.resize(inA.size());
             detail::positive_difference_AVX(inA.data(), inB.data(), outC.data(), inA.size());
         }

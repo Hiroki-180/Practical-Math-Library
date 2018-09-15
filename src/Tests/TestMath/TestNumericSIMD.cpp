@@ -72,7 +72,7 @@ TEST(TestNumericSIMD, accumulate)
 		= 5000;
 #endif
 
-    const std::size_t lSize = 100;
+    const std::size_t lSize = 150;
 	auto lInitializer = [lSize](auto& inArray)->void
 	{
 		for (auto i = 0U; i < lSize; ++i)
@@ -191,7 +191,7 @@ TEST(TestNumericSIMD, inner_product)
         = 5000;
 #endif
 
-    const std::size_t lSize = 100;
+    const std::size_t lSize = 150;
     auto lInitializer = [lSize](auto& inArray1, auto& inArray2)->void
     {
         for (auto i = 0U; i < lSize; ++i)
@@ -313,7 +313,7 @@ TEST(TestNumericSIMD, positive_difference)
         = 2000;
 #endif
 
-    const std::size_t lSize = 100;
+    const std::size_t lSize = 150;
     auto lInitializer = [lSize](auto& inArray1, auto& inArray2)->void
     {
         for (auto i = 0U; i < lSize; ++i)
