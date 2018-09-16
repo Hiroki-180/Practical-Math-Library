@@ -44,17 +44,21 @@ add_library(
   numeric_simd/accumulate.cpp
   numeric_simd/inner_product.cpp
   numeric_simd/positive_difference.cpp
+  numeric_simd/adjacent_divide.cpp
   ../../include/PML/Math/constants.h
   ../../include/PML/Math/pmath.h
   ../../include/PML/Math/numeric_simd.h
   ../../include/PML/Math/numeric_simd/accumulate.h
   ../../include/PML/Math/numeric_simd/inner_product.h
-  ../../include/PML/Math/numeric_simd/positive_difference.h)
+  ../../include/PML/Math/numeric_simd/positive_difference.h
+  ../../include/PML/Math/numeric_simd/adjacent_divide.h)
 
 SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/accumulate.h)
 SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/inner_product.h)
 SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/positive_difference.h)
+SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/adjacent_divide.h)
 
 SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/accumulate.cpp)
 SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/inner_product.cpp)
 SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/positive_difference.cpp)
+SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/adjacent_divide.cpp)

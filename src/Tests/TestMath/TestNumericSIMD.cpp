@@ -16,6 +16,7 @@ namespace {
     template<typename T>
     void outputResult(
         std::size_t inTestNum,
+        std::size_t inSize,
         const T& inAns,
         const T& inOptSIMDVResult,
         const T& inAVXVResult,
@@ -45,6 +46,7 @@ namespace {
             << "---Debud Mode---\n"
 #endif
             << inTestNum << "-times calculation,\n"
+            << inSize << "-elements array,\n"
             << "Naive           :" << inElapsedTime         << "[msec],\n"
             << "Opt. SIMD Vector:" << inElapsedTimeOptSIMDV << "[msec],\n"
             << "AVX Vector      :" << inElapsedTimeAVXV     << "[msec].\n"
@@ -178,7 +180,8 @@ TEST(TestNumericSIMD, accumulate)
         lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
     }
 
-	outputResult(lTestNum,
+	outputResult(
+        lTestNum, lSize,
         lSum, lSumOptSIMDV, lSumAVXV, lSumOptSIMDA, lSumAVXA, lSumOptSIMDAV, lSumAVXAV,
         lElapsed, lOptSIMDVElapsed, lAVXVElapsed, lOptSIMDAElapsed, lAVXAElapsed, lOptSIMDAVElapsed, lAVXAVElapsed);
 }
@@ -300,7 +303,8 @@ TEST(TestNumericSIMD, inner_product)
         lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
     }
 
-    outputResult(lTestNum,
+    outputResult(
+        lTestNum, lSize,
         lSum, lSumOptSIMDV, lSumAVXV, lSumOptSIMDA, lSumAVXA, lSumOptSIMDAV, lSumAVXAV,
         lElapsed, lOptSIMDVElapsed, lAVXVElapsed, lOptSIMDAElapsed, lAVXAElapsed, lOptSIMDAVElapsed, lAVXAVElapsed);
 }
@@ -429,7 +433,8 @@ TEST(TestNumericSIMD, positive_difference)
         lAnsAVXAV.assign(lAnsAVXAVAligned.cbegin(), lAnsAVXAVAligned.cend());
     }
 
-    outputResult(lTestNum,
+    outputResult(
+        lTestNum, lSize,
         lAns, lAnsOptSIMDV, lAnsAVXV, lAnsOptSIMDA, lAnsAVXA, lAnsOptSIMDAV, lAnsAVXAV,
         lElapsed, lOptSIMDVElapsed, lAVXVElapsed, lOptSIMDAElapsed, lAVXAElapsed, lOptSIMDAVElapsed, lAVXAVElapsed);
 }
@@ -438,7 +443,7 @@ TEST(TestNumericSIMD, adjacent_divide)
 {
     const auto lTestNum
 #ifdef NDEBUG
-        = 200000;
+        = 100000;
 #else
         = 2000;
 #endif
@@ -558,7 +563,8 @@ TEST(TestNumericSIMD, adjacent_divide)
         lAnsAVXAV.assign(lAnsAVXAVAligned.cbegin(), lAnsAVXAVAligned.cend());
     }
 
-    outputResult(lTestNum,
+    outputResult(
+        lTestNum, lSize,
         lAns, lAnsOptSIMDV, lAnsAVXV, lAnsOptSIMDA, lAnsAVXA, lAnsOptSIMDAV, lAnsAVXAV,
         lElapsed, lOptSIMDVElapsed, lAVXVElapsed, lOptSIMDAElapsed, lAVXAElapsed, lOptSIMDAVElapsed, lAVXAVElapsed);
 }
