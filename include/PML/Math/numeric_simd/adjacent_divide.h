@@ -55,10 +55,10 @@ namespace pml {
     namespace aligned {
 
         /**
-        * @fn adjacent_divide_AVX(const vector32<double>& inA, double inShift, vector32<double>& outB)
+        * @fn adjacent_divide_AVX(const alvector<double>& inA, double inShift, alvector<double>& outB)
         *
         * @brief
-        * Dividing elements by the adjacent elements.
+        * Dividing elements by the adjacent elements using AVX and memory aligned data.
         *
         * @param[in] inA
         * 32-byte aligned input array as vector.
@@ -70,9 +70,9 @@ namespace pml {
         * 32-byte aligned resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
         */
         void adjacent_divide_AVX(
-            const alvector32<double>& inA,
+            const alvector<double>& inA,
             double inShift,
-            alvector32<double>& outB);
+            alvector<double>& outB);
 
     } // aligned
 } // pml

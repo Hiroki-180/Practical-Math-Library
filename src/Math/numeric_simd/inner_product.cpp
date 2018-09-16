@@ -1,5 +1,5 @@
 #include <PML/Core/cross_intrin.h>
-#include <PML/Math/numeric_simd/accumulate.h>
+#include <PML/Math/numeric_simd/inner_product.h>
 #include <cassert>
 
 namespace pml {
@@ -7,8 +7,9 @@ namespace pml {
     namespace {
 
         template<typename T>
-        double accumulate_AVX_Impl(
+        double inner_product_AVX_Impl(
             const double* inA,
+            const double* inB,
             std::size_t inSize,
             T inLoader)
         {
@@ -17,16 +18,23 @@ namespace pml {
             const std::size_t lUnrollEnd = (inSize - (inSize & 7));
             for (std::size_t i = 0; i < lUnrollEnd; i += 8)
             {
-                const __m256d lF256 = inLoader(&inA[i]);
-                const __m256d lB256 = inLoader(&inA[i + 4]);
+                const __m256d lAF256 = inLoader(&inA[i]);
+                const __m256d lAB256 = inLoader(&inA[i + 4]);
 
-                lSum256 = _mm256_add_pd(lSum256, _mm256_add_pd(lF256, lB256));
+                const __m256d lBF256 = inLoader(&inB[i]);
+                const __m256d lBB256 = inLoader(&inB[i + 4]);
+
+                lSum256 = _mm256_add_pd(lSum256, _mm256_mul_pd(lAF256, lBF256));
+                lSum256 = _mm256_add_pd(lSum256, _mm256_mul_pd(lAB256, lBB256));
             }
 
             const std::size_t l256End = (inSize - (inSize & 3));
             if (l256End != lUnrollEnd)
             {
-                lSum256 = _mm256_add_pd(lSum256, inLoader(&inA[lUnrollEnd]));
+                const __m256d lA256 = inLoader(&inA[lUnrollEnd]);
+                const __m256d lB256 = inLoader(&inB[lUnrollEnd]);
+
+                lSum256 = _mm256_add_pd(lSum256, _mm256_mul_pd(lA256, lB256));
             }
 
             const __m128d hiDual = _mm256_extractf128_pd(lSum256, 1);
@@ -39,35 +47,44 @@ namespace pml {
 
             for (std::size_t i = l256End; i < inSize; ++i)
             {
-                lSum += inA[i];
+                lSum += inA[i] * inB[i];
             }
 
             return lSum;
         }
     } // unnamed
 
-    double accumulate_AVX(
+    double inner_product_AVX(
         const double* inA,
+        const double* inB,
         std::size_t inSize)
     {
-        return accumulate_AVX_Impl(
-            inA, inSize,
+        return inner_product_AVX_Impl(
+            inA, inB, inSize,
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
-
-    double accumulate_AVX(const std::vector<double>& inA)
+        
+    double inner_product_AVX(
+        const std::vector<double>& inA,
+        const std::vector<double>& inB)
     {
-        return accumulate_AVX_Impl(
-            inA.data(), inA.size(),
+        assert(inA.size() == inB.size());
+
+        return inner_product_AVX_Impl(
+            inA.data(), inB.data(), inA.size(),
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
 
     namespace aligned {
 
-        double accumulate_AVX(const alvector<double>& inA)
+        double inner_product_AVX(
+            const alvector<double>& inA,
+            const alvector<double>& inB)
         {
-            return accumulate_AVX_Impl(
-                inA.data(), inA.size(),
+            assert(inA.size() == inB.size());
+
+            return inner_product_AVX_Impl(
+                inA.data(), inB.data(), inA.size(),
                 [](auto* inArray) { return _mm256_load_pd(inArray); });
         }
 

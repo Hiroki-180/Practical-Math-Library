@@ -5,6 +5,7 @@
 #include <PML/Math/numeric_simd/accumulate.h>
 #include <PML/Math/numeric_simd/inner_product.h>
 #include <PML/Math/numeric_simd/positive_difference.h>
+#include <PML/Math/numeric_simd/adjacent_divide.h>
 #include <PML/Core/CPUDispatcher.h>
 #include <numeric>
 #include <chrono>
@@ -422,6 +423,135 @@ TEST(TestNumericSIMD, positive_difference)
         for (auto i = 0; i < lTestNum; ++i)
         {
             pml::aligned::positive_difference_AVX(lAVector1, lAVector2, lAnsAVXAVAligned);
+        }
+        lEnd = std::chrono::system_clock::now();
+        lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+        lAnsAVXAV.assign(lAnsAVXAVAligned.cbegin(), lAnsAVXAVAligned.cend());
+    }
+
+    outputResult(lTestNum,
+        lAns, lAnsOptSIMDV, lAnsAVXV, lAnsOptSIMDA, lAnsAVXA, lAnsOptSIMDAV, lAnsAVXAV,
+        lElapsed, lOptSIMDVElapsed, lAVXVElapsed, lOptSIMDAElapsed, lAVXAElapsed, lOptSIMDAVElapsed, lAVXAVElapsed);
+}
+
+TEST(TestNumericSIMD, adjacent_divide)
+{
+    const auto lTestNum
+#ifdef NDEBUG
+        = 200000;
+#else
+        = 2000;
+#endif
+
+    const std::size_t lSize = 100;
+    auto lInitializer = [lSize](auto& inArray)->void
+    {
+        for (auto i = 0U; i < lSize; ++i)
+        {
+            inArray[i] = static_cast<double>(i);
+        }
+    };
+
+    const auto lShift = -1.0;
+
+    // In case of the memory alignent is not guaranteed.
+    // STL.
+    auto lAns = std::vector<double>(lSize);
+    long long lElapsed = 0;
+    // automatically selected optimal SIMD with std::vector.
+    auto lAnsOptSIMDV = std::vector<double>(lSize);
+    long long lOptSIMDVElapsed = 0;
+    // AVX with std::vector.
+    auto lAnsAVXV = std::vector<double>(lSize);
+    long long lAVXVElapsed = 0;
+    // automatically selected optimal SIMD with array.
+    auto lAnsOptSIMDA = std::vector<double>(lSize);
+    long long lOptSIMDAElapsed = 0;
+    // AVX with array.
+    auto lAnsAVXA = std::vector<double>(lSize);
+    long long lAVXAElapsed = 0;
+    {
+        std::vector<double> lVector(lSize);
+        lInitializer(lVector);
+
+        // naive.
+        auto lStart = std::chrono::system_clock::now();
+        for (auto i = 0; i < lTestNum; ++i)
+        {
+            lAns.back() = lVector.back();
+            for (std::size_t j = (lSize - 1); j > 0; --j)
+            {
+                lAns[j - 1] = lVector[j - 1] / lVector[j] + lShift;
+            }
+        }
+        auto lEnd = std::chrono::system_clock::now();
+        lElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+
+        // calculation using automatically selected optimal SIMD with std::vector
+        lStart = std::chrono::system_clock::now();
+        for (auto i = 0; i < lTestNum; ++i)
+        {
+            pml::adjacent_divide_SIMD(lVector, lShift, lAnsOptSIMDV);
+        }
+        lEnd = std::chrono::system_clock::now();
+        lOptSIMDVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+
+        // calculation using AVX with std::vector
+        lStart = std::chrono::system_clock::now();
+        for (auto i = 0; i < lTestNum; ++i)
+        {
+            pml::adjacent_divide_AVX(lVector, lShift, lAnsAVXV);
+        }
+        lEnd = std::chrono::system_clock::now();
+        lAVXVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+
+        // calculation using automatically selected optimal SIMD with array.
+        lStart = std::chrono::system_clock::now();
+        for (auto i = 0; i < lTestNum; ++i)
+        {
+            pml::adjacent_divide_SIMD(lVector.data(), lShift, lAnsOptSIMDA.data(), lVector.size());
+        }
+        lEnd = std::chrono::system_clock::now();
+        lOptSIMDAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+
+        // calculation using AVX with array.
+        lStart = std::chrono::system_clock::now();
+        for (auto i = 0; i < lTestNum; ++i)
+        {
+            pml::adjacent_divide_AVX(lVector.data(), lShift, lAnsAVXA.data(), lVector.size());
+        }
+        lEnd = std::chrono::system_clock::now();
+        lAVXAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+    }
+
+    // In case of the memory alignent is guaranteed.
+    // automatically selected optimal SIMD with aligned vector.
+    auto lAnsOptSIMDAVAligned = pml::aligned::alvector<double>(lSize);
+    auto lAnsOptSIMDAV = std::vector<double>(lSize);
+    long long lOptSIMDAVElapsed = 0;
+    // AVX with aligned vector.
+    auto lAnsAVXAVAligned = pml::aligned::alvector<double>(lSize);
+    auto lAnsAVXAV = std::vector<double>(lSize);
+    long long lAVXAVElapsed = 0;
+    {
+        auto lAVector = pml::aligned::alvector<double>(lSize);
+        lInitializer(lAVector);
+
+        // calculation using automatically selected optimal SIMD with std::vector
+        auto lStart = std::chrono::system_clock::now();
+        for (auto i = 0; i < lTestNum; ++i)
+        {
+            pml::aligned::adjacent_divide_SIMD(lAVector, lShift, lAnsOptSIMDAVAligned);
+        }
+        auto lEnd = std::chrono::system_clock::now();
+        lOptSIMDAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+        lAnsOptSIMDAV.assign(lAnsOptSIMDAVAligned.cbegin(), lAnsOptSIMDAVAligned.cend());
+
+        // calculation using AVX with std::vector
+        lStart = std::chrono::system_clock::now();
+        for (auto i = 0; i < lTestNum; ++i)
+        {
+            pml::aligned::adjacent_divide_AVX(lAVector, lShift, lAnsAVXAVAligned);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();

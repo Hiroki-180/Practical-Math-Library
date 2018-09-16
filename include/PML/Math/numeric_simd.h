@@ -82,6 +82,30 @@ namespace pml {
         std::size_t inSize);
 
     /**
+    * @fn adjacent_divide_SIMD(const double* inA, double* outB, std::size_t inSize)
+    *
+    * @brief
+    * Dividing elements by the adjacent elements using automatically selected optimal SIMD.
+    *
+    * @param[in] inA
+    * Pointer to the address of the first element of the input array.
+    *
+    * @param[in] inShift
+    * Shift value.
+    *
+    * @param[out] outB
+    * Resulted array, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
+    *
+    * @param[in] inSize
+    * Size of the array inA and outB.
+    */
+    void adjacent_divide_SIMD(
+        const double* inA,
+        double inShift,
+        double* outB,
+        std::size_t inSize);
+
+    /**
     * @fn accumulate_SIMD(const std::vector<double>& inA);
     *
     * @brief
@@ -133,6 +157,26 @@ namespace pml {
         const std::vector<double>& inA,
         const std::vector<double>& inB,
         std::vector<double>& outC);
+
+    /**
+    * @fn adjacent_divide_SIMD(const std::vector<double>& inA, std::vector<double>& outB)
+    *
+    * @brief
+    * Dividing elements by the adjacent elements using automatically selected optimal SIMD.
+    *
+    * @param[in] inA
+    * Input array as std::vector.
+    *
+    * @param[in] inShift
+    * Shift value.
+    *
+    * @param[out] outB
+    * Resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
+    */
+    void adjacent_divide_SIMD(
+        const std::vector<double>& inA,
+        double inShift,
+        std::vector<double>& outB);
 
     namespace aligned {
 
@@ -188,6 +232,26 @@ namespace pml {
             const pml::aligned::alvector<double>& inA,
             const pml::aligned::alvector<double>& inB,
             pml::aligned::alvector<double>& outC);
+
+        /**
+        * @fn adjacent_divide_AVX(const pml::aligned::alvector<double>& inA, double inShift, pml::aligned::alvector<double>& outB)
+        *
+        * @brief
+        * Dividing elements by the adjacent elements using automatically selected optimal SIMD with memory aligned data.
+        *
+        * @param[in] inA
+        * Aligned input array as vector.
+        *
+        * @param[in] inShift
+        * Shift value.
+        *
+        * @param[out] outB
+        * Aligned resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
+        */
+        void adjacent_divide_SIMD(
+            const pml::aligned::alvector<double>& inA,
+            double inShift,
+            pml::aligned::alvector<double>& outB);
 
     } // aligned
 } // pml
