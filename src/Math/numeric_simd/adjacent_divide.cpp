@@ -3,54 +3,54 @@
 
 namespace pml {
 
-    template<typename T>
-    void adjacent_divide_AVX_Impl(
-        const double* inA,
-        double inShift,
-        double* outB,
-        std::size_t inSize,
-        T inLoader)
-    {
-        if (inSize == 0)
+    namespace {
+
+        template<typename T>
+        void adjacent_divide_AVX_Impl(
+            const double* inA,
+            double inShift,
+            double* outB,
+            std::size_t inSize,
+            T inLoader)
         {
-            return;
-        }
+            const __m256d lShift = _mm256_set1_pd(inShift);
+            const std::size_t l256End = (inSize - (inSize & 3));
+            __m256d lA256 = inLoader(&inA[0]);
 
-        outB[inSize - 1] = inA[inSize - 1];
+            if (l256End != 0)
+            {
+                const __m256d lB256 = aligned::_mm256_rotate_left_pd(lA256, -1);
+                const __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lB256, lA256), lShift);
+                _mm256_store_pd(&outB[0], lDiv256);
 
-        if (inSize == 1)
-        {
-            return;
-        }
+                outB[0] = inA[0];
+            }
 
-        inSize -= 1;
+            const __m256d lMask256 = _mm256_set_pd(-1, 0, 0, 0);
+            for (std::size_t i = 4; i < l256End; i += 4)
+            {
+                // A: inA[i-4], inA[i-3], inA[i-2], inA[i-1]
 
-        const std::size_t lUnrollEnd = (inSize - (inSize & 7));
-        for (std::size_t i = 1; i < lUnrollEnd; i += 8)
-        {
-            __m256d lNum256 = inLoader(&inA[i - 1]);
-            __m256d lDen256 = inLoader(&inA[i]);
-            __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
-            _mm256_store_pd(&outB[i - 1], lDiv256);
+                // B: inA[i], inA[i+1], inA[i+2], inA[i+3]
+                __m256d lB256 = inLoader(&inA[i]);
 
-            lNum256 = inLoader(&inA[i + 3]);
-            lDen256 = inLoader(&inA[i + 4]);
-            lDiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
-            _mm256_store_pd(&outB[i + 3], lDiv256);
-        }
+                // C: inA[i], inA[i+1], inA[i+2], inA[i-1]
+                __m256d lC256 = _mm256_blendv_pd(lB256, lA256, lMask256);
 
-        const std::size_t l256End = (inSize - (inSize & 3));
-        if (l256End != lUnrollEnd)
-        {
-            const __m256d lNum256 = inLoader(&inA[lUnrollEnd - 1]);
-            const __m256d lDen256 = inLoader(&inA[lUnrollEnd]);
-            const __m256d lDeiv256 = _mm256_add_pd(_mm256_div_pd(lNum256, lDen256), _mm256_set1_pd(inShift));
-            _mm256_store_pd(&outB[lUnrollEnd - 1], lDeiv256);
-        }
+                // D: inA[i-1], inA[i], inA[i+1], inA[i+2]
+                const __m256d lD256 = aligned::_mm256_rotate_left_pd(lC256, -1);
 
-        for (std::size_t i = l256End; i < inSize; ++i)
-        {
-            outB[i] = inA[i] / inA[i + 1] + inShift;
+                // Div: inA[i-1]/inA[i], inA[i]/inA[i+1], inA[i+1]/inA[i+2], inA[i+2]/inA[i+3]
+                const __m256d lDiv256 = _mm256_add_pd(_mm256_div_pd(lD256, lB256), lShift);
+                _mm256_store_pd(&outB[i], lDiv256);
+
+                std::swap(lA256, lB256);
+            }
+
+            for (std::size_t i = l256End; i < inSize; ++i)
+            {
+                outB[i] = inA[i - 1] / inA[i] + inShift;
+            }
         }
     }
 

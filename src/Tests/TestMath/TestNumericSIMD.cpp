@@ -443,7 +443,7 @@ TEST(TestNumericSIMD, adjacent_divide)
 {
     const auto lTestNum
 #ifdef NDEBUG
-        = 100000;
+        = 300000;
 #else
         = 2000;
 #endif
@@ -483,10 +483,10 @@ TEST(TestNumericSIMD, adjacent_divide)
         auto lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lAns.back() = lVector.back();
-            for (std::size_t j = (lSize - 1); j > 0; --j)
+            lAns[0] = lVector[0];
+            for (std::size_t j = 1; j < lSize; ++j)
             {
-                lAns[j - 1] = lVector[j - 1] / lVector[j] + lShift;
+                lAns[j] = lVector[j - 1] / lVector[j] + lShift;
             }
         }
         auto lEnd = std::chrono::system_clock::now();

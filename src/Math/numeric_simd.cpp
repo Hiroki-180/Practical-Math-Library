@@ -61,10 +61,10 @@ namespace pml {
             return adjacent_divide_AVX(inA, inShift, outB, inSize);
         }
 
-        outB[inSize - 1] = inA[inSize - 1];
-        for (std::size_t i = (inSize - 1); i > 0; --i)
+        outB[0] = inA[0];
+        for (std::size_t i = 1; i < inShift; ++i)
         {
-            outB[i - 1] = inA[i - 1] / inA[i] + inShift;
+            outB[i] = inA[i - 1] / inA[i] + inShift;
         }
     }
 
@@ -118,10 +118,10 @@ namespace pml {
         }
 
         outB.resize(inA.size());
-        outB.back() = inA.back();
-        for (std::size_t i = (inA.size() - 1); i > 0; --i)
+        outB[0] = inA[0];
+        for (std::size_t i = 1; i < inShift; ++i)
         {
-            outB[i - 1] = inA[i - 1] / inA[i] + inShift;
+            outB[i] = inA[i - 1] / inA[i] + inShift;
         }
     }
 
@@ -177,10 +177,10 @@ namespace pml {
             }
 
             outB.resize(inA.size());
-            outB.back() = inA.back();
-            for (std::size_t i = (inA.size() - 1); i > 0; --i)
+            outB[0] = inA[0];
+            for (std::size_t i = 1; i < inShift; ++i)
             {
-                outB[i - 1] = inA[i - 1] / inA[i] + inShift;
+                outB[i] = inA[i - 1] / inA[i] + inShift;
             }
         }
 

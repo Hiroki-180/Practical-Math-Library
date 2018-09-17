@@ -37,6 +37,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)
 add_library(
   Core
   STATIC
+  cross_intrin.cpp
   CPUDispatcher.cpp
   ../../include/PML/Core/cross_intrin.h
   ../../include/PML/Core/aligned_array.h

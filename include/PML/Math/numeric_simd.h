@@ -94,7 +94,7 @@ namespace pml {
     * Shift value.
     *
     * @param[out] outB
-    * Resulted array, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
+    * Resulted array, (inA[0], inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift).
     *
     * @param[in] inSize
     * Size of the array inA and outB.
@@ -171,7 +171,7 @@ namespace pml {
     * Shift value.
     *
     * @param[out] outB
-    * Resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
+    * Resulted array as vector, (inA[0], inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift).
     */
     void adjacent_divide_SIMD(
         const std::vector<double>& inA,
@@ -246,7 +246,7 @@ namespace pml {
         * Shift value.
         *
         * @param[out] outB
-        * Aligned resulted array as vector, (inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift, inA[inSize-1]).
+        * Aligned resulted array as vector, (inA[0], inA[0]/inA[1] + inShift, inA[1]/inA[2] + inShift, ..., inA[inSize-2]/inA[inSize-1] + inShift).
         */
         void adjacent_divide_SIMD(
             const pml::aligned::alvector<double>& inA,
