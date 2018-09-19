@@ -12,31 +12,31 @@ TEST(TestMathConstants, PI)
 
 TEST(TestMathConstants, PI_Relations)
 {
-	const auto lAnsPI= std::acos(-1.0);
-	EXPECT_DOUBLE_EQ(std::sqrt(lAnsPI), pml::constants::SqrtPI());
+    const auto lAnsPI = std::acos(-1.0);
+    EXPECT_DOUBLE_EQ(std::sqrt(lAnsPI), pml::constants::SqrtPI());
     EXPECT_DOUBLE_EQ(1.0 / lAnsPI, pml::constants::_1OverPI());
     EXPECT_DOUBLE_EQ(2.0 / lAnsPI, pml::constants::_2OverPI());
     EXPECT_DOUBLE_EQ(4.0 / lAnsPI, pml::constants::_4OverPI());
 
-	const auto lAnsPIHalf = 0.5*lAnsPI;
+    const auto lAnsPIHalf = 0.5*lAnsPI;
     EXPECT_DOUBLE_EQ(lAnsPIHalf, pml::constants::PIHalf());
     EXPECT_DOUBLE_EQ(std::sqrt(lAnsPIHalf), pml::constants::SqrtPIHalf());
 
     const auto lAnsPIQuater = 0.25*lAnsPI;
     EXPECT_DOUBLE_EQ(lAnsPIQuater, pml::constants::PIQuater());
 
-	const auto lAnsTwoPI = 2.0*lAnsPI;
+    const auto lAnsTwoPI = 2.0*lAnsPI;
     EXPECT_DOUBLE_EQ(lAnsTwoPI, pml::constants::TwoPI());
     EXPECT_DOUBLE_EQ(std::sqrt(lAnsTwoPI), pml::constants::SqrtTwoPI());
     EXPECT_DOUBLE_EQ(1.0 / lAnsTwoPI, pml::constants::_1OverTwoPI());
     EXPECT_DOUBLE_EQ(1.0 / std::sqrt(lAnsTwoPI), pml::constants::_1OverSqrtTwoPI());
 
-	EXPECT_DOUBLE_EQ(lAnsPI*lAnsPI, pml::constants::PISqrd());
+    EXPECT_DOUBLE_EQ(lAnsPI*lAnsPI, pml::constants::PISqrd());
 }
 
 TEST(TestMathConstants, e)
 {
-	EXPECT_DOUBLE_EQ(1.0, std::log(pml::constants::e()));
+    EXPECT_DOUBLE_EQ(1.0, std::log(pml::constants::e()));
 }
 
 TEST(TestMathConstants, Sqrts)
@@ -52,7 +52,7 @@ TEST(TestMathConstants, Sqrts)
 
 TEST(TestMathConstants, GoldenRatio)
 {
-	EXPECT_DOUBLE_EQ(0.5*(1.0 + pml::constants::SqrtOf5()), pml::constants::GoldenRatio());
+    EXPECT_DOUBLE_EQ(0.5*(1.0 + pml::constants::SqrtOf5()), pml::constants::GoldenRatio());
 }
 
 TEST(TestMathConstants, Apery)
@@ -75,8 +75,8 @@ TEST(TestMathConstants, UniversalParabolicP)
 
 TEST(TestMathConstants, RationalNumbers)
 {
-	EXPECT_DOUBLE_EQ(1.0 / 3.0, pml::constants::Q::_1over3());
-	EXPECT_DOUBLE_EQ(1.0 / 6.0, pml::constants::Q::_1over6());
-	EXPECT_DOUBLE_EQ(1.0 / 7.0, pml::constants::Q::_1over7());
-	EXPECT_DOUBLE_EQ(1.0 / 9.0, pml::constants::Q::_1over9());
+    EXPECT_DOUBLE_EQ(1.0 / 3.0, pml::constants::Q::_1over3());
+    EXPECT_DOUBLE_EQ(1.0 / 6.0, pml::constants::Q::_1over6());
+    EXPECT_DOUBLE_EQ(1.0 / 7.0, pml::constants::Q::_1over7());
+    EXPECT_DOUBLE_EQ(1.0 / 9.0, pml::constants::Q::_1over9());
 }
