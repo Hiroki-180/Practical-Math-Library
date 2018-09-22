@@ -50,24 +50,6 @@ namespace pml {
         }
     }
 
-    void adjacent_divide_SIMD(
-        const double* inA,
-        double inShift,
-        double* outB,
-        std::size_t inSize)
-    {
-        if (CPUDispatcher::isAVX())
-        {
-            return adjacent_divide_AVX(inA, inShift, outB, inSize);
-        }
-
-        outB[0] = inA[0];
-        for (std::size_t i = 1; i < inShift; ++i)
-        {
-            outB[i] = inA[i - 1] / inA[i] + inShift;
-        }
-    }
-
     double accumulate_SIMD(const std::vector<double>& inA)
     {
         if (CPUDispatcher::isAVX())
@@ -97,31 +79,14 @@ namespace pml {
     {
         if (CPUDispatcher::isAVX())
         {
-            return positive_difference_AVX(inA, inB, outC);
+            positive_difference_AVX(inA, inB, outC);
+            return;
         }
 
         outC.resize(inA.size());
         for (std::size_t i = 0; i < inA.size(); ++i)
         {
             outC[i] = std::max(inA[i] - inB[i], 0.0);
-        }
-    }
-
-    void adjacent_divide_SIMD(
-        const std::vector<double>& inA,
-        double inShift,
-        std::vector<double>& outB)
-    {
-        if (CPUDispatcher::isAVX())
-        {
-            return adjacent_divide_AVX(inA, inShift, outB);
-        }
-
-        outB.resize(inA.size());
-        outB[0] = inA[0];
-        for (std::size_t i = 1; i < inShift; ++i)
-        {
-            outB[i] = inA[i - 1] / inA[i] + inShift;
         }
     }
 
@@ -163,24 +128,6 @@ namespace pml {
             for (std::size_t i = 0; i < inA.size(); ++i)
             {
                 outC[i] = std::max(inA[i] - inB[i], 0.0);
-            }
-        }
-
-        void adjacent_divide_SIMD(
-            const alvector<double>& inA,
-            double inShift,
-            alvector<double>& outB)
-        {
-            if (CPUDispatcher::isAVX())
-            {
-                return aligned::adjacent_divide_AVX(inA, inShift, outB);
-            }
-
-            outB.resize(inA.size());
-            outB[0] = inA[0];
-            for (std::size_t i = 1; i < inShift; ++i)
-            {
-                outB[i] = inA[i - 1] / inA[i] + inShift;
             }
         }
 

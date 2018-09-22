@@ -5,6 +5,7 @@
 
 #include <chrono>
 #include <cmath>
+#include <functional>
 
 TEST(TestPMath, exp_value)
 {
@@ -82,43 +83,54 @@ TEST(TestPMath, expv_value)
     }
 }
 
-TEST(TestPMath, sin_value)
+
+class pmath_trigonometric : public ::testing::TestWithParam<
+    std::pair<std::function<double(double)>, std::function<double(double)>>> {};
+
+TEST_P(pmath_trigonometric, value)
 {
-    for (auto i = -20000; i < 20000; ++i)
+    const auto& lSTLF = GetParam().first;
+    const auto& lPMLF = GetParam().second;
+
+    for (auto i = -1000000; i < 1000000; ++i)
     {
-        const auto lX = static_cast<double>(i);
-        EXPECT_DOUBLE_EQ(std::sin(lX), pml::sin(lX));
+        const auto lX = static_cast<double>(i*0.0001);
+        EXPECT_DOUBLE_EQ(lSTLF(lX), lPMLF(lX)) << lX;
     }
 }
 
-TEST(TestPMath, sin_performance)
+TEST_P(pmath_trigonometric, performance)
 {
     const auto lTestNum
 #ifdef NDEBUG
-        = 2000000;
+        = 10000000;
 #else
         = 100000;
 #endif
 
     auto lSum = 0.0;
+    const auto& lSTLF = GetParam().first;
     const auto lStart = std::chrono::system_clock::now();
     for (auto i = 0; i < lTestNum; ++i)
     {
-        lSum += std::sin(static_cast<double>(i));
+        const auto lX = static_cast<double>(i*0.00001);
+        lSum += lSTLF(lX);
     }
     const auto lEnd = std::chrono::system_clock::now();
     const auto lElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
 
     auto lSumPML = 0.0;
+    const auto& lPMLF = GetParam().second;
     const auto lStartPML = std::chrono::system_clock::now();
     for (auto i = 0; i < lTestNum; ++i)
     {
-        lSumPML += pml::sin(static_cast<double>(i));
+        const auto lX = static_cast<double>(i*0.00001);
+        lSumPML += lPMLF(lX);
     }
     const auto lEndPML = std::chrono::system_clock::now();
     const auto lElapsedPML = std::chrono::duration_cast<std::chrono::milliseconds>(lEndPML - lStartPML).count();
 
-    EXPECT_NEAR(lSum, lSumPML, 1.0E-12);
+    EXPECT_NEAR(lSum, lSumPML, std::fabs(lSum)*1.0E-13);
 
     std::cout
 #ifdef NDEBUG
@@ -129,63 +141,20 @@ TEST(TestPMath, sin_performance)
         << "STL:" << lElapsed << "[msec],\n"
         << "PML:" << lElapsedPML << "[msec],\n"
         << std::setprecision(3)
-        << "PML is " << (lElapsed / (double)(lElapsedPML)) << " faster than this compiler's STL implimentation.\n";
+        << "PML is " << (lElapsed / (double)(lElapsedPML)) << " times faster than this compiler's STL implimentation.\n";
 
 #ifdef NDEBUG
-    EXPECT_LE(lElapsedPML, lElapsed);
+
+    EXPECT_LE(lElapsedPML - lElapsed, 0.1*lElapsed);
 #endif
 }
 
-TEST(TestPMath, cos_value)
-{
-    for (auto i = -20000; i < 20000; ++i)
-    {
-        const auto lX = static_cast<double>(i);
-        EXPECT_DOUBLE_EQ(std::cos(lX), pml::cos(lX));
-    }
-}
-
-TEST(TestPMath, cos_performance)
-{
-    const auto lTestNum
-#ifdef NDEBUG
-        = 2000000;
-#else
-        = 100000;
-#endif
-
-    auto lSum = 0.0;
-    const auto lStart = std::chrono::system_clock::now();
-    for (auto i = 0; i < lTestNum; ++i)
-    {
-        lSum += std::cos(static_cast<double>(i));
-    }
-    const auto lEnd = std::chrono::system_clock::now();
-    const auto lElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
-
-    auto lSumPML = 0.0;
-    const auto lStartPML = std::chrono::system_clock::now();
-    for (auto i = 0; i < lTestNum; ++i)
-    {
-        lSumPML += pml::cos(static_cast<double>(i));
-    }
-    const auto lEndPML = std::chrono::system_clock::now();
-    const auto lElapsedPML = std::chrono::duration_cast<std::chrono::milliseconds>(lEndPML - lStartPML).count();
-
-    EXPECT_NEAR(lSum, lSumPML, 1.0E-12);
-
-    std::cout
-#ifdef NDEBUG
-        << "---Release Mode---\n"
-#else
-        << "---Debud Mode---\n"
-#endif
-        << "STL:" << lElapsed << "[msec],\n"
-        << "PML:" << lElapsedPML << "[msec],\n"
-        << std::setprecision(3)
-        << "PML is " << (lElapsed / (double)(lElapsedPML)) << " faster than this compiler's STL implimentation.\n";
-
-#ifdef NDEBUG
-    EXPECT_LE(lElapsedPML, lElapsed);
-#endif
-}
+INSTANTIATE_TEST_CASE_P(
+    name, pmath_trigonometric,
+    ::testing::Values(
+        std::make_pair(
+            std::bind((double(*)(double))&std::sin, std::placeholders::_1),
+            std::bind((double(*)(double))&pml::sin, std::placeholders::_1)),
+        std::make_pair(
+            std::bind((double(*)(double))&std::cos, std::placeholders::_1),
+            std::bind((double(*)(double))&pml::cos, std::placeholders::_1))));
