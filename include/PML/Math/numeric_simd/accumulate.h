@@ -8,7 +8,7 @@
 namespace pml {
 
     /**
-    * @fn accumulate_AVX(const double* inA, std::size_t inSize)
+    * @fn accumulate_AVX_array(const double* inA, std::size_t inSize)
     *
     * @brief
     * Accelerated version of std::accumulate by AVX.
@@ -22,12 +22,31 @@ namespace pml {
     * @return
     * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
     */
-    double accumulate_AVX(
+    double accumulate_AVX_array(
         const double* inA,
         std::size_t inSize);
 
     /**
-    * @fn accumulate_AVX(const std::vector<double>& inA);
+    * @fn accumulate_naive_array(const double* inA, std::size_t inSize)
+    *
+    * @brief
+    * Wrapper of std::accumulate.
+    *
+    * @param[in] inA
+    * Pointer to the address of the first element of the array.
+    *
+    * @param[in] inSize
+    * Size of the array inA.
+    *
+    * @return
+    * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
+    */
+    double accumulate_naive_array(
+        const double* inA,
+        std::size_t inSize);
+
+    /**
+    * @fn accumulate_AVX_vector(const std::vector<double>& inA);
     *
     * @brief
     * Accelerated version of std::accumulate by AVX.
@@ -38,13 +57,29 @@ namespace pml {
     * @return
     * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inA.size()-1].
     */
-    double accumulate_AVX(const std::vector<double>& inA);
+    double accumulate_AVX_vector(const std::vector<double>& inA);
 
+    /**
+    * @fn accumulate_naive_vector(const std::vector<double>& inA)
+    *
+    * @brief
+    * Wrapper of std::accumulate.
+    *
+    * @param[in] inA
+    * Pointer to the address of the first element of the array.
+    *
+    * @param[in] inSize
+    * Size of the array inA.
+    *
+    * @return
+    * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
+    */
+    double accumulate_naive_vector(const std::vector<double>& inA);
 
     namespace aligned {
 
         /**
-        * @fn accumulate_AVX(const alvector<double>& inA)
+        * @fn accumulate_AVX_alvector(const alvector<double>& inA)
         *
         * @brief
         * Accelerated version of std::accumulate by AVX with memory aligned data.
@@ -55,7 +90,24 @@ namespace pml {
         * @return
         * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inA.size()-1].
         */
-        double accumulate_AVX(const alvector<double>& inA);
+        double accumulate_AVX_alvector(const alvector<double>& inA);
+
+        /**
+        * @fn accumulate_naive_alvector(const alvector<double>& inA)
+        *
+        * @brief
+        * Wrapper of std::accumulate with memory aligned data.
+        *
+        * @param[in] inA
+        * Pointer to the address of the first element of the array.
+        *
+        * @param[in] inSize
+        * Size of the array inA.
+        *
+        * @return
+        * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
+        */
+        double accumulate_naive_alvector(const alvector<double>& inA);
 
     } // aligned
 } // pml

@@ -26,9 +26,9 @@ namespace {
             lSum += inF(lX);
         }
         const auto lEnd = std::chrono::system_clock::now();
-        const auto lElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
+        const auto lElapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
 
-        return { lSum, lElapsed };
+        return { lSum, lElapsedTime };
     };
 }
 

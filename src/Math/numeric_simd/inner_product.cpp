@@ -1,6 +1,7 @@
 #include <PML/Core/cross_intrin.h>
 #include <PML/Math/numeric_simd/inner_product.h>
 #include <cassert>
+#include <numeric>
 
 namespace pml {
 
@@ -52,9 +53,18 @@ namespace pml {
 
             return lSum;
         }
+
+        double inner_product_Naive_Impl(
+            const double* inA,
+            const double* inB,
+            std::size_t inSize)
+        {
+            return std::inner_product(inA, inA + inSize, inB, 0.0);
+        }
+
     } // unnamed
 
-    double inner_product_AVX(
+    double inner_product_AVX_array(
         const double* inA,
         const double* inB,
         std::size_t inSize)
@@ -64,7 +74,15 @@ namespace pml {
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
         
-    double inner_product_AVX(
+    double inner_product_naive_array(
+        const double* inA,
+        const double* inB,
+        std::size_t inSize)
+    {
+        return inner_product_Naive_Impl(inA, inB, inSize);
+    }
+
+    double inner_product_AVX_vector(
         const std::vector<double>& inA,
         const std::vector<double>& inB)
     {
@@ -75,9 +93,18 @@ namespace pml {
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
 
+    double inner_product_naive_vector(
+        const std::vector<double>& inA,
+        const std::vector<double>& inB)
+    {
+        assert(inA.size() == inB.size());
+
+        return inner_product_Naive_Impl(inA.data(), inB.data(), inA.size());
+    }
+
     namespace aligned {
 
-        double inner_product_AVX(
+        double inner_product_AVX_alvector(
             const alvector<double>& inA,
             const alvector<double>& inB)
         {
@@ -86,6 +113,15 @@ namespace pml {
             return inner_product_AVX_Impl(
                 inA.data(), inB.data(), inA.size(),
                 [](auto* inArray) { return _mm256_load_pd(inArray); });
+        }
+
+        double inner_product_naive_alvector(
+            const alvector<double>& inA,
+            const alvector<double>& inB)
+        {
+            assert(inA.size() == inB.size());
+
+            return inner_product_Naive_Impl(inA.data(), inB.data(), inA.size());
         }
 
     } // aligned

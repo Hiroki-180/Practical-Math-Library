@@ -122,7 +122,7 @@ TEST(TestNumericSIMD, accumulate)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXV = pml::accumulate_AVX(lVector);
+            lSumAVXV = pml::accumulate_AVX_vector(lVector);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -140,7 +140,7 @@ TEST(TestNumericSIMD, accumulate)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXA = pml::accumulate_AVX(lVector.data(), lVector.size());
+            lSumAVXA = pml::accumulate_AVX_array(lVector.data(), lVector.size());
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -157,7 +157,7 @@ TEST(TestNumericSIMD, accumulate)
         auto lAVector = pml::aligned::alvector<double>(lSize);
         lInitializer(lAVector);
 
-        // calculation using automatically selected optimal SIMD with std::vector
+        // calculation using automatically selected optimal SIMD with aligned vector
         auto lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
@@ -166,11 +166,11 @@ TEST(TestNumericSIMD, accumulate)
         auto lEnd = std::chrono::system_clock::now();
         lOptSIMDAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
 
-        // calculation using AVX with std::vector
+        // calculation using AVX with aligned vector
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXAV = pml::aligned::accumulate_AVX(lAVector);
+            lSumAVXAV = pml::aligned::accumulate_AVX_alvector(lAVector);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -244,7 +244,7 @@ TEST(TestNumericSIMD, inner_product)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXV = pml::inner_product_AVX(lVector1, lVector2);
+            lSumAVXV = pml::inner_product_AVX_vector(lVector1, lVector2);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -262,7 +262,7 @@ TEST(TestNumericSIMD, inner_product)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXA = pml::inner_product_AVX(lVector1.data(), lVector2.data(), lVector1.size());
+            lSumAVXA = pml::inner_product_AVX_array(lVector1.data(), lVector2.data(), lVector1.size());
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -280,7 +280,7 @@ TEST(TestNumericSIMD, inner_product)
         auto lAVector2 = pml::aligned::alvector<double>(lSize);
         lInitializer(lAVector1, lAVector2);
 
-        // calculation using automatically selected optimal SIMD with std::vector
+        // calculation using automatically selected optimal SIMD with aligned vector
         auto lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
@@ -289,11 +289,11 @@ TEST(TestNumericSIMD, inner_product)
         auto lEnd = std::chrono::system_clock::now();
         lOptSIMDAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
 
-        // calculation using AVX with std::vector
+        // calculation using AVX with aligned vector
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXAV = pml::aligned::inner_product_AVX(lAVector1, lAVector2);
+            lSumAVXAV = pml::aligned::inner_product_AVX_alvector(lAVector1, lAVector2);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -370,7 +370,7 @@ TEST(TestNumericSIMD, positive_difference)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            pml::positive_difference_AVX(lVector1, lVector2, lAnsAVXV);
+            pml::positive_difference_AVX_vector(lVector1, lVector2, lAnsAVXV);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -388,7 +388,7 @@ TEST(TestNumericSIMD, positive_difference)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            pml::positive_difference_AVX(lVector1.data(), lVector2.data(), lAnsAVXA.data(), lVector1.size());
+            pml::positive_difference_AVX_array(lVector1.data(), lVector2.data(), lAnsAVXA.data(), lVector1.size());
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -408,7 +408,7 @@ TEST(TestNumericSIMD, positive_difference)
         auto lAVector2 = pml::aligned::alvector<double>(lSize);
         lInitializer(lAVector1, lAVector2);
 
-        // calculation using automatically selected optimal SIMD with std::vector
+        // calculation using automatically selected optimal SIMD with aligned vector
         auto lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
@@ -418,11 +418,11 @@ TEST(TestNumericSIMD, positive_difference)
         lOptSIMDAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
         lAnsOptSIMDAV.assign(lAnsOptSIMDAVAligned.cbegin(), lAnsOptSIMDAVAligned.cend());
 
-        // calculation using AVX with std::vector
+        // calculation using AVX with aligned vector
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            pml::aligned::positive_difference_AVX(lAVector1, lAVector2, lAnsAVXAVAligned);
+            pml::aligned::positive_difference_AVX_alvector(lAVector1, lAVector2, lAnsAVXAVAligned);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();

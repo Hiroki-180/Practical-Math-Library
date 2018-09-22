@@ -45,22 +45,42 @@ namespace pml {
                 outC[i] = std::max(inA[i] - inB[i], 0.0);
             }
         }
-    }
 
-    void positive_difference_AVX(
+        void positive_difference_naive_Impl(
+            const double* inA,
+            const double* inB,
+            double* outC,
+            std::size_t inSize)
+        {
+            for (std::size_t i = 0; i < inSize; ++i)
+            {
+                outC[i] = std::max(inA[i] - inB[i], 0.0);
+            }
+        }
+
+    } // unnamed
+
+    void positive_difference_AVX_array(
         const double* inA,
         const double* inB,
         double* outC,
         std::size_t inSize)
     {
-        positive_difference_AVX_Impl(
-            inA, inB, outC, inSize,
-            [](auto* inArray) { return _mm256_loadu_pd(inArray); });
-
-        return;
+        return positive_difference_AVX_Impl(
+                inA, inB, outC, inSize,
+                [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
 
-    void positive_difference_AVX(
+    void positive_difference_naive_array(
+        const double* inA,
+        const double* inB,
+        double* outC,
+        std::size_t inSize)
+    {
+        return positive_difference_naive_Impl(inA, inB, outC, inSize);
+    }
+
+    void positive_difference_AVX_vector(
         const std::vector<double>& inA,
         const std::vector<double>& inB,
         std::vector<double>& outC)
@@ -68,17 +88,29 @@ namespace pml {
         assert(inA.size() == inB.size());
 
         outC.resize(inA.size());
-        positive_difference_AVX_Impl(
-            inA.data(), inB.data(), outC.data(), inA.size(),
-            [](auto* inArray) { return _mm256_loadu_pd(inArray); });
         outC.shrink_to_fit();
 
-        return;
+        return positive_difference_AVX_Impl(
+                inA.data(), inB.data(), outC.data(), inA.size(),
+                [](auto* inArray) { return _mm256_loadu_pd(inArray); });
+    }
+
+    void positive_difference_naive_vector(
+        const std::vector<double>& inA,
+        const std::vector<double>& inB,
+        std::vector<double>& outC)
+    {
+        assert(inA.size() == inB.size());
+
+        outC.resize(inA.size());
+        outC.shrink_to_fit();
+        
+        return positive_difference_naive_Impl(inA.data(), inB.data(), outC.data(), inA.size());
     }
 
     namespace aligned {
 
-        void positive_difference_AVX(
+        void positive_difference_AVX_alvector(
             const alvector<double>& inA,
             const alvector<double>& inB,
             alvector<double>& outC)
@@ -86,12 +118,24 @@ namespace pml {
             assert(inA.size() == inB.size());
 
             outC.resize(inA.size());
-            positive_difference_AVX_Impl(
-                inA.data(), inB.data(), outC.data(), inA.size(),
-                [](auto* inArray) { return _mm256_load_pd(inArray); });
             outC.shrink_to_fit();
 
-            return;
+            return positive_difference_AVX_Impl(
+                    inA.data(), inB.data(), outC.data(), inA.size(),
+                    [](auto* inArray) { return _mm256_load_pd(inArray); });
+        }
+
+        void positive_difference_naive_alvector(
+            const alvector<double>& inA,
+            const alvector<double>& inB,
+            alvector<double>& outC)
+        {
+            assert(inA.size() == inB.size());
+
+            outC.resize(inA.size());
+            outC.shrink_to_fit();
+            
+            return positive_difference_naive_Impl(inA.data(), inB.data(), outC.data(), inA.size());
         }
 
     } // aligned
