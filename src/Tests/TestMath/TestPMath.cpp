@@ -8,7 +8,7 @@
 
 namespace {
 
-    std::pair<double, double> testSumAndPerformance(const std::function<double(double)>& inF)
+    std::pair<double, long long> testSumAndPerformance(const std::function<double(double)>& inF)
     {
         const auto lTestNum
 #ifdef NDEBUG
