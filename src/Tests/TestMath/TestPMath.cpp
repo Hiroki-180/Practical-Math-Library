@@ -8,7 +8,17 @@
 
 namespace {
 
-    std::pair<double, long long> testSumAndPerformance(const std::function<double(double)>& inF)
+    struct SumAndPerformance final
+    {
+        SumAndPerformance(double inSum, long long inElapsedTime)
+            : mSum(inSum), mElapsedTime(inElapsedTime)
+        {}
+
+        double mSum;
+        long long mElapsedTime;
+    };
+
+    SumAndPerformance test(const std::function<double(double)>& inF)
     {
         const auto lTestNum
 #ifdef NDEBUG
@@ -28,7 +38,7 @@ namespace {
         const auto lEnd = std::chrono::system_clock::now();
         const auto lElapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
 
-        return { lSum, lElapsedTime };
+        return SumAndPerformance(lSum, lElapsedTime);
     };
 }
 
@@ -52,13 +62,12 @@ TEST_P(pmath, performance)
     std::cout << "Test of " << std::get<0>(GetParam()) << " function.\n";
 
     const auto& lSTLF = std::get<1>(GetParam());
-    const auto lSTLResult = testSumAndPerformance(lSTLF);
+    const auto lSTLResult = test(lSTLF);
 
     const auto& lPMLF = std::get<2>(GetParam());
-    const auto lPMLResult = testSumAndPerformance(lPMLF);
+    const auto lPMLResult = test(lPMLF);
 
-    // test of the value of sum.
-    EXPECT_NEAR(lSTLResult.first, lPMLResult.first, std::fabs(lPMLResult.first)*1.0E-13);
+    EXPECT_NEAR(lSTLResult.mSum, lPMLResult.mSum, std::fabs(lPMLResult.mSum)*1.0E-13);
 
     std::cout
 #ifdef NDEBUG
@@ -67,14 +76,13 @@ TEST_P(pmath, performance)
         << "---Debud Mode---\n"
 #endif
         << std::setprecision(3)
-        << "STL:" << lSTLResult.second << "[msec],\n"
-        << "PML:" << lPMLResult.second << "[msec],\n"
-        << "PML is " << (lSTLResult.second / (double)(lPMLResult.second)) 
+        << "STL:" << lSTLResult.mElapsedTime << "[msec],\n"
+        << "PML:" << lPMLResult.mElapsedTime << "[msec],\n"
+        << "PML is " << (lSTLResult.mElapsedTime / (double)(lPMLResult.mElapsedTime))
         << " times faster than this compiler's STL implimentation.\n";
 
 #ifdef NDEBUG
-    // performance test
-    EXPECT_LE(lPMLResult.second - lSTLResult.second, 0.1*lSTLResult.second);
+    EXPECT_LE(lPMLResult.mElapsedTime - lSTLResult.mElapsedTime, 0.1*lSTLResult.mElapsedTime);
 #endif
 }
 

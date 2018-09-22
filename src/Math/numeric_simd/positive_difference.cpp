@@ -40,8 +40,7 @@ namespace pml {
                 _mm256_storeu_pd(&outC[lUnrollEnd], lPD256);
             }
 
-            for (std::size_t i = l256End; i < inSize; ++i)
-            {
+            for (std::size_t i = l256End; i < inSize; ++i) {
                 outC[i] = std::max(inA[i] - inB[i], 0.0);
             }
         }
@@ -52,8 +51,7 @@ namespace pml {
             double* outC,
             std::size_t inSize)
         {
-            for (std::size_t i = 0; i < inSize; ++i)
-            {
+            for (std::size_t i = 0; i < inSize; ++i) {
                 outC[i] = std::max(inA[i] - inB[i], 0.0);
             }
         }

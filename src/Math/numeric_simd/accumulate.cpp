@@ -25,8 +25,7 @@ namespace pml {
             }
 
             const std::size_t l256End = (inSize - (inSize & 3));
-            if (l256End != lUnrollEnd)
-            {
+            if (l256End != lUnrollEnd){
                 lSum256 = _mm256_add_pd(lSum256, inLoader(&inA[lUnrollEnd]));
             }
 
@@ -38,8 +37,7 @@ namespace pml {
             _mm_store_pd(lPartialSum, lSum128);
             auto lSum = lPartialSum[0] + lPartialSum[1];
 
-            for (std::size_t i = l256End; i < inSize; ++i)
-            {
+            for (std::size_t i = l256End; i < inSize; ++i){
                 lSum += inA[i];
             }
 

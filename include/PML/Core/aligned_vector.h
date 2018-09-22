@@ -83,8 +83,7 @@ namespace pml {
                 {
                     hint;
 
-                    if (n > this->max_size())
-                    {
+                    if (n > this->max_size()){
                         throw std::bad_alloc(); //ToDo.
                     }
 

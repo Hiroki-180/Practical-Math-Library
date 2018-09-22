@@ -58,7 +58,8 @@ TEST(TestMathConstants, GoldenRatio)
 TEST(TestMathConstants, Apery)
 {
     double lRiemannZeta3 = 0.0;
-    for (auto i = 20000000; i > 0; --i) {
+    for (auto i = 20000000; i > 0; --i)
+    {
         const double lDen = (static_cast<double>(i)*i*i);
         lRiemannZeta3 += 1.0 / lDen;
     }

@@ -74,8 +74,7 @@ TEST(TestNumericSIMD, accumulate)
     const std::size_t lSize = 150;
 	auto lInitializer = [lSize](auto& inArray)->void
 	{
-		for (auto i = 0U; i < lSize; ++i)
-		{
+		for (auto i = 0U; i < lSize; ++i){
 			inArray[i] = i;
 		}
 	};

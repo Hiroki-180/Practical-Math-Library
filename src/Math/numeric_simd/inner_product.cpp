@@ -46,8 +46,7 @@ namespace pml {
             _mm_store_pd(lPartialSum, lSum128);
             auto lSum = lPartialSum[0] + lPartialSum[1];
 
-            for (std::size_t i = l256End; i < inSize; ++i)
-            {
+            for (std::size_t i = l256End; i < inSize; ++i){
                 lSum += inA[i] * inB[i];
             }
 

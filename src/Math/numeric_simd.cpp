@@ -14,16 +14,13 @@ namespace pml {
         template<typename F, typename... Args>
         auto optimizer(F inAVX512, F inAVX, F inSSE, F inNaive, Args&... inArgs)
         {
-            if (CPUDispatcher::isAVX512F())
-            {
+            if (CPUDispatcher::isAVX512F()){
                 return inAVX512(inArgs...);
             }
-            else if (CPUDispatcher::isAVX())
-            {
+            else if (CPUDispatcher::isAVX()){
                 return inAVX(inArgs...);
             }
-            else if (CPUDispatcher::isSSE())
-            {
+            else if (CPUDispatcher::isSSE()){
                 return inSSE(inArgs...);
             }
 
