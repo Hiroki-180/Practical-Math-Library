@@ -56,17 +56,24 @@ namespace pml {
         positive_difference_AVX_Impl(
             inA, inB, outC, inSize,
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
+
+        return;
     }
-        
-        void positive_difference_AVX(
+
+    void positive_difference_AVX(
         const std::vector<double>& inA,
         const std::vector<double>& inB,
         std::vector<double>& outC)
     {
+        assert(inA.size() == inB.size());
+
         outC.resize(inA.size());
         positive_difference_AVX_Impl(
             inA.data(), inB.data(), outC.data(), inA.size(),
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
+        outC.shrink_to_fit();
+
+        return;
     }
 
     namespace aligned {
@@ -79,10 +86,12 @@ namespace pml {
             assert(inA.size() == inB.size());
 
             outC.resize(inA.size());
-
             positive_difference_AVX_Impl(
                 inA.data(), inB.data(), outC.data(), inA.size(),
                 [](auto* inArray) { return _mm256_load_pd(inArray); });
+            outC.shrink_to_fit();
+
+            return;
         }
 
     } // aligned

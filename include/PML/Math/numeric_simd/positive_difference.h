@@ -17,10 +17,11 @@ namespace pml {
     * Pointer to the address of the first element of the 1st array.
     *
     * @param[in] inB
-    * Pointer to the address of the first element of the 2nd array.
+    * Pointer to the address of the first element of the 2nd array which should have same size with inA.
     *
     * @param[out] outC
     * Resulted array, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inSize-1] - inB[inSize-1], 0)).
+    * The size is automatically adjusted to inA and inB in this function.
     *
     * @param[in] inSize
     * Size of the array inA, inB and outC.
@@ -41,16 +42,16 @@ namespace pml {
     * 1st array as std::vector.
     *
     * @param[out] inB
-    * 2nd array as std::vector.
+    * 32-byte aligned 2nd array as vector which should have same size with inA.
     *
     * @param[in] outC
     * Resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
+    * The size is automatically adjusted to inA and inB in this function.
     */
     void positive_difference_AVX(
         const std::vector<double>& inA,
         const std::vector<double>& inB,
         std::vector<double>& outC);
-
 
     namespace aligned {
 
@@ -64,10 +65,11 @@ namespace pml {
         * 32-byte aligned 1st array as vector.
         *
         * @param[in] inB
-        * 32-byte aligned 2nd array as vector.
+        * 32-byte aligned 2nd array as vector which should have same size with inA.
         *
         * @param[out] outC
         * 32-byte aligned resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
+        * The size is automatically adjusted to inA and inB in this function.
         */
         void positive_difference_AVX(
             const alvector<double>& inA,

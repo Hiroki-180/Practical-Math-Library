@@ -88,6 +88,7 @@ namespace pml {
         {
             outC[i] = std::max(inA[i] - inB[i], 0.0);
         }
+        return;
     }
 
     namespace aligned {
@@ -121,7 +122,8 @@ namespace pml {
         {
             if (CPUDispatcher::isAVX())
             {
-                return aligned::positive_difference_AVX(inA, inB, outC);
+                aligned::positive_difference_AVX(inA, inB, outC);
+                return;
             }
 
             outC.resize(inA.size());
@@ -129,6 +131,7 @@ namespace pml {
             {
                 outC[i] = std::max(inA[i] - inB[i], 0.0);
             }
+            return;
         }
 
     } //aligned
