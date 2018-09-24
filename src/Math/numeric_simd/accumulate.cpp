@@ -44,13 +44,6 @@ namespace pml {
             return lSum;
         }
 
-        double accumulate_Naive_Impl(
-            const double* inA,
-            std::size_t inSize)
-        {
-            return std::accumulate(inA, inA + inSize, 0.0);
-        }
-
     } // unnamed
 
     double accumulate_AVX_array(
@@ -62,11 +55,11 @@ namespace pml {
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
 
-    double accumulate_naive_array(
+    double accumulate_array(
         const double* inA,
         std::size_t inSize)
     {
-        return accumulate_Naive_Impl(inA, inSize);
+        return std::accumulate(inA, inA + inSize, 0.0);
     }
 
     double accumulate_AVX_vector(const std::vector<double>& inA)
@@ -76,9 +69,9 @@ namespace pml {
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
 
-    double accumulate_naive_vector(const std::vector<double>& inA)
+    double accumulate_vector(const std::vector<double>& inA)
     {
-        return accumulate_Naive_Impl(inA.data(), inA.size());
+        return std::accumulate(inA.cbegin(), inA.cend(), 0.0);
     }
 
     namespace aligned {
@@ -90,9 +83,9 @@ namespace pml {
                 [](auto* inArray) { return _mm256_load_pd(inArray); });
         }
 
-        double accumulate_naive_alvector(const alvector<double>& inA)
+        double accumulate_alvector(const alvector<double>& inA)
         {
-            return accumulate_Naive_Impl(inA.data(), inA.size());
+            return std::accumulate(inA.cbegin(), inA.cend(), 0.0);
         }
 
     } // aligned

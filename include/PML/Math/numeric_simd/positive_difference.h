@@ -33,7 +33,7 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn positive_difference_naive_array(const double* inA, const double* inB, double* outC, std::size_t inSize)
+    * @fn positive_difference_array(const double* inA, const double* inB, double* outC, std::size_t inSize)
     *
     * @brief
     * Instruction of subtraction of two arrays and taking plus part using no SIMD instructions.
@@ -51,7 +51,7 @@ namespace pml {
     * @param[in] inSize
     * Size of the array inA, inB and outC.
     */
-    void positive_difference_naive_array(
+    void positive_difference_array(
         const double* inA,
         const double* inB,
         double* outC,
@@ -79,7 +79,7 @@ namespace pml {
         std::vector<double>& outC);
 
     /**
-    * @fn positive_difference_naive_vector(const std::vector<double>& inA, const std::vector<double>& inB, std::vector<double>& outC)
+    * @fn positive_difference_vector(const std::vector<double>& inA, const std::vector<double>& inB, std::vector<double>& outC)
     *
     * @brief
     * Instruction of subtraction of two arrays and taking plus part using no SIMD instructions.
@@ -94,7 +94,7 @@ namespace pml {
     * Resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
     * The size is automatically adjusted to inA and inB in this function.
     */
-    void positive_difference_naive_vector(
+    void positive_difference_vector(
         const std::vector<double>& inA,
         const std::vector<double>& inB,
         std::vector<double>& outC);
@@ -123,7 +123,7 @@ namespace pml {
             alvector<double>& outC);
 
         /**
-        * @fn positive_difference_naive_alvector(const alvector<double>& inA, const alvector<double>& inB, alvector<double>& outC)
+        * @fn positive_difference_alvector(const alvector<double>& inA, const alvector<double>& inB, alvector<double>& outC)
         *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part using no SIMD instructions.
@@ -138,7 +138,7 @@ namespace pml {
         * 32-byte aligned resulted array as vector, (max(inA[0] - inB[0], 0), max(inA[1] - inB[1], 0), ..., max(inA[inA.size()-1] - inB[inA.size()-1], 0)).
         * The size is automatically adjusted to inA and inB in this function.
         */
-        void positive_difference_naive_alvector(
+        void positive_difference_alvector(
             const alvector<double>& inA,
             const alvector<double>& inB,
             alvector<double>& outC);

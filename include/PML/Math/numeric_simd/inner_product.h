@@ -31,7 +31,7 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn inner_product_naive_array(const double* inA, const double* inB, std::size_t inSize)
+    * @fn inner_product_array(const double* inA, const double* inB, std::size_t inSize)
     *
     * @brief
     * Wrapper of std::inner_product.
@@ -48,7 +48,7 @@ namespace pml {
     * @return
     * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inSize-1]*inB[inSize-1].
     */
-    double inner_product_naive_array(
+    double inner_product_array(
         const double* inA,
         const double* inB,
         std::size_t inSize);
@@ -73,7 +73,7 @@ namespace pml {
         const std::vector<double>& inB);
 
     /**
-    * @fn inner_product_naive_vector(const std::vector<double>& inA, const std::vector<double>& inB)
+    * @fn inner_product_vector(const std::vector<double>& inA, const std::vector<double>& inB)
     *
     * @brief
     * Wrapper of std::inner_prod by AVX.
@@ -87,7 +87,7 @@ namespace pml {
     * @return
     * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inA.size()-1]*inB[inB.size()-1].
     */
-    double inner_product_naive_vector(
+    double inner_product_vector(
         const std::vector<double>& inA,
         const std::vector<double>& inB);
 
@@ -113,7 +113,7 @@ namespace pml {
             const alvector<double>& inB);
 
         /**
-        * @fn inner_product_naive_alvector(const alvector<double>& inA, const alvector<double>& inB)
+        * @fn inner_product_alvector(const alvector<double>& inA, const alvector<double>& inB)
         *
         * @brief
         * Wrapper of std::inner_prod with memory aligned data.
@@ -127,7 +127,7 @@ namespace pml {
         * @return
         * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inA.size()-1]*inB[inB.size()-1].
         */
-        double inner_product_naive_alvector(
+        double inner_product_alvector(
             const alvector<double>& inA,
             const alvector<double>& inB);
 

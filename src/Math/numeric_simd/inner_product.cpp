@@ -53,14 +53,6 @@ namespace pml {
             return lSum;
         }
 
-        double inner_product_Naive_Impl(
-            const double* inA,
-            const double* inB,
-            std::size_t inSize)
-        {
-            return std::inner_product(inA, inA + inSize, inB, 0.0);
-        }
-
     } // unnamed
 
     double inner_product_AVX_array(
@@ -73,12 +65,12 @@ namespace pml {
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
         
-    double inner_product_naive_array(
+    double inner_product_array(
         const double* inA,
         const double* inB,
         std::size_t inSize)
     {
-        return inner_product_Naive_Impl(inA, inB, inSize);
+        return std::inner_product(inA, inA + inSize, inB, 0.0);
     }
 
     double inner_product_AVX_vector(
@@ -92,13 +84,13 @@ namespace pml {
             [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
 
-    double inner_product_naive_vector(
+    double inner_product_vector(
         const std::vector<double>& inA,
         const std::vector<double>& inB)
     {
         assert(inA.size() == inB.size());
 
-        return inner_product_Naive_Impl(inA.data(), inB.data(), inA.size());
+        return std::inner_product(inA.cbegin(), inA.cend(), inB.cend(), 0.0);
     }
 
     namespace aligned {
@@ -114,13 +106,13 @@ namespace pml {
                 [](auto* inArray) { return _mm256_load_pd(inArray); });
         }
 
-        double inner_product_naive_alvector(
+        double inner_product_alvector(
             const alvector<double>& inA,
             const alvector<double>& inB)
         {
             assert(inA.size() == inB.size());
 
-            return inner_product_Naive_Impl(inA.data(), inB.data(), inA.size());
+            return std::inner_product(inA.cbegin(), inA.cend(), inB.cbegin(), 0.0);
         }
 
     } // aligned

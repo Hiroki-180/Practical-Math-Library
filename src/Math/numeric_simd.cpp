@@ -34,10 +34,10 @@ namespace pml {
         std::size_t inSize)
     {
         return optimizer(
-            std::bind(&accumulate_AVX_array,   std::placeholders::_1, std::placeholders::_2),
-            std::bind(&accumulate_AVX_array,   std::placeholders::_1, std::placeholders::_2),
-            std::bind(&accumulate_naive_array, std::placeholders::_1, std::placeholders::_2),
-            std::bind(&accumulate_naive_array, std::placeholders::_1, std::placeholders::_2),
+            std::bind(&accumulate_AVX_array, std::placeholders::_1, std::placeholders::_2),
+            std::bind(&accumulate_AVX_array, std::placeholders::_1, std::placeholders::_2),
+            std::bind(&accumulate_array,     std::placeholders::_1, std::placeholders::_2),
+            std::bind(&accumulate_array,     std::placeholders::_1, std::placeholders::_2),
             inA, inSize);
     }
 
@@ -47,10 +47,10 @@ namespace pml {
         std::size_t inSize)
     {
         return optimizer(
-            std::bind(&inner_product_AVX_array,   std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-            std::bind(&inner_product_AVX_array,   std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-            std::bind(&inner_product_naive_array, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-            std::bind(&inner_product_naive_array, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+            std::bind(&inner_product_AVX_array, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+            std::bind(&inner_product_AVX_array, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+            std::bind(&inner_product_array,     std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+            std::bind(&inner_product_array,     std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
             inA, inB, inSize);
     }
 
@@ -68,10 +68,10 @@ namespace pml {
                 &positive_difference_AVX_array,
                 std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4),
             std::bind(
-                &positive_difference_naive_array,
+                &positive_difference_array,
                 std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4),
             std::bind(
-                &positive_difference_naive_array,
+                &positive_difference_array,
                 std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4),
             inA, inB, outC, inSize);
     }
@@ -79,10 +79,10 @@ namespace pml {
     double accumulate_SIMD(const std::vector<double>& inA)
     {
         return optimizer(
-            std::bind(&accumulate_AVX_vector,   std::placeholders::_1),
-            std::bind(&accumulate_AVX_vector,   std::placeholders::_1),
-            std::bind(&accumulate_naive_vector, std::placeholders::_1),
-            std::bind(&accumulate_naive_vector, std::placeholders::_1),
+            std::bind(&accumulate_AVX_vector, std::placeholders::_1),
+            std::bind(&accumulate_AVX_vector, std::placeholders::_1),
+            std::bind(&accumulate_vector,     std::placeholders::_1),
+            std::bind(&accumulate_vector,     std::placeholders::_1),
             inA);
     }
 
@@ -91,10 +91,10 @@ namespace pml {
         const std::vector<double>& inB)
     {
         return optimizer(
-            std::bind(&inner_product_AVX_vector,   std::placeholders::_1, std::placeholders::_2),
-            std::bind(&inner_product_AVX_vector,   std::placeholders::_1, std::placeholders::_2),
-            std::bind(&inner_product_naive_vector, std::placeholders::_1, std::placeholders::_2),
-            std::bind(&inner_product_naive_vector, std::placeholders::_1, std::placeholders::_2),
+            std::bind(&inner_product_AVX_vector, std::placeholders::_1, std::placeholders::_2),
+            std::bind(&inner_product_AVX_vector, std::placeholders::_1, std::placeholders::_2),
+            std::bind(&inner_product_vector,     std::placeholders::_1, std::placeholders::_2),
+            std::bind(&inner_product_vector,     std::placeholders::_1, std::placeholders::_2),
             inA, inB);
     }
 
@@ -111,10 +111,10 @@ namespace pml {
                 &positive_difference_AVX_vector,
                 std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
             std::bind(
-                &positive_difference_naive_vector,
+                &positive_difference_vector,
                 std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
             std::bind(
-                &positive_difference_naive_vector,
+                &positive_difference_vector,
                 std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
             inA, inB, outC);
     }
@@ -124,10 +124,10 @@ namespace pml {
         double accumulate_SIMD(const alvector<double>& inA)
         {
             return optimizer(
-                std::bind(&accumulate_AVX_alvector,   std::placeholders::_1),
-                std::bind(&accumulate_AVX_alvector,   std::placeholders::_1),
-                std::bind(&accumulate_naive_alvector, std::placeholders::_1),
-                std::bind(&accumulate_naive_alvector, std::placeholders::_1),
+                std::bind(&accumulate_AVX_alvector, std::placeholders::_1),
+                std::bind(&accumulate_AVX_alvector, std::placeholders::_1),
+                std::bind(&accumulate_alvector,     std::placeholders::_1),
+                std::bind(&accumulate_alvector,     std::placeholders::_1),
                 inA);
         }
 
@@ -136,10 +136,10 @@ namespace pml {
             const alvector<double>& inB)
         {
             return optimizer(
-                std::bind(&inner_product_AVX_alvector,   std::placeholders::_1, std::placeholders::_2),
-                std::bind(&inner_product_AVX_alvector,   std::placeholders::_1, std::placeholders::_2),
-                std::bind(&inner_product_naive_alvector, std::placeholders::_1, std::placeholders::_2),
-                std::bind(&inner_product_naive_alvector, std::placeholders::_1, std::placeholders::_2),
+                std::bind(&inner_product_AVX_alvector, std::placeholders::_1, std::placeholders::_2),
+                std::bind(&inner_product_AVX_alvector, std::placeholders::_1, std::placeholders::_2),
+                std::bind(&inner_product_alvector,     std::placeholders::_1, std::placeholders::_2),
+                std::bind(&inner_product_alvector,     std::placeholders::_1, std::placeholders::_2),
                 inA, inB);
         }
 
@@ -156,10 +156,10 @@ namespace pml {
                     &positive_difference_AVX_alvector,
                     std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                 std::bind(
-                    &positive_difference_naive_alvector,
+                    &positive_difference_alvector,
                     std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                 std::bind(
-                    &positive_difference_naive_alvector,
+                    &positive_difference_alvector,
                     std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                 inA, inB, outC);
         }

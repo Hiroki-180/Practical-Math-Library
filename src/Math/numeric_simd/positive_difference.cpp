@@ -45,7 +45,7 @@ namespace pml {
             }
         }
 
-        void positive_difference_naive_Impl(
+        void positive_difference_Impl(
             const double* inA,
             const double* inB,
             double* outC,
@@ -69,13 +69,13 @@ namespace pml {
                 [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
 
-    void positive_difference_naive_array(
+    void positive_difference_array(
         const double* inA,
         const double* inB,
         double* outC,
         std::size_t inSize)
     {
-        return positive_difference_naive_Impl(inA, inB, outC, inSize);
+        return positive_difference_Impl(inA, inB, outC, inSize);
     }
 
     void positive_difference_AVX_vector(
@@ -93,7 +93,7 @@ namespace pml {
                 [](auto* inArray) { return _mm256_loadu_pd(inArray); });
     }
 
-    void positive_difference_naive_vector(
+    void positive_difference_vector(
         const std::vector<double>& inA,
         const std::vector<double>& inB,
         std::vector<double>& outC)
@@ -103,7 +103,7 @@ namespace pml {
         outC.resize(inA.size());
         outC.shrink_to_fit();
         
-        return positive_difference_naive_Impl(inA.data(), inB.data(), outC.data(), inA.size());
+        return positive_difference_Impl(inA.data(), inB.data(), outC.data(), inA.size());
     }
 
     namespace aligned {
@@ -123,7 +123,7 @@ namespace pml {
                     [](auto* inArray) { return _mm256_load_pd(inArray); });
         }
 
-        void positive_difference_naive_alvector(
+        void positive_difference_alvector(
             const alvector<double>& inA,
             const alvector<double>& inB,
             alvector<double>& outC)
@@ -133,7 +133,7 @@ namespace pml {
             outC.resize(inA.size());
             outC.shrink_to_fit();
             
-            return positive_difference_naive_Impl(inA.data(), inB.data(), outC.data(), inA.size());
+            return positive_difference_Impl(inA.data(), inB.data(), outC.data(), inA.size());
         }
 
     } // aligned
