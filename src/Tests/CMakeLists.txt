@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Tests CXX)
 
-add_dependencies(Core Math)
+add_dependencies(Core Math Utility)
 
 include_directories(../../include)
 include_directories(./)
@@ -40,7 +40,8 @@ add_executable(
  TestCore/TestCore.cpp
  TestMath/TestConstants.cpp
  TestMath/TestNumericSIMD.cpp
- TestMath/TestPMath.cpp)
+ TestMath/TestPMath.cpp
+ TestUtility/TestCSVParser.cpp)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
  # Clang
@@ -75,4 +76,4 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 endif()
 
 target_link_libraries(
- Tests ${LINK_LIBRARIES_GTEST} ${LINK_LIBRARIES_GTEST_MAIN} Core Math)
+ Tests ${LINK_LIBRARIES_GTEST} ${LINK_LIBRARIES_GTEST_MAIN} Core Math Utility)

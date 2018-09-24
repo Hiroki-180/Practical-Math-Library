@@ -4,4 +4,5 @@ project(PML CXX)
 
 add_subdirectory(src/Core)
 add_subdirectory(src/Math)
+add_subdirectory(src/Utility)
 add_subdirectory(src/Tests)
