@@ -27,7 +27,7 @@ namespace pml {
             ParserBaseImpl(IterT inStart, IterT inEnd) : mStart(inStart), mEnd(inEnd), mLine(0), mIsOpen(false)
             {}
 
-            virtual ~ParserBaseImpl() = default;
+            virtual ~ParserBaseImpl() override = default;
 
             virtual bool readOneLine(std::vector<std::string>& outBuffer) override
             {
@@ -237,7 +237,7 @@ namespace pml {
                 mEnd = lEOF;
             }
 
-            ~FileParser()
+            virtual ~FileParser() override
             {
                 mFile.close();
             }
