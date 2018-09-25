@@ -29,11 +29,11 @@ namespace pml {
 
             virtual ~ParserBaseImpl() override = default;
 
-            virtual bool readOneLine(std::vector<std::string>& outBuffer) override
+            virtual bool readNextOneRecord(std::vector<std::string>& outBuffer) override
             {
                 outBuffer.clear();
 
-                if (isEnd()) {
+                if (isEnd()  || !isOpen()) {
                     return false;
                 }
 
@@ -174,17 +174,17 @@ namespace pml {
                 return true;
             }
 
-            virtual bool isEnd() override
+            virtual bool isEnd() const override
             {
                 return (mStart == mEnd);
             }
 
-            virtual bool isOpen() override
+            virtual bool isOpen() const override
             {
                 return mIsOpen;
             }
 
-            virtual std::size_t getLine() override
+            virtual std::size_t getLine() const override
             {
                 return mLine;
             }
@@ -291,25 +291,25 @@ namespace pml {
         }
     }
 
-    bool CSVParser::readOneLine(std::vector<std::string>& outBuffer)
+    bool CSVParser::readNextOneRecord(std::vector<std::string>& outBuffer)
     {
-        const auto lIsRead = mParser->readOneLine(outBuffer);
+        const auto lIsRead = mParser->readNextOneRecord(outBuffer);
         outBuffer.shrink_to_fit();
 
         return lIsRead;
     }
 
-    bool CSVParser::isOpen()
+    bool CSVParser::isOpen() const
     {
         return mParser->isOpen();
     }
 
-    bool CSVParser::isEnd()
+    bool CSVParser::isEnd() const
     {
         return  mParser->isEnd();
     }
 
-    std::size_t CSVParser::getLine()
+    std::size_t CSVParser::getLine() const
     {
         return mParser->getLine();
     }

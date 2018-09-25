@@ -21,7 +21,7 @@ TEST_P(CSVParserString, refAndCopy)
 
         auto lLines = 0U;
         auto lIdx = 0U;
-        while (lParser.readOneLine(lBuffer))
+        while (lParser.readNextOneRecord(lBuffer))
         {
             for (auto i = 0U; i < lBuffer.size(); ++i) {
                 EXPECT_EQ(GetParam().second[lIdx], lBuffer[i]);
@@ -40,7 +40,7 @@ TEST_P(CSVParserString, refAndCopy)
 INSTANTIATE_TEST_CASE_P(
     name, CSVParserString,
     ::testing::Values(
-        std::make_pair(std::string("abc,def,ghi"), std::vector<std::string>{"abc", "def", "ghi"}),
+        std::make_pair(std::string("abc, def ,ghi"), std::vector<std::string>{"abc", " def ", "ghi"}),
         std::make_pair(std::string("\"abc\",\"def\",\"ghi\""), std::vector<std::string>{ "abc", "def", "ghi" }),
         std::make_pair(std::string("abc,\"def\",ghi"), std::vector<std::string>{ "abc", "def", "ghi" }),
         std::make_pair(std::string("abc, \"def\" ,ghi"), std::vector<std::string>{ "abc", "def", "ghi" }),
