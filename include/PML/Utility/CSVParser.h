@@ -2,6 +2,7 @@
 #define UTILITY_CSV_PARSER
 
 #include <vector>
+#include <map>
 #include <string>
 #include <memory>
 
@@ -67,7 +68,7 @@ namespace pml{
         };
 
         /**
-        * Unique constructor of the CSVParser class.
+        * Unique constructor of this class.
         *
         * @param[in] inType
         * Target CSV data type. Following three types are possible;
@@ -102,6 +103,53 @@ namespace pml{
         bool readNextOneRecord(std::vector<std::string>& outBuffer);
 
         /**
+        * Read CSV file.
+        *
+        * @param[in] inFilePath
+        * The path to the target CSV file.
+        *
+        * @param[in] outBuffer
+        * All fields of the target data.
+        * outBuffer[i][j] contains j-th field in i-th record.
+        *
+        * @return
+        * Normal end or not. Return false if improper or unexpected format is found.
+        */
+        static bool readAllRecords(
+            const std::string& inFilePath,
+            std::vector<std::vector<std::string>>& outBuffer);
+
+        /**
+        * Read table in CSV format.
+        * Suppose the file content as "A,B,C\nD,E,F\G,H,I".
+        * Then if inIsColumnKey is true, the result is
+        *   outMap[A] = {B,C},
+        *   outMap[D] = {E,F},
+        *   outMap[G] = {H,I}.
+        * On the other hand, if inIsColumnKey is false, the result is
+        *   outMap[A] = {D,G},
+        *   outMap[B] = {E,H},
+        *   outMap[C] = {F,I}.
+        *
+        * @param[in] inFilePath
+        * The path to the target CSV file.
+        *
+        * @param[in] inIsColumnKey
+        * Whether the first column is keys or not.
+        * If this is false, the first row is interpreted as keys.
+        *
+        * @param[out] outMap
+        * Resulted table as map.
+        *
+        * @return
+        * Normal end or not. Return false if improper or unexpected format is found.
+        */
+        static bool readTable(
+            const std::string& inFilePath,
+            bool inIsColumnKey,
+            std::map<std::string, std::vector<std::string>>& outMap);
+
+        /**
         * Target file or string is correctly set or not.
         *
         * @return
@@ -126,6 +174,10 @@ namespace pml{
         std::size_t getLine() const;
 
     private:
+
+        /**
+        * Composit of implementation.
+        */
         std::unique_ptr<ParserBase> mParser;
     };
 

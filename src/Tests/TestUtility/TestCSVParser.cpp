@@ -55,3 +55,35 @@ INSTANTIATE_TEST_CASE_P(
         std::make_pair(std::string("abc,def,ghi\rjkl,mn,op\r"), std::vector<std::string>{ "abc", "def", "ghi", "jkl", "mn", "op" }),
         std::make_pair(std::string("abc,def,ghi\r\njkl,mn,op\r\n"), std::vector<std::string>{ "abc", "def", "ghi", "jkl", "mn", "op" }),
         std::make_pair(std::string("ab,cd,ef\ngh,ij,kl\nmn,op"), std::vector<std::string>{ "ab", "cd", "ef", "gh", "ij", "kl","mn","op" })));
+
+TEST(CSVParserStatic, allRecords)
+{
+    std::vector<std::vector<std::string>> lAllRecords;
+    EXPECT_TRUE(pml::CSVParser::readAllRecords("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", lAllRecords));
+    std::map<std::string, std::vector<std::string>> lTable;
+    for (auto i = 0U; i < lAllRecords.size(); ++i)
+    {
+        for (auto j = 1U; j < lAllRecords[i].size(); ++j) {
+            lTable[lAllRecords[i][0]].push_back(std::move(lAllRecords[i][j]));
+        }
+    }
+
+    std::map<std::string, std::vector<std::string>> lTable_ColumnKey;
+    EXPECT_TRUE(pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true, lTable_ColumnKey));
+
+    EXPECT_EQ(lTable_ColumnKey, lTable);
+    EXPECT_EQ(3U, lTable.size());
+}
+
+TEST(CSVParserStatic, table)
+{
+    std::map<std::string, std::vector<std::string>> lTable_ColumnKey;
+    EXPECT_TRUE(pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true, lTable_ColumnKey));
+
+    std::map<std::string, std::vector<std::string>> lTable_RowKey;
+    EXPECT_TRUE(pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_RowKey.csv", false, lTable_RowKey));
+
+    EXPECT_EQ(lTable_ColumnKey, lTable_RowKey);
+    EXPECT_EQ(3U, lTable_ColumnKey.size());
+    EXPECT_EQ(3U, lTable_RowKey   .size());
+}

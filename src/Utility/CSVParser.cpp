@@ -299,6 +299,97 @@ namespace pml {
         return lIsRead;
     }
 
+    bool CSVParser::readAllRecords(
+        const std::string& inFilePath,
+        std::vector<std::vector<std::string>>& outBuffer)
+    {
+        CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
+        std::vector<std::string> lRecord;
+
+        if (!lParser.isOpen()) {
+            return false;
+        }
+
+        while (lParser.readNextOneRecord(lRecord))
+        {
+            lRecord.shrink_to_fit();
+            outBuffer.push_back(std::move(lRecord));
+        }
+
+        return lParser.isEnd();
+    }
+
+    bool CSVParser::readTable(
+        const std::string& inFilePath,
+        bool inIsColumnKey,
+        std::map<std::string, std::vector<std::string>>& outMap)
+    {
+        CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
+        std::vector<std::string> lRecord;
+
+        if (!lParser.isOpen()) {
+            return false;
+        }
+
+        if (inIsColumnKey)
+        {
+            while(lParser.readNextOneRecord(lRecord))
+            {
+                if (lRecord.empty()) {
+                    continue;
+                }
+
+                const auto lKey = std::move(lRecord[0]);
+                lRecord.erase(lRecord.begin());
+                lRecord.shrink_to_fit();
+
+                outMap[std::move(lKey)] = std::move(lRecord);
+            }
+
+            return lParser.isEnd();
+        }
+        
+
+        // When the first row is keys.
+        std::vector<std::string> lKeys;
+        if(!lParser.readNextOneRecord(lKeys)){
+            return lParser.isEnd();
+        }
+        
+        if (lKeys.empty()) {
+            return lParser.isEnd();
+        }
+
+        std::vector<std::vector<std::string>> lVals(lKeys.size());
+
+        for (;;)
+        {
+            if (!lParser.readNextOneRecord(lRecord))
+            {
+                if (lParser.isEnd()) {
+                    break;
+                }
+
+                return false;
+            }
+
+            if (lRecord.size() != lKeys.size()) {
+                return false;
+            }
+
+            for (auto i = 0U; i < lRecord.size(); ++i) {
+                lVals[i].push_back(std::move(lRecord[i]));
+            }
+        }
+
+        for (auto i = 0U; i < lKeys.size(); ++i) {
+            lVals[i].shrink_to_fit();
+            outMap[lKeys[i]] = std::move(lVals[i]);
+        }
+
+        return true;
+    }
+
     bool CSVParser::isOpen() const
     {
         return mParser->isOpen();
