@@ -1,11 +1,22 @@
 #include <PML/Utility/CSVParser.h>
 #include <fstream>
+#include <exception>
 
 #ifdef _WIN32
 #include <locale>
 #endif
 
 namespace pml {
+
+    void PML_THROW_WITH_NESTED(
+        std::string&& inMessage,
+        char const* inFileName,
+        std::size_t inLine)
+    {
+        std::throw_with_nested(
+            std::runtime_error(
+                std::string{} + inFileName + "(" + std::to_string(inLine) + "), " + inMessage + " "));
+    }
 
     namespace {
 
@@ -33,7 +44,11 @@ namespace pml {
             {
                 outBuffer.clear();
 
-                if (isEnd()  || !isOpen()) {
+                if (!isOpen()) {
+                    PML_THROW_WITH_NESTED("Taregt is not opened.", __FILE__, __LINE__);
+                }
+
+                if (isEnd()) {
                     return false;
                 }
 
@@ -74,7 +89,8 @@ namespace pml {
                                 mStart = lit;
                                 SkipToNextLine();
 
-                                return false;
+                                PML_THROW_WITH_NESTED(
+                                    "Field is not closed by right side double quotation.", __FILE__, __LINE__);
                             }
                         }
 
@@ -115,7 +131,8 @@ namespace pml {
                                 mStart = lit;
                                 SkipToNextLine();
 
-                                return false;
+                                PML_THROW_WITH_NESTED(
+                                    "Double quotation as an element of fields must be escaped by itself.", __FILE__, __LINE__);
                             }
                         }
                         else if (lc == ',')
@@ -153,7 +170,9 @@ namespace pml {
                             mStart = lit;
                             SkipToNextLine();
 
-                            return false;
+                            PML_THROW_WITH_NESTED(
+                                "Character exist in the field " + lQuotedString + " outside of double quotations.",
+                                __FILE__, __LINE__);
                         }
                         else
                         {
@@ -287,7 +306,7 @@ namespace pml {
             mParser.reset(new StringParserCopy(inString));
             break;
         default:
-            throw std::runtime_error("Undefined type is specified");
+            PML_THROW_WITH_NESTED("Undefined type is specified.", __FILE__, __LINE__);
         }
     }
 
@@ -299,37 +318,30 @@ namespace pml {
         return lIsRead;
     }
 
-    bool CSVParser::readAllRecords(
-        const std::string& inFilePath,
-        std::vector<std::vector<std::string>>& outBuffer)
+    std::vector<std::vector<std::string>> CSVParser::readAllRecords(const std::string& inFilePath)
     {
+        std::vector<std::vector<std::string>> lOutBuffer;
+
         CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
         std::vector<std::string> lRecord;
-
-        if (!lParser.isOpen()) {
-            return false;
-        }
 
         while (lParser.readNextOneRecord(lRecord))
         {
             lRecord.shrink_to_fit();
-            outBuffer.push_back(std::move(lRecord));
+            lOutBuffer.push_back(std::move(lRecord));
         }
 
-        return lParser.isEnd();
+        return lOutBuffer;
     }
 
-    bool CSVParser::readTable(
+    std::map<std::string, std::vector<std::string>> CSVParser::readTable(
         const std::string& inFilePath,
-        bool inIsColumnKey,
-        std::map<std::string, std::vector<std::string>>& outMap)
+        bool inIsColumnKey)
     {
+        std::map<std::string, std::vector<std::string>> lOutMap;
+
         CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
         std::vector<std::string> lRecord;
-
-        if (!lParser.isOpen()) {
-            return false;
-        }
 
         if (inIsColumnKey)
         {
@@ -343,38 +355,27 @@ namespace pml {
                 lRecord.erase(lRecord.begin());
                 lRecord.shrink_to_fit();
 
-                outMap[std::move(lKey)] = std::move(lRecord);
+                lOutMap[std::move(lKey)] = std::move(lRecord);
             }
 
-            return lParser.isEnd();
+            return lOutMap;
         }
         
 
         // When the first row is keys.
         std::vector<std::string> lKeys;
-        if(!lParser.readNextOneRecord(lKeys)){
-            return lParser.isEnd();
-        }
+        lParser.readNextOneRecord(lKeys);
         
-        if (lKeys.empty()) {
-            return lParser.isEnd();
-        }
-
         std::vector<std::vector<std::string>> lVals(lKeys.size());
 
         for (;;)
         {
-            if (!lParser.readNextOneRecord(lRecord))
-            {
-                if (lParser.isEnd()) {
-                    break;
-                }
-
-                return false;
+            if (!lParser.readNextOneRecord(lRecord)) {
+                break;
             }
 
             if (lRecord.size() != lKeys.size()) {
-                return false;
+                PML_THROW_WITH_NESTED("Record size is unmatched with the key size.", __FILE__, __LINE__);
             }
 
             for (auto i = 0U; i < lRecord.size(); ++i) {
@@ -384,10 +385,10 @@ namespace pml {
 
         for (auto i = 0U; i < lKeys.size(); ++i) {
             lVals[i].shrink_to_fit();
-            outMap[lKeys[i]] = std::move(lVals[i]);
+            lOutMap[lKeys[i]] = std::move(lVals[i]);
         }
 
-        return true;
+        return lOutMap;
     }
 
     bool CSVParser::isOpen() const

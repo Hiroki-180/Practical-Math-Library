@@ -58,8 +58,7 @@ INSTANTIATE_TEST_CASE_P(
 
 TEST(CSVParserStatic, allRecords)
 {
-    std::vector<std::vector<std::string>> lAllRecords;
-    EXPECT_TRUE(pml::CSVParser::readAllRecords("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", lAllRecords));
+    auto lAllRecords = pml::CSVParser::readAllRecords("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv");
     std::map<std::string, std::vector<std::string>> lTable;
     for (auto i = 0U; i < lAllRecords.size(); ++i)
     {
@@ -68,8 +67,7 @@ TEST(CSVParserStatic, allRecords)
         }
     }
 
-    std::map<std::string, std::vector<std::string>> lTable_ColumnKey;
-    EXPECT_TRUE(pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true, lTable_ColumnKey));
+    auto lTable_ColumnKey = pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true);
 
     EXPECT_EQ(lTable_ColumnKey, lTable);
     EXPECT_EQ(3U, lTable.size());
@@ -77,11 +75,8 @@ TEST(CSVParserStatic, allRecords)
 
 TEST(CSVParserStatic, table)
 {
-    std::map<std::string, std::vector<std::string>> lTable_ColumnKey;
-    EXPECT_TRUE(pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true, lTable_ColumnKey));
-
-    std::map<std::string, std::vector<std::string>> lTable_RowKey;
-    EXPECT_TRUE(pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_RowKey.csv", false, lTable_RowKey));
+    auto lTable_ColumnKey = pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true );
+    auto lTable_RowKey    = pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_RowKey.csv"   , false);
 
     EXPECT_EQ(lTable_ColumnKey, lTable_RowKey);
     EXPECT_EQ(3U, lTable_ColumnKey.size());

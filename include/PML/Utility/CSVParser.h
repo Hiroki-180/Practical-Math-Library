@@ -98,7 +98,7 @@ namespace pml{
         * All Fields of the target one record are pushed back.
         *
         * @return
-        * Normal end or not. Return false if improper or unexpected format is found.
+        * False if and only if data has finished, otherwise true.
         */
         bool readNextOneRecord(std::vector<std::string>& outBuffer);
 
@@ -108,16 +108,11 @@ namespace pml{
         * @param[in] inFilePath
         * The path to the target CSV file.
         *
-        * @param[in] outBuffer
+        * @return
         * All fields of the target data.
         * outBuffer[i][j] contains j-th field in i-th record.
-        *
-        * @return
-        * Normal end or not. Return false if improper or unexpected format is found.
         */
-        static bool readAllRecords(
-            const std::string& inFilePath,
-            std::vector<std::vector<std::string>>& outBuffer);
+        static std::vector<std::vector<std::string>> readAllRecords(const std::string& inFilePath);
 
         /**
         * Read table in CSV format.
@@ -138,16 +133,12 @@ namespace pml{
         * Whether the first column is keys or not.
         * If this is false, the first row is interpreted as keys.
         *
-        * @param[out] outMap
-        * Resulted table as map.
-        *
         * @return
-        * Normal end or not. Return false if improper or unexpected format is found.
+        * Resulted table as map.
         */
-        static bool readTable(
+        static std::map<std::string, std::vector<std::string>> readTable(
             const std::string& inFilePath,
-            bool inIsColumnKey,
-            std::map<std::string, std::vector<std::string>>& outMap);
+            bool inIsColumnKey);
 
         /**
         * Target file or string is correctly set or not.
