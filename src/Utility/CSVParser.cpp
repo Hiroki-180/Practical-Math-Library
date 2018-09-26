@@ -8,7 +8,7 @@
 
 namespace pml {
 
-    void throw_with_nested(
+    inline void throw_with_nested(
         std::string&& inMessage,
         char const* inFileName,
         std::size_t inLine)
