@@ -36,6 +36,13 @@
 */
 #define PML_CATCH_END_AND_PRINT( OFSTREAM )   } catch(...) { pml::detail::print_exception(OFSTREAM); }
 
+/**
+* @def
+* Macro to finish the try-brock and add new exception by std::throw_with_nested(TYPE(MESSAGE)).
+* This macro should be used with PML_CATCH_BEGIN.
+*/
+#define PML_CATCH_END_AND_THROW( TYPE, MESSAGE )   } catch(...) { PML_THROW_WITH_NESTED( TYPE, MESSAGE ); }
+
 
 namespace pml {
     namespace detail {

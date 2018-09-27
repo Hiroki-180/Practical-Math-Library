@@ -311,6 +311,8 @@ namespace pml {
 
     std::vector<std::vector<std::string>> CSVParser::readAllRecords(const std::string& inFilePath)
     {
+        PML_CATCH_BEGIN
+
         std::vector<std::vector<std::string>> lOutBuffer;
 
         CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
@@ -323,12 +325,16 @@ namespace pml {
         }
 
         return lOutBuffer;
+
+        PML_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readAllRecords failed.");
     }
 
     std::map<std::string, std::vector<std::string>> CSVParser::readTable(
         const std::string& inFilePath,
         bool inIsColumnKey)
     {
+        PML_CATCH_BEGIN
+
         std::map<std::string, std::vector<std::string>> lOutMap;
 
         CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
@@ -380,6 +386,8 @@ namespace pml {
         }
 
         return lOutMap;
+
+        PML_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readTable failed.");
     }
 
     bool CSVParser::isOpen() const
