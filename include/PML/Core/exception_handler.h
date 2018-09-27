@@ -8,11 +8,34 @@
 * public header provided by PML.
 *
 * @brief
-* Macros for handling exceptions.
+* Useful macros for handling exceptions.
 */
 
 #include <exception>
 #include <fstream>
+
+/**
+* @def
+* Throw std::nested_exception by std::throw_with_nested( TYPE(MESSAGE with info. of __FILE and __LINE__) ).
+* PML throw exceptions using this macro if TYPE has a single string argument constructor.
+*/
+#define PML_THROW_WITH_NESTED( TYPE, MESSAGE ) pml::detail::throw_with_nested<TYPE>(MESSAGE, __FILE__, __LINE__)
+
+/**
+* @def
+* Macro to begin the try-brock.
+* This macro should be used with PML_CATCH_END_AND_PRINT(OFSTREAM).
+*/
+#define PML_CATCH_BEGIN try{
+
+/**
+* @def
+* Macro to finish the try-brock and output error messges to OFSTREAM.
+* std::logic_error, std::runtime_error, and other exceptions are distinguished in message.
+* This macro should be used with PML_CATCH_BEGIN.
+*/
+#define PML_CATCH_END_AND_PRINT( OFSTREAM )   } catch(...) { pml::detail::print_exception(OFSTREAM); }
+
 
 namespace pml {
     namespace detail {
@@ -36,11 +59,5 @@ namespace pml {
 
     } // detail
 } // pml
-
-#define PML_THROW_WITH_NESTED( TYPE, MESSAGE ) pml::detail::throw_with_nested<TYPE>(MESSAGE, __FILE__, __LINE__)
-
-#define PML_CATCH_BEGIN try{
-
-#define PML_CATCH_END_AND_PRINT( OFSTREAM )   } catch(...) { pml::detail::print_exception(OFSTREAM); }
 
 #endif
