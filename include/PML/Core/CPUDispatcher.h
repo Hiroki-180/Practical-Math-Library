@@ -31,18 +31,18 @@ namespace pml {
         const std::string& getVendor();
         const std::string& getBrand();
 
-		bool isSSE();
-		bool isSSE2();
-		bool isSSE3();
+        bool isSSE();
+        bool isSSE2();
+        bool isSSE3();
         bool isSSSE3();
         bool isSSE41();
         bool isSSE42();
 
-		bool isFMA();
-		bool isAVX();
-		bool isAVX2();
-        
-		bool isAVX512F();
+        bool isFMA();
+        bool isAVX();
+        bool isAVX2();
+
+        bool isAVX512F();
         bool isAVX512PF();
         bool isAVX512ER();
         bool isAVX512CD();

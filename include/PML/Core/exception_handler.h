@@ -24,7 +24,7 @@
 /**
 * @def
 * Macro to begin the try-brock.
-* This macro should be used with PML_CATCH_END_AND_PRINT(OFSTREAM).
+* This macro should be used with PML_CATCH_END_AND_PRINT(OFSTREAM) or PML_CATCH_END_AND_THROW(TYPE, MESSAGE).
 */
 #define PML_CATCH_BEGIN try{
 
