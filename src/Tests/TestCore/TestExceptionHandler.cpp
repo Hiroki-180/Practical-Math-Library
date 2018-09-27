@@ -38,7 +38,7 @@ TEST(exception_handler, nest)
     EXPECT_TRUE(lOfs.is_open());
 
     PML_CATCH_BEGIN
-        f();
+    f();
     PML_CATCH_END_AND_PRINT(lOfs)
 
     auto lResult = pml::CSVParser::readAllRecords("Test.csv");

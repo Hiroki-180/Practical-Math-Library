@@ -26,7 +26,7 @@ namespace pml{
     * This class read files or string of the CSV format.
     * Here the CSV format is defined as follows;
     *  1. Mixing of newline format of CR, LF, and CRLF is permitted.
-    *     That is, each record must be separated by a newline character \n, \r or \r\n.
+    *     That is, each record must be separated by a newline character \n, \r, or \r\n.
     *     \r\n is interpreted as a single newline character of CRLF, not twice newline characters of CR plus LF.
     *  2. Newline character in the end of data is indifferent.
     *  3. Each field must be separated by a single comma(,).
