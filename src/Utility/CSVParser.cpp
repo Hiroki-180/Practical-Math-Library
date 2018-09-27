@@ -1,24 +1,12 @@
+#include <PML/Core/exception_handler.h>
 #include <PML/Utility/CSVParser.h>
 #include <fstream>
-#include <exception>
 
 #ifdef _WIN32
 #include <locale>
 #endif
 
 namespace pml {
-
-    inline void throw_with_nested(
-        std::string&& inMessage,
-        char const* inFileName,
-        std::size_t inLine)
-    {
-        std::throw_with_nested(
-            std::runtime_error(
-                std::string{} + inFileName + "(" + std::to_string(inLine) + "), " + inMessage + " "));
-    }
-
-#define PML_THROW_WITH_NESTED(MESSAGE) pml::throw_with_nested(MESSAGE, __FILE__, __LINE__)
 
     namespace {
 
@@ -47,7 +35,7 @@ namespace pml {
                 outBuffer.clear();
 
                 if (!isOpen()) {
-                    PML_THROW_WITH_NESTED("Taregt is not opened.");
+                    PML_THROW_WITH_NESTED(std::runtime_error, "Taregt is not opened.");
                 }
 
                 if (isEnd()) {
@@ -91,7 +79,9 @@ namespace pml {
                                 mStart = lit;
                                 SkipToNextLine();
 
-                                PML_THROW_WITH_NESTED("Field is not closed by right side double quotation.");
+                                PML_THROW_WITH_NESTED(
+                                    std::runtime_error,
+                                    "Field is not closed by right side double quotation.");
                             }
                         }
 
@@ -132,7 +122,9 @@ namespace pml {
                                 mStart = lit;
                                 SkipToNextLine();
 
-                                PML_THROW_WITH_NESTED("Double quotation as an element of fields must be escaped by itself.");
+                                PML_THROW_WITH_NESTED(
+                                    std::runtime_error,
+                                    "Double quotation as an element of fields must be escaped by itself.");
                             }
                         }
                         else if (lc == ',')
@@ -170,7 +162,8 @@ namespace pml {
                             mStart = lit;
                             SkipToNextLine();
 
-                            PML_THROW_WITH_NESTED("Character exist in the field " + lQuotedString + " outside of double quotations.");
+                            PML_THROW_WITH_NESTED(
+                                std::runtime_error, "Character exist in the field " + lQuotedString + " outside of double quotations.");
                         }
                         else
                         {
@@ -304,7 +297,7 @@ namespace pml {
             mParser.reset(new StringParserCopy(inString));
             break;
         default:
-            PML_THROW_WITH_NESTED("Undefined type is specified.");
+            PML_THROW_WITH_NESTED(std::logic_error, "Undefined type is specified.");
         }
     }
 
@@ -373,7 +366,7 @@ namespace pml {
             }
 
             if (lRecord.size() != lKeys.size()) {
-                PML_THROW_WITH_NESTED("Record size is unmatched with the key size.");
+                PML_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
             }
 
             for (auto i = 0U; i < lRecord.size(); ++i) {

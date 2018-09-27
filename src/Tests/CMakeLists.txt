@@ -38,6 +38,7 @@ add_executable(
  stdafx.cpp
  targetver.h
  TestCore/TestCore.cpp
+ TestCore/TestExceptionHandler.cpp
  TestMath/TestConstants.cpp
  TestMath/TestNumericSIMD.cpp
  TestMath/TestPMath.cpp

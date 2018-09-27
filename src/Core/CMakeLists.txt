@@ -39,7 +39,9 @@ add_library(
   STATIC
   cross_intrin.cpp
   CPUDispatcher.cpp
-  ../../include/PML/Core/cross_intrin.h
+  exception_handler.cpp
   ../../include/PML/Core/aligned_array.h
   ../../include/PML/Core/aligned_vector.h
-  ../../include/PML/Core/CPUDispatcher.h)
+  ../../include/PML/Core/CPUDispatcher.h
+  ../../include/PML/Core/cross_intrin.h
+  ../../include/PML/Core/exception_handler.h)
