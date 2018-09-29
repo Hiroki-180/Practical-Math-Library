@@ -21,8 +21,6 @@ namespace pml {
     namespace aligned {
 
         /**
-        * @fn _mm256_rotate_left_pd(const __m256d& x, int n) 
-        *
         * @brief
         * Rotate __m256d to the left using SIMD instructions upto AVX.
         *

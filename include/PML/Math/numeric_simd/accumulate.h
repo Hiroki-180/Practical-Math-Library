@@ -8,8 +8,6 @@
 namespace pml {
 
     /**
-    * @fn accumulate_AVX_array(const double* inA, std::size_t inSize)
-    *
     * @brief
     * Accelerated version of std::accumulate by AVX.
     *
@@ -27,8 +25,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn accumulate_array(const double* inA, std::size_t inSize)
-    *
     * @brief
     * Wrapper of std::accumulate.
     *
@@ -46,8 +42,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn accumulate_AVX_vector(const std::vector<double>& inA);
-    *
     * @brief
     * Accelerated version of std::accumulate by AVX.
     *
@@ -60,8 +54,6 @@ namespace pml {
     double accumulate_AVX_vector(const std::vector<double>& inA);
 
     /**
-    * @fn accumulate_vector(const std::vector<double>& inA)
-    *
     * @brief
     * Wrapper of std::accumulate.
     *
@@ -79,8 +71,6 @@ namespace pml {
     namespace aligned {
 
         /**
-        * @fn accumulate_AVX_alvector(const alvector<double>& inA)
-        *
         * @brief
         * Accelerated version of std::accumulate by AVX with memory aligned data.
         *
@@ -93,8 +83,6 @@ namespace pml {
         double accumulate_AVX_alvector(const alvector<double>& inA);
 
         /**
-        * @fn accumulate_alvector(const alvector<double>& inA)
-        *
         * @brief
         * Wrapper of std::accumulate with memory aligned data.
         *

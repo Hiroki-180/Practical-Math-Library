@@ -56,6 +56,7 @@ namespace pml {
     namespace detail {
 
         /**
+        * @brief
         * Throws std::nested_exception by std::throw_with_nested( E(inMessage with info. of inExceptionFileName and inLine) )
         * Templated exception E must have a Single String Argument constructor.
         *
@@ -79,6 +80,7 @@ namespace pml {
         };
 
         /**
+        * @brief
         * Output error message of current exceptions.
         *
         * @param[in] inOstream
@@ -87,6 +89,7 @@ namespace pml {
         void output_exceptions(std::ostream& inOstream);
 
         /**
+        * @brief
         * Aggregate error message of current exceptions.
         */
         void aggregate_exceptions();

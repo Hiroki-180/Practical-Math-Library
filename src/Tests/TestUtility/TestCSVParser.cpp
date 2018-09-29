@@ -40,6 +40,7 @@ TEST_P(CSVParserString, refAndCopy)
 INSTANTIATE_TEST_CASE_P(
     name, CSVParserString,
     ::testing::Values(
+        std::make_pair(std::string("\" \n \",abc"), std::vector<std::string>{" \n ", "abc"}),
         std::make_pair(std::string("abc, def ,ghi"), std::vector<std::string>{"abc", " def ", "ghi"}),
         std::make_pair(std::string("\"abc\",\"def\",\"ghi\""), std::vector<std::string>{ "abc", "def", "ghi" }),
         std::make_pair(std::string("abc,\"def\",ghi"), std::vector<std::string>{ "abc", "def", "ghi" }),

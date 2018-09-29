@@ -8,8 +8,6 @@
 namespace pml {
 
     /**
-    * @fn inner_product_AVX_array(const double* inA, const double* inB, std::size_t inSize)
-    *
     * @brief
     * Accelerated version of std::inner_product by AVX.
     *
@@ -31,8 +29,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn inner_product_array(const double* inA, const double* inB, std::size_t inSize)
-    *
     * @brief
     * Wrapper of std::inner_product.
     *
@@ -54,8 +50,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn inner_product_AVX_vector(const std::vector<double>& inA, const std::vector<double>& inB)
-    *
     * @brief
     * Accelerated version of std::inner_prod by AVX.
     *
@@ -73,8 +67,6 @@ namespace pml {
         const std::vector<double>& inB);
 
     /**
-    * @fn inner_product_vector(const std::vector<double>& inA, const std::vector<double>& inB)
-    *
     * @brief
     * Wrapper of std::inner_prod by AVX.
     *
@@ -94,8 +86,6 @@ namespace pml {
     namespace aligned {
 
         /**
-        * @fn inner_product_AVX_alvector(const alvector<double>& inA, const alvector<double>& inB)
-        *
         * @brief
         * Accelerated version of std::inner_prod by AVX with memory aligned data.
         *
@@ -113,8 +103,6 @@ namespace pml {
             const alvector<double>& inB);
 
         /**
-        * @fn inner_product_alvector(const alvector<double>& inA, const alvector<double>& inB)
-        *
         * @brief
         * Wrapper of std::inner_prod with memory aligned data.
         *

@@ -8,8 +8,6 @@
 namespace pml {
 
     /**
-    * @fn positive_difference_AVX_array(const double* inA, const double* inB, double* outC, std::size_t inSize)
-    *
     * @brief
     * Instruction of subtraction of two arrays and taking plus part using AVX instructions.
     *
@@ -33,8 +31,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn positive_difference_array(const double* inA, const double* inB, double* outC, std::size_t inSize)
-    *
     * @brief
     * Instruction of subtraction of two arrays and taking plus part using no SIMD instructions.
     *
@@ -58,8 +54,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn positive_difference_AVX_vector(const std::vector<double>& inA, const std::vector<double>& inB, std::vector<double>& outC)
-    *
     * @brief
     * Instruction of subtraction of two arrays and taking plus part using AVX instructions.
     *
@@ -79,8 +73,6 @@ namespace pml {
         std::vector<double>& outC);
 
     /**
-    * @fn positive_difference_vector(const std::vector<double>& inA, const std::vector<double>& inB, std::vector<double>& outC)
-    *
     * @brief
     * Instruction of subtraction of two arrays and taking plus part using no SIMD instructions.
     *
@@ -102,8 +94,6 @@ namespace pml {
     namespace aligned {
 
         /**
-        * @fn positive_difference_AVX_alvector(const alvector<double>& inA, const alvector<double>& inB, alvector<double>& outC)
-        *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part using AVX instructions.
         *
@@ -123,8 +113,6 @@ namespace pml {
             alvector<double>& outC);
 
         /**
-        * @fn positive_difference_alvector(const alvector<double>& inA, const alvector<double>& inB, alvector<double>& outC)
-        *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part using no SIMD instructions.
         *

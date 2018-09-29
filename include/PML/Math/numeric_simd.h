@@ -16,8 +16,6 @@
 namespace pml {
 
     /**
-    * @fn accumulate_SIMD(const double* inA, std::size_t inSize)
-    *
     * @brief
     * Accelerated version of std::accumulate by automatically selected optimal SIMD.
     *
@@ -35,8 +33,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn inner_product_SIMD(const double* inA, const double* inB, std::size_t inSize)
-    *
     * @brief
     * Accelerated version of std::inner_product by automatically selected optimal SIMD.
     *
@@ -58,8 +54,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn positive_difference_SIMD(const double* inA, const double* inB, double* outC, std::size_t inSize)
-    *
     * @brief
     * Instruction of subtraction of two arrays and taking plus part by automatically selected optimal SIMD.
     *
@@ -82,8 +76,6 @@ namespace pml {
         std::size_t inSize);
 
     /**
-    * @fn accumulate_SIMD(const std::vector<double>& inA);
-    *
     * @brief
     * Accelerated version of std::accumulate by automatically selected optimal SIMD.
     *
@@ -96,8 +88,6 @@ namespace pml {
     double accumulate_SIMD(const std::vector<double>& inA);
 
     /**
-    * @fn inner_product_SIMD(const std::vector<double>& inA, const std::vector<double>& inB)
-    *
     * @brief
     * Accelerated version of std::inner_product by automatically selected optimal SIMD.
     *
@@ -115,8 +105,6 @@ namespace pml {
         const std::vector<double>& inB);
 
     /**
-    * @fn positive_difference_SIMD(const std::vector<double>& inA, const std::vector<double>& inB, std::vector<double>& outC)
-    *
     * @brief
     * Instruction of subtraction of two arrays and taking plus part by automatically selected optimal SIMD.
     *
@@ -137,8 +125,6 @@ namespace pml {
     namespace aligned {
 
         /**
-        * @fn accumulate_SIMD(const pml::aligned::alvector<double>& inA)
-        *
         * @brief
         * Accelerated version of std::accumulate by automatically selected optimal SIMD with memory aligned data.
         *
@@ -151,8 +137,6 @@ namespace pml {
         double accumulate_SIMD(const pml::aligned::alvector<double>& inA);
 
         /**
-        * @fn inner_product_SIMD(const pml::aligned::alvector<double>& inA, const pml::aligned::alvector<double>& inB)
-        *
         * @brief
         * Accelerated version of std::inner_product by automatically selected optimal SIMD with memory aligned data.
         *
@@ -170,8 +154,6 @@ namespace pml {
             const pml::aligned::alvector<double>& inB);
 
         /**
-        * @fn positive_difference_SIMD(const pml::aligned::alvector<double>& inA, const pml::aligned::alvector<double>& inB, pml::aligned::alvector<double>& outC)
-        *
         * @brief
         * Instruction of subtraction of two arrays and taking plus part by automatically selected optimal SIMD with memory aligned data.
         *

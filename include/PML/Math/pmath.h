@@ -14,8 +14,6 @@
 namespace pml{
 
     /**
-    * @fn double exp(double inX)
-    *
     * @brief
     * Exp-function implimented by look-up-table and Taylor expansion.
     * This exp-function is implimented by the algorithm of the following fast math library,
@@ -31,8 +29,6 @@ namespace pml{
     double exp(double inX);
 
     /**
-    * @fn double expv(const double* inX, double* outY, std::size_t inSize)
-    *
     * @brief
     * Vector function of exp implimented by look-up-table and Taylor expansion.
     * This exp-function is implimented by the algorithm of the following fast math library,
@@ -52,8 +48,6 @@ namespace pml{
     void expv(const double* inX, double* outY, std::size_t inSize);
 
     /**
-    * @fn double sin(double inX)
-    *
     * @brief
     * Sin-function implimented by look-up-table and Taylor expansion.
     *
@@ -65,8 +59,6 @@ namespace pml{
     double sin(double inX);
 
     /**
-    * @fn double cos(double inX)
-    *
     * @brief
     * Cos-function implimented by look-up-table and Taylor expansion.
     *

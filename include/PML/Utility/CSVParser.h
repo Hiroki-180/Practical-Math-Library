@@ -23,7 +23,7 @@ namespace pml{
     * CSVParser
     *
     * @brief
-    * This class read files or string of the CSV format.
+    * This class reads files or string of the CSV format.
     * Here the CSV format is defined as follows;
     *  1. Mixing of newline format of CR, LF, and CRLF is permitted.
     *     That is, each record must be separated by a newline character \n, \r, or \r\n.
@@ -41,11 +41,13 @@ namespace pml{
     public:
 
         /**
+        * @brief
         * Pure virtual base class for implementation of the class CSVParser by composit pattern.
         */
         class ParserBase;
 
         /**
+        * @brief
         * Target data type of the CSV parser.
         */
         enum class InputType
@@ -56,6 +58,7 @@ namespace pml{
         };
 
         /**
+        * @brief
         * Unique constructor of this class.
         *
         * @param[in] inType
@@ -74,12 +77,14 @@ namespace pml{
         CSVParser& operator =(CSVParser&&)      = delete;
 
         /**
+        * @brief
         * Destructor.
         * If the CSV data type is CSVParser::InputType::FILE, the target file is closed here.
         */
         ~CSVParser();
 
         /**
+        * @brief
         * Read the next one record of CSV data.
         *
         * @param[out] outBuffer
@@ -91,6 +96,7 @@ namespace pml{
         bool readNextOneRecord(std::vector<std::string>& outBuffer);
 
         /**
+        * @brief
         * Read CSV file.
         *
         * @param[in] inFilePath
@@ -103,6 +109,7 @@ namespace pml{
         static std::vector<std::vector<std::string>> readAllRecords(const std::string& inFilePath);
 
         /**
+        * @brief
         * Read table in CSV format.
         * Suppose the file content as "A,B,C\nD,E,F\G,H,I".
         * Then if inIsColumnKey is true, the result is
@@ -129,6 +136,7 @@ namespace pml{
             bool inIsColumnKey);
 
         /**
+        * @brief
         * Target file or string is correctly set or not.
         *
         * @return
@@ -137,6 +145,7 @@ namespace pml{
         bool isOpen() const;
 
         /**
+        * @brief
         * Whether all records are read or not.
         *
         * @return
@@ -145,6 +154,7 @@ namespace pml{
         bool isEnd() const;
 
         /**
+        * @brief
         * The number of already read records.
         *
         * @return
@@ -155,7 +165,8 @@ namespace pml{
     private:
 
         /**
-        * Composit of implementation.
+        * @brief
+        * Composit member of implementation.
         */
         std::unique_ptr<ParserBase> mParser;
     };
