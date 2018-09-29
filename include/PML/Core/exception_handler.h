@@ -18,14 +18,14 @@
 * @def
 * Macro to throw std::nested_exception by std::throw_with_nested( TYPE(MESSAGE with info. of __FILE__ and __LINE__) ).
 * PML always throws exceptions using this macro if TYPE has a Single String Argument constructor.
-* PML throws only inheritances of std::exception as exception and does not throw it's original implementations of exceptions.
+* PML throws only inheritances of std::exception if exceptions occured and does not throw it's original implementations.
 */
 #define PML_THROW_WITH_NESTED( TYPE, MESSAGE ) pml::detail::throw_with_nested_SSA<TYPE>(MESSAGE, __FILE__, __LINE__)
 
 /**
 * @def
 * Macro to begin a try-brock.
-* This macro should be used with PML_CATCH_END_AND_PRINT(OFSTREAM) or PML_CATCH_END_AND_THROW(TYPE, MESSAGE).
+* This macro should be used with PML_CATCH_END_AND_OUTPUT, PML_CATCH_END_AND_AGGREGATE, or PML_CATCH_END_AND_THROW.
 */
 #define PML_CATCH_BEGIN try{
 

@@ -1,5 +1,5 @@
 #include <PML/Core/exception_handler.h>
-#include <iostream>
+#include <ostream>
 #include <type_traits>
 
 namespace pml {
@@ -17,6 +17,7 @@ namespace pml {
         }
 
         /**
+        * @brief
         * Output error message of std::exceptions.
         *
         * @param[in] inException
@@ -99,6 +100,7 @@ namespace pml {
         }
 
         /**
+        * @brief
         * Aggregate error message of std::exceptions.
         *
         * @param[in] inException
