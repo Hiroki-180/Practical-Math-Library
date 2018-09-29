@@ -35,7 +35,7 @@
 * std::logic_error, std::runtime_error, and other exceptions are distinguished in message.
 * This macro should be used with PML_CATCH_BEGIN.
 */
-#define PML_CATCH_END_AND_PRINT( OSTREAM )   } catch(...) { pml::detail::print_exception(OSTREAM); }
+#define PML_CATCH_END_AND_OUTPUT( OSTREAM )   } catch(...) { pml::detail::print_exception(OSTREAM); }
 
 /**
 * @def

@@ -50,7 +50,7 @@ TEST_P(exception_handler, nest_print)
             EXPECT_TRUE(lOfs.is_open());
             PML_CATCH_BEGIN
                 (GetParam().first)();
-            PML_CATCH_END_AND_PRINT(lOfs)
+            PML_CATCH_END_AND_OUTPUT(lOfs)
 
             auto lResult = pml::CSVParser::readAllRecords(lFileName);
             EXPECT_EQ(GetParam().second, lResult.size());
@@ -67,7 +67,7 @@ TEST_P(exception_handler, nest_print)
     std::stringstream lSs_2;
     PML_CATCH_BEGIN
         (GetParam().first)();
-    PML_CATCH_END_AND_PRINT(lSs_2)
+    PML_CATCH_END_AND_OUTPUT(lSs_2)
     EXPECT_EQ(lSs_1.str(), lSs_2.str());
 }
 
@@ -89,7 +89,7 @@ TEST_P(exception_handler, nest_rethrow)
             EXPECT_TRUE(lOfs.is_open());
             PML_CATCH_BEGIN
                 lThrower();
-            PML_CATCH_END_AND_PRINT(lOfs)
+            PML_CATCH_END_AND_OUTPUT(lOfs)
 
             auto lResult = pml::CSVParser::readAllRecords(lFileName);
             EXPECT_EQ(GetParam().second + 1, lResult.size());
@@ -106,7 +106,7 @@ TEST_P(exception_handler, nest_rethrow)
     std::stringstream lSs_2;
     PML_CATCH_BEGIN
         lThrower();
-    PML_CATCH_END_AND_PRINT(lSs_2)
+    PML_CATCH_END_AND_OUTPUT(lSs_2)
     EXPECT_EQ(lSs_1.str(), lSs_2.str());
 }
 
