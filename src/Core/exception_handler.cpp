@@ -16,7 +16,19 @@ namespace pml {
             }
         }
 
-        void print_std_exception(
+        /**
+        * Output error message of std::exceptions.
+        *
+        * @param[in] inException
+        * Nested exceptions.
+        *
+        * @param[in] inOstream
+        * Out stream.
+        *
+        * @param[in] inIsFirstCall
+        * Is the current call first one in recursion of nested_exception unrolling.
+        */
+        void output_std_exceptions(
             const std::exception& inException,
             std::ostream& inOstream,
             bool inIsFirstCall)
@@ -31,58 +43,105 @@ namespace pml {
             }
             catch (const std::logic_error& e) {
                 inOstream << "Logic error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
             catch (const std::runtime_error& e) {
                 inOstream << "Runtime error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
             catch (const std::bad_exception& e) {
                 inOstream << "Bad exception error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
             catch (const std::bad_alloc& e) {
                 inOstream << "Bad alloc error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
             catch (const std::bad_cast& e) {
                 inOstream << "Bad cast error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
             catch (const std::bad_typeid& e) {
                 inOstream << "Bad typeid error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
             catch (const std::bad_weak_ptr& e) {
                 inOstream << "Bad weak pointer error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
 #if defined(__cplusplus) && __cplusplus >= 201703L
             catch (const std::bad_optional_access& e) {
                 inOstream << "Bad optional access error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
             catch (const std::bad_variant_access& e) {
                 inOstream << "Bad variant access error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
 #endif
             catch (const std::exception& e) {
                 inOstream << "Error: ";
-                print_std_exception(e, inOstream, false);
+                output_std_exceptions(e, inOstream, false);
             }
         }
 
-        void print_exception(std::ostream& inOstream)
+        void output_exceptions(std::ostream& inOstream)
         {
             try {
                 throw;
             }
             catch (std::exception& e) {
-                print_std_exception(e, inOstream, true);
+                output_std_exceptions(e, inOstream, true);
             }
             catch (...) {
-                inOstream << "PML never throws not standard exceptions." << std::endl;
+                inOstream << "PML never throws unstandard exceptions." << std::endl;
+            }
+        }
+
+        /**
+        * Aggregate error message of std::exceptions.
+        *
+        * @param[in] inException
+        * Nested exceptions.
+        *
+        * @param[in] inAggregatedMessage
+        * Recursively aggregated message.
+        *
+        * @param[in] inIsFirstCall
+        * Is the current call first one in recursion of nested_exception unrolling.
+        */
+        void aggregate_std_exceptions(
+            const std::exception& inException,
+            std::string& inAggregatedMessage,
+            bool inIsFirstCall)
+        {
+            try {
+                if (inIsFirstCall) {
+                    throw;
+                }
+
+                inAggregatedMessage += std::string(std::string{} + " " + inException.what());
+                pml::detail::rethrow_if_nested_ptr(inException);
+            }
+            catch (const std::exception& e) {
+                aggregate_std_exceptions(e, inAggregatedMessage, false);
+            }
+        }
+
+        void aggregate_exceptions()
+        {
+            try {
+                throw;
+            }
+            catch (std::exception& e) {
+                std::string lAggregatedMessage("");
+                aggregate_std_exceptions(e, lAggregatedMessage, true);
+                throw std::runtime_error(lAggregatedMessage);
+            }
+            catch (...) {
+                std::string lAggregatedMessage("");
+                lAggregatedMessage = "PML never throws unstandard exceptions.";
+                throw std::runtime_error(lAggregatedMessage);
             }
         }
 

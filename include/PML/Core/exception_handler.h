@@ -17,7 +17,7 @@
 /**
 * @def
 * Macro to throw std::nested_exception by std::throw_with_nested( TYPE(MESSAGE with info. of __FILE__ and __LINE__) ).
-* PML always throws exceptions using this macro if TYPE has a single string argument constructor.
+* PML always throws exceptions using this macro if TYPE has a Single String Argument constructor.
 * PML throws only inheritances of std::exception as exception and does not throw it's original implementations of exceptions.
 */
 #define PML_THROW_WITH_NESTED( TYPE, MESSAGE ) pml::detail::throw_with_nested_SSA<TYPE>(MESSAGE, __FILE__, __LINE__)
@@ -35,7 +35,14 @@
 * std::logic_error, std::runtime_error, and other exceptions are distinguished in message.
 * This macro should be used with PML_CATCH_BEGIN.
 */
-#define PML_CATCH_END_AND_OUTPUT( OSTREAM )   } catch(...) { pml::detail::print_exception(OSTREAM); }
+#define PML_CATCH_END_AND_OUTPUT( OSTREAM )   } catch(...) { pml::detail::output_exceptions(OSTREAM); }
+
+/**
+* @def
+* Macro to finish a try-brock which aggregates error message of nested exceptions and throws a single std::runtime_error with aggregated one.
+* This macro should be used with PML_CATCH_BEGIN.
+*/
+#define PML_CATCH_END_AND_AGGREGATE   } catch(...) { pml::detail::aggregate_exceptions(); }
 
 /**
 * @def
@@ -72,29 +79,17 @@ namespace pml {
         };
 
         /**
-        * Print error message of std::exceptions.
-        *
-        * @param[in] inException
-        * Nested exceptions.
+        * Output error message of current exceptions.
         *
         * @param[in] inOstream
         * Out stream.
-        *
-        * @param[in] inIsFirstCall
-        * Is the current call first one in recursion of nested_exception unrolling.
         */
-        void print_std_exception(
-            const std::exception& inException,
-            std::ostream& inOstream,
-            bool inIsFirstCall);
+        void output_exceptions(std::ostream& inOstream);
 
         /**
-        * Print error message of current exceptions including std::exceptions.
-        *
-        * @param[in] inOstream
-        * Out stream.
+        * Aggregate error message of current exceptions.
         */
-        void print_exception(std::ostream& inOstream);
+        void aggregate_exceptions();
 
     } // detail
 } // pml
