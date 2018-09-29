@@ -43,19 +43,7 @@ namespace pml{
         /**
         * Pure virtual base class for implementation of the class CSVParser by composit pattern.
         */
-        class ParserBase
-        {
-        public:
-            virtual ~ParserBase() = default;
-
-            virtual bool readNextOneRecord(std::vector<std::string>& outBuffer) = 0;
-
-            virtual bool isEnd() const = 0;
-
-            virtual bool isOpen() const = 0;
-
-            virtual std::size_t getLine() const = 0;
-        };
+        class ParserBase;
 
         /**
         * Target data type of the CSV parser.
@@ -89,7 +77,7 @@ namespace pml{
         * Destructor.
         * If the CSV data type is CSVParser::InputType::FILE, the target file is closed here.
         */
-        ~CSVParser() = default;
+        ~CSVParser();
 
         /**
         * Read the next one record of CSV data.

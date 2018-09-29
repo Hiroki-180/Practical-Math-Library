@@ -8,6 +8,20 @@
 
 namespace pml {
 
+    class CSVParser:: ParserBase
+    {
+    public:
+        virtual ~ParserBase() = default;
+
+        virtual bool readNextOneRecord(std::vector<std::string>& outBuffer) = 0;
+
+        virtual bool isEnd() const = 0;
+
+        virtual bool isOpen() const = 0;
+
+        virtual std::size_t getLine() const = 0;
+    };
+
     namespace {
 
         template<typename IterT>
@@ -300,6 +314,8 @@ namespace pml {
             PML_THROW_WITH_NESTED(std::logic_error, "Undefined type is specified.");
         }
     }
+
+    CSVParser::~CSVParser() = default;
 
     bool CSVParser::readNextOneRecord(std::vector<std::string>& outBuffer)
     {
