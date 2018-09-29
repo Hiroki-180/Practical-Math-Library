@@ -3,12 +3,13 @@
 #include <gtest/gtest.h>
 #include <PML/Core/exception_handler.h>
 #include <PML/Utility/CSVParser.h>
+#include <fstream>
 
 namespace{
 
     [[noreturn]] void h()
     {
-        throw std::bad_alloc();
+        PML_THROW_WITH_NESTED(std::logic_error, "Error 1.");
     }
 
     [[noreturn]] void g()
@@ -17,7 +18,7 @@ namespace{
             h();
         }
         catch (...) {
-            PML_THROW_WITH_NESTED(std::logic_error, "Error 2.");
+            PML_THROW_WITH_NESTED(std::runtime_error, "Error 2.");
         }
     };
 

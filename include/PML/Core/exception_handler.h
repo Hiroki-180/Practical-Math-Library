@@ -12,33 +12,34 @@
 */
 
 #include <exception>
-#include <fstream>
+#include <ostream>
 
 /**
 * @def
-* Throw std::nested_exception by std::throw_with_nested( TYPE(MESSAGE with info. of __FILE and __LINE__) ).
-* PML throw exceptions using this macro if TYPE has a single string argument constructor.
+* Macro to throw std::nested_exception by std::throw_with_nested( TYPE(MESSAGE with info. of __FILE__ and __LINE__) ).
+* PML always throws exceptions using this macro if TYPE has a single string argument constructor.
+* PML throws only inheritances of std::exception as exception and does not throw it's original implementations of exceptions.
 */
-#define PML_THROW_WITH_NESTED( TYPE, MESSAGE ) pml::detail::throw_with_nested<TYPE>(MESSAGE, __FILE__, __LINE__)
+#define PML_THROW_WITH_NESTED( TYPE, MESSAGE ) pml::detail::throw_with_nested_SSA<TYPE>(MESSAGE, __FILE__, __LINE__)
 
 /**
 * @def
-* Macro to begin the try-brock.
+* Macro to begin a try-brock.
 * This macro should be used with PML_CATCH_END_AND_PRINT(OFSTREAM) or PML_CATCH_END_AND_THROW(TYPE, MESSAGE).
 */
 #define PML_CATCH_BEGIN try{
 
 /**
 * @def
-* Macro to finish the try-brock and output error messges to OFSTREAM.
+* Macro to finish a try-brock and output error messges to OSTREAM which must be an inheritance of std::ofstream.
 * std::logic_error, std::runtime_error, and other exceptions are distinguished in message.
 * This macro should be used with PML_CATCH_BEGIN.
 */
-#define PML_CATCH_END_AND_PRINT( OFSTREAM )   } catch(...) { pml::detail::print_exception(OFSTREAM); }
+#define PML_CATCH_END_AND_PRINT( OSTREAM )   } catch(...) { pml::detail::print_exception(OSTREAM); }
 
 /**
 * @def
-* Macro to finish the try-brock and add new exception by std::throw_with_nested(TYPE(MESSAGE)) if something exceptions are catched.
+* Macro to finish a try-brock which calls std::throw_with_nested(TYPE(MESSAGE)) if something exceptions are catched.
 * This macro should be used with PML_CATCH_BEGIN.
 */
 #define PML_CATCH_END_AND_THROW( TYPE, MESSAGE )   } catch(...) { PML_THROW_WITH_NESTED( TYPE, MESSAGE ); }
@@ -47,22 +48,53 @@
 namespace pml {
     namespace detail {
 
-        template<class E>
-        [[noreturn]] void throw_with_nested(
+        /**
+        * Throws std::nested_exception by std::throw_with_nested( E(inMessage with info. of inExceptionFileName and inLine) )
+        * Templated exception E must have a Single String Argument constructor.
+        *
+        * @param[in] inMessage
+        * Error message.
+        *
+        * @param[in] inExceptionFileName
+        * File name throwing the present exception.
+        *
+        * @param[in] inLine
+        * Line number where exception occured in inExceptionFileName.
+        */
+        template<typename E>
+        [[noreturn]] void throw_with_nested_SSA(
             std::string&& inMessage,
-            char const* inFileName,
+            char const* inExceptionFileName,
             std::size_t inLine)
         {
             std::throw_with_nested(
-                E(std::string{} + inFileName + "(" + std::to_string(inLine) + "): " + inMessage + " "));
+                E(std::string{} + inExceptionFileName + "(" + std::to_string(inLine) + "): " + inMessage + " "));
         };
 
+        /**
+        * Print error message of std::exceptions.
+        *
+        * @param[in] inException
+        * Exceptions.
+        *
+        * @param[in] inOfstream
+        * Out stream.
+        *
+        * @param[in] inIsFirstCall
+        * Is first call in recursion of nested_exception unrolling.
+        */
         void print_std_exception(
             const std::exception& inException,
-            std::ofstream& inFile,
+            std::ostream& inOfstream,
             bool inIsFirstCall);
 
-        void print_exception(std::ofstream& inFile);
+        /**
+        * Print error message of current exceptions including std::exceptions.
+        *
+        * @param[in] inOfstream
+        * Out stream.
+        */
+        void print_exception(std::ostream& inFile);
 
     } // detail
 } // pml
