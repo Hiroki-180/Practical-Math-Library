@@ -18,7 +18,7 @@ namespace pml {
 
         void print_std_exception(
             const std::exception& inException,
-            std::ostream& inOfstream,
+            std::ostream& inOstream,
             bool inIsFirstCall)
         {
             try {
@@ -26,63 +26,63 @@ namespace pml {
                     throw;
                 }
 
-                inOfstream << inException.what() << std::endl;
+                inOstream << inException.what() << std::endl;
                 pml::detail::rethrow_if_nested_ptr(inException);
             }
             catch (const std::logic_error& e) {
-                inOfstream << "Logic error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Logic error: ";
+                print_std_exception(e, inOstream, false);
             }
             catch (const std::runtime_error& e) {
-                inOfstream << "Runtime error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Runtime error: ";
+                print_std_exception(e, inOstream, false);
             }
             catch (const std::bad_exception& e) {
-                inOfstream << "Bad exception error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Bad exception error: ";
+                print_std_exception(e, inOstream, false);
             }
             catch (const std::bad_alloc& e) {
-                inOfstream << "Bad alloc error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Bad alloc error: ";
+                print_std_exception(e, inOstream, false);
             }
             catch (const std::bad_cast& e) {
-                inOfstream << "Bad cast error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Bad cast error: ";
+                print_std_exception(e, inOstream, false);
             }
             catch (const std::bad_typeid& e) {
-                inOfstream << "Bad typeid error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Bad typeid error: ";
+                print_std_exception(e, inOstream, false);
             }
             catch (const std::bad_weak_ptr& e) {
-                inOfstream << "Bad weak pointer error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Bad weak pointer error: ";
+                print_std_exception(e, inOstream, false);
             }
 #if defined(__cplusplus) && __cplusplus >= 201703L
             catch (const std::bad_optional_access& e) {
-                inOfstream << "Bad optional access error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Bad optional access error: ";
+                print_std_exception(e, inOstream, false);
             }
             catch (const std::bad_variant_access& e) {
-                inOfstream << "Bad variant access error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Bad variant access error: ";
+                print_std_exception(e, inOstream, false);
             }
 #endif
             catch (const std::exception& e) {
-                inOfstream << "Error: ";
-                print_std_exception(e, inOfstream, false);
+                inOstream << "Error: ";
+                print_std_exception(e, inOstream, false);
             }
         }
 
-        void print_exception(std::ostream& inOfstream)
+        void print_exception(std::ostream& inOstream)
         {
             try {
                 throw;
             }
             catch (std::exception& e) {
-                print_std_exception(e, inOfstream, true);
+                print_std_exception(e, inOstream, true);
             }
             catch (...) {
-                inOfstream << "Unknown errro occured in PML." << std::endl;
+                inOstream << "PML never throws not standard exceptions." << std::endl;
             }
         }
 

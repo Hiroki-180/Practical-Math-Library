@@ -75,26 +75,26 @@ namespace pml {
         * Print error message of std::exceptions.
         *
         * @param[in] inException
-        * Exceptions.
+        * Nested exceptions.
         *
-        * @param[in] inOfstream
+        * @param[in] inOstream
         * Out stream.
         *
         * @param[in] inIsFirstCall
-        * Is first call in recursion of nested_exception unrolling.
+        * Is the current call first one in recursion of nested_exception unrolling.
         */
         void print_std_exception(
             const std::exception& inException,
-            std::ostream& inOfstream,
+            std::ostream& inOstream,
             bool inIsFirstCall);
 
         /**
         * Print error message of current exceptions including std::exceptions.
         *
-        * @param[in] inOfstream
+        * @param[in] inOstream
         * Out stream.
         */
-        void print_exception(std::ostream& inFile);
+        void print_exception(std::ostream& inOstream);
 
     } // detail
 } // pml
