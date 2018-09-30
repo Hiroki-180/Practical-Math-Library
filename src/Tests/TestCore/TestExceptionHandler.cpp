@@ -102,7 +102,7 @@ TEST_P(exception_handler, nest_rethrow)
     PML_CATCH_END_AND_OUTPUT(lOfs)
 
     auto lResult = pml::CSVParser::readAllRecords(lFileName);
-        EXPECT_EQ(((GetParam().second == 0) ? 0U : (GetParam().second + 1U)), lResult.size());
+    EXPECT_EQ(((GetParam().second == 0) ? 0U : (GetParam().second + 1U)), lResult.size());
 
     remove(lFileName.c_str());
 }
