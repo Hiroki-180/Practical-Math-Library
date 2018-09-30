@@ -78,3 +78,12 @@ endif()
 
 target_link_libraries(
  Tests ${LINK_LIBRARIES_GTEST} ${LINK_LIBRARIES_GTEST_MAIN} Core Math Utility)
+
+SOURCE_GROUP("Source files\\TestCore" FILES TestCore/TestCore.cpp)
+SOURCE_GROUP("Source files\\TestCore" FILES TestCore/TestExceptionHandler.cpp)
+
+SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestConstants.cpp)
+SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestNumericSIMD.cpp)
+SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestPMath.cpp)
+
+SOURCE_GROUP("Source files\\TestUtility" FILES TestUtility/TestCSVParser.cpp)
