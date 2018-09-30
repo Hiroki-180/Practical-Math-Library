@@ -83,3 +83,13 @@ TEST(CSVParserStatic, table)
     EXPECT_EQ(3U, lTable_ColumnKey.size());
     EXPECT_EQ(3U, lTable_RowKey   .size());
 }
+
+TEST(CSVParserStatic, table_unordered)
+{
+    auto lTable_ColumnKey = pml::CSVParser::readTableUnordered("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true);
+    auto lTable_RowKey    = pml::CSVParser::readTableUnordered("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_RowKey.csv"   , false);
+
+    EXPECT_EQ(lTable_ColumnKey, lTable_RowKey);
+    EXPECT_EQ(3U, lTable_ColumnKey.size());
+    EXPECT_EQ(3U, lTable_RowKey.size());
+}
