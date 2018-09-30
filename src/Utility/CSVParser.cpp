@@ -302,13 +302,13 @@ namespace pml {
         switch (inType)
         {
         case InputType::FILE:
-            mParser.reset(new FileParser(inString));
+            mParser = std::make_unique<FileParser>(inString);
             break;
         case InputType::STRING_REF:
-            mParser.reset(new StringParserRef(inString));
+            mParser = std::make_unique<StringParserRef>(inString);
             break;
         case InputType::STRING_COPY:
-            mParser.reset(new StringParserCopy(inString));
+            mParser = std::make_unique<StringParserCopy>(inString);
             break;
         default:
             PML_THROW_WITH_NESTED(std::logic_error, "Undefined type is specified.");
