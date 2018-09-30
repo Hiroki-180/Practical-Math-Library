@@ -43,61 +43,6 @@ namespace pml{
 
         /**
         * @brief
-        * Pure virtual base class for implementation of the class CSVParser by composit pattern.
-        */
-        class ParserBase;
-
-        /**
-        * @brief
-        * Target data type of the CSV parser.
-        */
-        enum class InputType
-        {
-            FILE,
-            STRING_REF,
-            STRING_COPY,
-        };
-
-        /**
-        * @brief
-        * Unique constructor of this class.
-        *
-        * @param[in] inType
-        * Target CSV data type. Following three types are possible;
-        * CSVParser::InputType::FILE, STRING_REF, or STRING_COPY.
-        *
-        * @param[in] inString
-        * If the argument inType is CSVParser::InputType::FILE, inString is interpreted as the path to the target CSV file.
-        * If inType is CSVParser::InputType::STRING_REF or STRING_COPY, inString is interpreted as CSV data itself.
-        */
-        CSVParser(InputType inType, const std::string& inString);
-
-        CSVParser(const CSVParser&)             = delete;
-        CSVParser(CSVParser&&)                  = delete;
-        CSVParser& operator =(const CSVParser&) = delete;
-        CSVParser& operator =(CSVParser&&)      = delete;
-
-        /**
-        * @brief
-        * Destructor.
-        * If the CSV data type is CSVParser::InputType::FILE, the target file is closed here.
-        */
-        ~CSVParser();
-
-        /**
-        * @brief
-        * Read the next one record of CSV data.
-        *
-        * @param[out] outBuffer
-        * All Fields of the target one record are pushed back.
-        *
-        * @return
-        * False if and only if data has finished, otherwise true.
-        */
-        bool readNextOneRecord(std::vector<std::string>& outBuffer);
-
-        /**
-        * @brief
         * Read CSV file.
         *
         * @param[in] inFilePath
@@ -162,6 +107,61 @@ namespace pml{
         static std::unordered_map<std::string, std::vector<std::string>> readTableUnordered(
             const std::string& inFilePath,
             bool inIsColumnKey);
+
+        /**
+        * @brief
+        * Pure virtual base class for implementation of the class CSVParser by composit pattern.
+        */
+        class ParserBase;
+
+        /**
+        * @brief
+        * Target data type of the CSV parser.
+        */
+        enum class InputType
+        {
+            FILE,
+            STRING_REF,
+            STRING_COPY,
+        };
+
+        /**
+        * @brief
+        * Unique constructor of this class.
+        *
+        * @param[in] inType
+        * Target CSV data type. Following three types are possible;
+        * CSVParser::InputType::FILE, STRING_REF, or STRING_COPY.
+        *
+        * @param[in] inString
+        * If the argument inType is CSVParser::InputType::FILE, inString is interpreted as the path to the target CSV file.
+        * If inType is CSVParser::InputType::STRING_REF or STRING_COPY, inString is interpreted as CSV data itself.
+        */
+        CSVParser(InputType inType, const std::string& inString);
+
+        CSVParser(const CSVParser&)             = delete;
+        CSVParser(CSVParser&&)                  = delete;
+        CSVParser& operator =(const CSVParser&) = delete;
+        CSVParser& operator =(CSVParser&&)      = delete;
+
+        /**
+        * @brief
+        * Destructor.
+        * If the CSV data type is CSVParser::InputType::FILE, the target file is closed here.
+        */
+        ~CSVParser();
+
+        /**
+        * @brief
+        * Read the next one record of CSV data.
+        *
+        * @param[out] outBuffer
+        * All Fields of the target one record are pushed back.
+        *
+        * @return
+        * False if and only if data has finished, otherwise true.
+        */
+        bool readNextOneRecord(std::vector<std::string>& outBuffer);
 
         /**
         * @brief
