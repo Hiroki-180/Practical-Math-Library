@@ -1,5 +1,8 @@
 #include <PML/Core/cross_intrin.h>
 #include <PML/Core/CPUDispatcher.h>
+#include <vector>
+#include <bitset>
+#include <array>
 
 #ifndef _MSC_VER
 #include <cpuid.h>
@@ -8,7 +11,23 @@
 namespace pml {
     namespace CPUDispatcher {
 
-        namespace detail {
+        namespace {
+
+            class CPUData final
+            {
+            public:
+                CPUData();
+
+                int nIds_;
+                int nExIds_;
+                std::string vendor_;
+                std::string brand_;
+                std::bitset<32> f_1_ECX_;
+                std::bitset<32> f_1_EDX_;
+                std::bitset<32> f_7_EBX_;
+                std::vector<std::array<int, 4>> data_;
+                std::vector<std::array<int, 4>> extdata_;
+            };
 
             CPUData::CPUData()
                 : nIds_{ 0 },
@@ -134,52 +153,49 @@ namespace pml {
 
             static const CPUData gCPUData;
 
-        } // detail
+        } // unnamed
 
-        const std::string& getVendor() { return detail::gCPUData.vendor_; }
-        const std::string& getBrand() { return detail::gCPUData.brand_; }
+        const std::string& getVendor() { return gCPUData.vendor_; }
+        const std::string& getBrand()  { return gCPUData.brand_; }
 
-        bool isSSE() { return detail::gCPUData.f_1_EDX_[25]; }
-        bool isSSE2() { return detail::gCPUData.f_1_EDX_[26]; }
-        bool isSSE3() { return detail::gCPUData.f_1_ECX_[0]; }
-        bool isSSSE3() { return detail::gCPUData.f_1_ECX_[9]; }
-        bool isSSE41() { return detail::gCPUData.f_1_ECX_[19]; }
-        bool isSSE42() { return detail::gCPUData.f_1_ECX_[20]; }
+        bool isSSE()   { return gCPUData.f_1_EDX_[25]; }
+        bool isSSE2()  { return gCPUData.f_1_EDX_[26]; }
+        bool isSSE3()  { return gCPUData.f_1_ECX_[ 0]; }
+        bool isSSSE3() { return gCPUData.f_1_ECX_[ 9]; }
+        bool isSSE41() { return gCPUData.f_1_ECX_[19]; }
+        bool isSSE42() { return gCPUData.f_1_ECX_[20]; }
 
-        bool isFMA() { return detail::gCPUData.f_1_ECX_[12]; }
-        bool isAVX() { return detail::gCPUData.f_1_ECX_[28]; }
-        bool isAVX2() { return detail::gCPUData.f_7_EBX_[5]; }
+        bool isFMA()  { return gCPUData.f_1_ECX_[12]; }
+        bool isAVX()  { return gCPUData.f_1_ECX_[28]; }
+        bool isAVX2() { return gCPUData.f_7_EBX_[ 5]; }
 
-        bool isAVX512F() { return detail::gCPUData.f_7_EBX_[16]; }
-        bool isAVX512PF() { return detail::gCPUData.f_7_EBX_[26]; }
-        bool isAVX512ER() { return detail::gCPUData.f_7_EBX_[27]; }
-        bool isAVX512CD() { return detail::gCPUData.f_7_EBX_[28]; }
+        bool isAVX512F()  { return gCPUData.f_7_EBX_[16]; }
+        bool isAVX512PF() { return gCPUData.f_7_EBX_[26]; }
+        bool isAVX512ER() { return gCPUData.f_7_EBX_[27]; }
+        bool isAVX512CD() { return gCPUData.f_7_EBX_[28]; }
 
-        /**
-        * Print out supported instruction set extensions
-        */
         void outputCPUInfo(std::ostream& outStream)
         {
             outStream << "CPU Information" << std::endl;
             outStream << CPUDispatcher::getVendor() << std::endl;
-            outStream << CPUDispatcher::getBrand() << std::endl;
+            outStream << CPUDispatcher::getBrand () << std::endl;
 
             const auto support_message = [&outStream](const std::string& isa_feature, bool is_supported) {
                 outStream << isa_feature << "," << (is_supported ? " supported" : " not supported") << std::endl;
             };
 
-            support_message("SSE", CPUDispatcher::isSSE());
-            support_message("SSE2", CPUDispatcher::isSSE2());
-            support_message("SSE3", CPUDispatcher::isSSE3());
-            support_message("SSSE3", CPUDispatcher::isSSSE3());
+            support_message("SSE",    CPUDispatcher::isSSE  ());
+            support_message("SSE2",   CPUDispatcher::isSSE2 ());
+            support_message("SSE3",   CPUDispatcher::isSSE3 ());
+            support_message("SSSE3",  CPUDispatcher::isSSSE3());
             support_message("SSE4.1", CPUDispatcher::isSSE41());
             support_message("SSE4.2", CPUDispatcher::isSSE42());
 
-            support_message("FMA", CPUDispatcher::isFMA());
-            support_message("AVX", CPUDispatcher::isAVX());
+            support_message("FMA",  CPUDispatcher::isFMA ());
+            support_message("AVX",  CPUDispatcher::isAVX ());
             support_message("AVX2", CPUDispatcher::isAVX2());
 
-            support_message("AVX512F", CPUDispatcher::isAVX512F());
+            support_message("AVX512F",  CPUDispatcher::isAVX512F ());
             support_message("AVX512PF", CPUDispatcher::isAVX512PF());
             support_message("AVX512ER", CPUDispatcher::isAVX512ER());
             support_message("AVX512CD", CPUDispatcher::isAVX512CD());
