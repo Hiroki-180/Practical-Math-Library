@@ -83,10 +83,10 @@ namespace pml {
         * @brief
         * Output error message of current exceptions.
         *
-        * @param[in] inOstream
-        * Out stream.
+        * @param[in] inoutStream
+        * Stream.
         */
-        void output_exceptions(std::ostream& inOstream);
+        void output_exceptions(std::ostream& inoutStream);
 
         /**
         * @brief

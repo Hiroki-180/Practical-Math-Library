@@ -23,15 +23,15 @@ namespace pml {
         * @param[in] inException
         * Nested exceptions.
         *
-        * @param[in] inOstream
-        * Out stream.
+        * @param[in] inoutStream
+        * Stream.
         *
         * @param[in] inIsFirstCall
         * Is the current call first one in recursion of nested_exception unrolling.
         */
         void output_std_exceptions(
             const std::exception& inException,
-            std::ostream& inOstream,
+            std::ostream& inoutStream,
             bool inIsFirstCall)
         {
             try {
@@ -39,63 +39,63 @@ namespace pml {
                     throw;
                 }
 
-                inOstream << inException.what() << std::endl;
+                inoutStream << inException.what() << std::endl;
                 pml::detail::rethrow_if_nested_ptr(inException);
             }
             catch (const std::logic_error& e) {
-                inOstream << "Logic error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Logic error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
             catch (const std::runtime_error& e) {
-                inOstream << "Runtime error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Runtime error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
             catch (const std::bad_exception& e) {
-                inOstream << "Bad exception error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Bad exception error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
             catch (const std::bad_alloc& e) {
-                inOstream << "Bad alloc error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Bad alloc error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
             catch (const std::bad_cast& e) {
-                inOstream << "Bad cast error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Bad cast error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
             catch (const std::bad_typeid& e) {
-                inOstream << "Bad typeid error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Bad typeid error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
             catch (const std::bad_weak_ptr& e) {
-                inOstream << "Bad weak pointer error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Bad weak pointer error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
 #if defined(__cplusplus) && __cplusplus >= 201703L
             catch (const std::bad_optional_access& e) {
-                inOstream << "Bad optional access error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Bad optional access error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
             catch (const std::bad_variant_access& e) {
-                inOstream << "Bad variant access error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Bad variant access error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
 #endif
             catch (const std::exception& e) {
-                inOstream << "Error: ";
-                output_std_exceptions(e, inOstream, false);
+                inoutStream << "Error: ";
+                output_std_exceptions(e, inoutStream, false);
             }
         }
 
-        void output_exceptions(std::ostream& inOstream)
+        void output_exceptions(std::ostream& inoutStream)
         {
             try {
                 throw;
             }
             catch (std::exception& e) {
-                output_std_exceptions(e, inOstream, true);
+                output_std_exceptions(e, inoutStream, true);
             }
             catch (...) {
-                inOstream << "PML never throws unstandard exceptions." << std::endl;
+                inoutStream << "PML never throws unstandard exceptions." << std::endl;
             }
         }
 
