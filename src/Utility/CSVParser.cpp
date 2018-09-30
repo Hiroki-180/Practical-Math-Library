@@ -295,6 +295,68 @@ namespace pml {
             std::string mString;
         };
 
+        template<template <typename...> class Map, typename Key, typename Val>
+        auto readTableImpl(
+            const std::string& inFilePath,
+            bool inIsColumnKey)
+        {
+            PML_CATCH_BEGIN
+
+            Map<Key, Val> lOutMap;
+
+            CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
+            std::vector<Key> lRecord;
+
+            if (inIsColumnKey)
+            {
+                while (lParser.readNextOneRecord(lRecord))
+                {
+                    if (lRecord.empty()) {
+                        continue;
+                    }
+
+                    const auto lKey = std::move(lRecord[0]);
+                    lRecord.erase(lRecord.begin());
+                    lRecord.shrink_to_fit();
+
+                    lOutMap[std::move(lKey)] = std::move(lRecord);
+                }
+
+                return lOutMap;
+            }
+
+
+            // When the first row is keys.
+            std::vector<Key> lKeys;
+            lParser.readNextOneRecord(lKeys);
+
+            std::vector<Val> lVals(lKeys.size());
+
+            for (;;)
+            {
+                if (!lParser.readNextOneRecord(lRecord)) {
+                    break;
+                }
+
+                if (lRecord.size() != lKeys.size()) {
+                    PML_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
+                }
+
+                for (auto i = 0U; i < lRecord.size(); ++i) {
+                    lVals[i].push_back(std::move(lRecord[i]));
+                }
+            }
+
+            for (auto i = 0U; i < lKeys.size(); ++i) {
+                lVals[i].shrink_to_fit();
+                lOutMap[lKeys[i]] = std::move(lVals[i]);
+            }
+
+            return lOutMap;
+
+            PML_CATCH_END_AND_THROW(std::runtime_error, "Reading CSV table failed.");
+        }
+
     } // unnamed
 
     CSVParser::CSVParser(InputType inType, const std::string& inString)
@@ -349,61 +411,14 @@ namespace pml {
         const std::string& inFilePath,
         bool inIsColumnKey)
     {
-        PML_CATCH_BEGIN
+        return readTableImpl<std::map, std::string, std::vector<std::string>>(inFilePath, inIsColumnKey);
+    }
 
-        std::map<std::string, std::vector<std::string>> lOutMap;
-
-        CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
-        std::vector<std::string> lRecord;
-
-        if (inIsColumnKey)
-        {
-            while(lParser.readNextOneRecord(lRecord))
-            {
-                if (lRecord.empty()) {
-                    continue;
-                }
-
-                const auto lKey = std::move(lRecord[0]);
-                lRecord.erase(lRecord.begin());
-                lRecord.shrink_to_fit();
-
-                lOutMap[std::move(lKey)] = std::move(lRecord);
-            }
-
-            return lOutMap;
-        }
-        
-
-        // When the first row is keys.
-        std::vector<std::string> lKeys;
-        lParser.readNextOneRecord(lKeys);
-        
-        std::vector<std::vector<std::string>> lVals(lKeys.size());
-
-        for (;;)
-        {
-            if (!lParser.readNextOneRecord(lRecord)) {
-                break;
-            }
-
-            if (lRecord.size() != lKeys.size()) {
-                PML_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
-            }
-
-            for (auto i = 0U; i < lRecord.size(); ++i) {
-                lVals[i].push_back(std::move(lRecord[i]));
-            }
-        }
-
-        for (auto i = 0U; i < lKeys.size(); ++i) {
-            lVals[i].shrink_to_fit();
-            lOutMap[lKeys[i]] = std::move(lVals[i]);
-        }
-
-        return lOutMap;
-
-        PML_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readTable failed.");
+    std::unordered_map<std::string, std::vector<std::string>> CSVParser::readTableUnordered(
+        const std::string& inFilePath,
+        bool inIsColumnKey)
+    {
+        return readTableImpl<std::unordered_map, std::string, std::vector<std::string>>(inFilePath, inIsColumnKey);
     }
 
     bool CSVParser::isOpen() const
