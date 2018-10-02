@@ -11,6 +11,8 @@
 * List of mathematical constants.
 */
 
+#include <limits>
+
 /**
 * @def PML_CONST_PI
 *
