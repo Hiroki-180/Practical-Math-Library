@@ -46,6 +46,7 @@ add_library(
   numeric_simd/positive_difference.cpp
   ../../include/PML/Math/constants.h
   ../../include/PML/Math/pmath.h
+  ../../include/PML/Math/derivative.h
   ../../include/PML/Math/numeric_simd.h
   ../../include/PML/Math/numeric_simd/accumulate.h
   ../../include/PML/Math/numeric_simd/inner_product.h

@@ -40,6 +40,7 @@ add_executable(
  TestCore/TestCore.cpp
  TestCore/TestExceptionHandler.cpp
  TestMath/TestConstants.cpp
+ TestMath/TestDerivative.cpp
  TestMath/TestNumericSIMD.cpp
  TestMath/TestPMath.cpp
  TestUtility/TestCSVParser.cpp)
@@ -83,6 +84,7 @@ SOURCE_GROUP("Source files\\TestCore" FILES TestCore/TestCore.cpp)
 SOURCE_GROUP("Source files\\TestCore" FILES TestCore/TestExceptionHandler.cpp)
 
 SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestConstants.cpp)
+SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestDerivative.cpp)
 SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestNumericSIMD.cpp)
 SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestPMath.cpp)
 
