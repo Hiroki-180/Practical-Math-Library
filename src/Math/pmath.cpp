@@ -2,7 +2,7 @@
 #include <PML/Core/aligned_vector.h>
 #include <PML/Core/CPUDispatcher.h>
 #include <PML/Math/pmath.h>
-#include <PML/Math/Constants.h>
+#include <PML/Math/constants.h>
 
 #include <assert.h>
 #include <type_traits>
@@ -120,7 +120,7 @@ namespace pml {
             const double ldtSqrd = ldt * ldt;
 
             double lMulToSin = (2.0 - ldtSqrd);
-            double lMulToCos = ldt * (2.0 - pml::constants::Q::_1over3()*ldtSqrd);
+            double lMulToCos = ldt * (2.0 - pml::constants::rational(1, 3)*ldtSqrd);
 
             const bool lUseCosSumFormula = (lArgIdx & 1);
             if (lUseCosSumFormula)
@@ -163,7 +163,7 @@ namespace pml {
             const double ldtSqrd = ldt * ldt;
 
             double lMulToCos = (2.0 - ldtSqrd);
-            double lMulToSin = ldt * (2.0 - pml::constants::Q::_1over3()*ldtSqrd);
+            double lMulToSin = ldt * (2.0 - pml::constants::rational(1, 3)*ldtSqrd);
 
             const bool lUseSinSumFormula = (lArgIdx & 1);
             if (lUseSinSumFormula)
@@ -295,4 +295,4 @@ namespace pml {
                                              std::cos(inX);
     }
 
-}
+} // pml

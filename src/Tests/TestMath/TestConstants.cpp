@@ -2,15 +2,14 @@
 
 #include <gtest/gtest.h>
 #include <PML/Math/constants.h>
-
 #include <cmath>
 
-TEST(TestMathConstants, PI)
+TEST(constants, PI)
 {
     EXPECT_DOUBLE_EQ(acos(-1.0), pml::constants::PI());
 }
 
-TEST(TestMathConstants, PI_Relations)
+TEST(constants, PI_Relations)
 {
     const auto lAnsPI = std::acos(-1.0);
     EXPECT_DOUBLE_EQ(std::sqrt(lAnsPI), pml::constants::SqrtPI());
@@ -34,28 +33,17 @@ TEST(TestMathConstants, PI_Relations)
     EXPECT_DOUBLE_EQ(lAnsPI*lAnsPI, pml::constants::PISqrd());
 }
 
-TEST(TestMathConstants, e)
+TEST(constants, e)
 {
     EXPECT_DOUBLE_EQ(1.0, std::log(pml::constants::e()));
 }
 
-TEST(TestMathConstants, Sqrts)
+TEST(constants, GoldenRatio)
 {
-	EXPECT_DOUBLE_EQ(std::sqrt( 2.0), pml::constants:: SqrtOf2());
-	EXPECT_DOUBLE_EQ(std::sqrt( 3.0), pml::constants:: SqrtOf3());
-	EXPECT_DOUBLE_EQ(std::sqrt( 5.0), pml::constants:: SqrtOf5());
-	EXPECT_DOUBLE_EQ(std::sqrt( 6.0), pml::constants:: SqrtOf6());
-	EXPECT_DOUBLE_EQ(std::sqrt( 7.0), pml::constants:: SqrtOf7());
-	EXPECT_DOUBLE_EQ(std::sqrt( 8.0), pml::constants:: SqrtOf8());
-	EXPECT_DOUBLE_EQ(std::sqrt(10.0), pml::constants::SqrtOf10());
+    EXPECT_DOUBLE_EQ(0.5*(1.0 + pml::constants::sqrt(5.0)), pml::constants::GoldenRatio());
 }
 
-TEST(TestMathConstants, GoldenRatio)
-{
-    EXPECT_DOUBLE_EQ(0.5*(1.0 + pml::constants::SqrtOf5()), pml::constants::GoldenRatio());
-}
-
-TEST(TestMathConstants, Apery)
+TEST(constants, Apery)
 {
     double lRiemannZeta3 = 0.0;
     for (auto i = 20000000; i > 0; --i)
@@ -67,17 +55,68 @@ TEST(TestMathConstants, Apery)
     EXPECT_DOUBLE_EQ(lRiemannZeta3, pml::constants::Apery());
 }
 
-TEST(TestMathConstants, UniversalParabolicP)
+TEST(constants, UniversalParabolicP)
 {
     EXPECT_DOUBLE_EQ(
-        std::log(1.0 + pml::constants::SqrtOf2()) + pml::constants::SqrtOf2(),
+        std::log(1.0 + pml::constants::sqrt(2.0)) + pml::constants::sqrt(2.0),
         pml::constants::UniversalParabolicP());
 }
 
-TEST(TestMathConstants, RationalNumbers)
+TEST(constants, abs)
 {
-    EXPECT_DOUBLE_EQ(1.0 / 3.0, pml::constants::Q::_1over3());
-    EXPECT_DOUBLE_EQ(1.0 / 6.0, pml::constants::Q::_1over6());
-    EXPECT_DOUBLE_EQ(1.0 / 7.0, pml::constants::Q::_1over7());
-    EXPECT_DOUBLE_EQ(1.0 / 9.0, pml::constants::Q::_1over9());
+    static_assert((pml::constants::fabs( 1.0) == 1.0), "Err. of pml::constants::fabs( 1.0)");
+    static_assert((pml::constants::fabs(-1.0) == 1.0), "Err. of pml::constants::fabs(-1.0)");
+    static_assert((pml::constants::fabs( 5.0) == 5.0), "Err. of pml::constants::fabs( 5.0)");
+    static_assert((pml::constants::fabs(-5.0) == 5.0), "Err. of pml::constants::fabs(-5.0)");
+}
+
+TEST(constants, sum)
+{
+    static_assert((pml::constants::sum( 1.0, 1.0) ==  2.0), "Err. of pml::constants::sum( 1.0, 1.0)");
+    static_assert((pml::constants::sum(-1.0, 1.0) ==  0.0), "Err. of pml::constants::sum(-1.0, 1.0)");
+    static_assert((pml::constants::sum( 8.0, 3.0) == 11.0), "Err. of pml::constants::sum( 8.0, 3.0)");
+    static_assert((pml::constants::sum(-5.0, 9.0) ==  4.0), "Err. of pml::constants::sum(-5.0, 9.0)");
+}
+
+TEST(constants, multiply)
+{
+    static_assert((pml::constants::multiply( 1.0, 1.0) ==   1.0), "Err. of pml::constants::multiply( 1.0, 1.0)");
+    static_assert((pml::constants::multiply(-1.0, 1.0) ==  -1.0), "Err. of pml::constants::multiply(-1.0, 1.0)");
+    static_assert((pml::constants::multiply( 8.0, 3.0) ==  24.0), "Err. of pml::constants::multiply( 8.0, 3.0)");
+    static_assert((pml::constants::multiply(-5.0, 9.0) == -45.0), "Err. of pml::constants::multiply(-5.0, 9.0)");
+}
+
+TEST(constants, rational)
+{
+    static_assert((pml::constants::rational(1.0, 3.0) == 0.3333333333333333333333), "Err. of pml::constants::rational(1.0, 3.0)");
+    static_assert((pml::constants::rational(1.0, 6.0) == 0.1666666666666666666667), "Err. of pml::constants::rational(1.0, 6.0)");
+    static_assert((pml::constants::rational(1.0, 7.0) == 0.1428571428571428571429), "Err. of pml::constants::rational(1.0, 7.0)");
+    static_assert((pml::constants::rational(1.0, 9.0) == 0.1111111111111111111111), "Err. of pml::constants::rational(1.0, 9.0)");
+}
+
+TEST(constants, rational_sum)
+{
+    static_assert((pml::constants::rational_sum(1.0, 3.0,  2.0) ==  2.33333333333333333), "Err. of pml::constants::rational_sum(1, 3, 2)");
+    static_assert((pml::constants::rational_sum(1.0, 6.0, -3.0) == -2.83333333333333333), "Err. of pml::constants::rational_sum(1, 6, -3)");
+    static_assert((pml::constants::rational_sum(5.0, 2.0,  1.0) ==  3.5), "Err. of pml::constants::rational_sum(5, 2, 1)");
+    static_assert((pml::constants::rational_sum(8.0, 9.0, -5.0) == -4.11111111111111111), "Err. of pml::constants::rational_sum(8, 9, -5)");
+}
+
+TEST(constants, sqrt)
+{
+	static_assert(pml::constants::fabs(pml::constants::sqrt(2.0)  - 1.41421356237309504880) < 1.0e-15, "Err. of pml::constants::sqrt(2.0).");
+    static_assert(pml::constants::fabs(pml::constants::sqrt(3.0)  - 1.73205080756887729352) < 1.0e-15, "Err. of pml::constants::sqrt(3.0).");
+    static_assert(pml::constants::fabs(pml::constants::sqrt(5.0)  - 2.23606797749978969640) < 1.0e-15, "Err. of pml::constants::sqrt(5.0).");
+    static_assert(pml::constants::fabs(pml::constants::sqrt(6.0)  - 2.44948974278317809819) < 1.0e-15, "Err. of pml::constants::sqrt(6.0).");
+    static_assert(pml::constants::fabs(pml::constants::sqrt(7.0)  - 2.64575131106459059050) < 1.0e-15, "Err. of pml::constants::sqrt(7.0).");
+    static_assert(pml::constants::fabs(pml::constants::sqrt(8.0)  - 2.82842712474619009760) < 1.0e-15, "Err. of pml::constants::sqrt(8.0).");
+    static_assert(pml::constants::fabs(pml::constants::sqrt(10.0) - 3.16227766016837933199) < 1.0e-15, "Err. of pml::constants::sqrt(10.0).");
+}
+
+TEST(constants, pow)
+{
+    static_assert((pml::constants::pow( 2.0, 2) ==    4.0), "Err. of pml::constants::pow( 2.0, 2)");
+    static_assert((pml::constants::pow(-3.0, 3) ==  -27.0), "Err. of pml::constants::pow(-3.0, 3)");
+    static_assert((pml::constants::pow( 4.0, 5) == 1024.0), "Err. of pml::constants::pow( 4.0, 5)");
+    static_assert((pml::constants::pow(-3.0, 6) ==  729.0), "Err. of pml::constants::pow(-3.0, 6)");
 }

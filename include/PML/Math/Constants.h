@@ -17,7 +17,7 @@
 * @brief
 * Value of PI.
 */
-#define PML_CONST_PI 3.141592653589793
+#define PML_CONST_PI 3.141592653589793238463
 
 /**
 * @def PML_CONST_PIHALF
@@ -25,7 +25,7 @@
 * @bries
 * Value of PI over 2, PI/2.
 */
-#define PML_CONST_PIHALF 1.570796326794896
+#define PML_CONST_PIHALF 1.570796326794896619231
 
 /**
 * @def PML_CONST_PIQUATER
@@ -33,7 +33,7 @@
 * @brief
 * Value of PI over 4, PI/4.
 */
-#define PML_CONST_PIQUATER 0.7853981633974483
+#define PML_CONST_PIQUATER 0.7853981633974483096157
 
 /**
 * @def PML_CONST_TWOPI
@@ -41,7 +41,7 @@
 * @brief
 * Value of 2 times PI, 2*PI.
 */
-#define PML_CONST_TWOPI 6.283185307179586
+#define PML_CONST_TWOPI 6.283185307179586476925
 
 /**
 * @def PML_CONST_SQRTPI
@@ -49,7 +49,7 @@
 * @brief
 * Value of the square root of PI, sqrt(PI).
 */
-#define PML_CONST_SQRTPI 1.772453850905515
+#define PML_CONST_SQRTPI 1.772453850905516027298
 
 /**
 * @def PML_CONST_SQRTPIHALF
@@ -57,7 +57,7 @@
 * @brief
 * Value of the square root of PI over 2, sqrt(PI/2).
 */
-#define PML_CONST_SQRTPIHALF 1.253314137315500
+#define PML_CONST_SQRTPIHALF 1.253314137315500251208
 
 /**
 * @def PML_CONST_SQRTTWOPI
@@ -65,7 +65,7 @@
 * @brief
 * Value of the square root of 2 times PI, sqrt(2*PI).
 */
-#define PML_CONST_SQRTTWOPI 2.506628274631000
+#define PML_CONST_SQRTTWOPI 2.506628274631000502416
 
 /**
 * @def PML_CONST_PISQRD
@@ -73,7 +73,7 @@
 * @brief
 * Value of the PI squared, PI*PI.
 */
-#define PML_CONST_PISQRD 9.869604401089358
+#define PML_CONST_PISQRD 9.869604401089358618834
 
 /**
 * @def PML_CONST_1OVERPI
@@ -81,7 +81,7 @@
 * @brief
 * Value of the one over PI, 1/PI.
 */
-#define PML_CONST_1OVERPI 0.3183098861837907
+#define PML_CONST_1OVERPI 0.3183098861837906715378
 
 /**
 * @def PML_CONST_2OVERPI
@@ -89,7 +89,7 @@
 * @brief
 * Value of the two over PI, 2/PI.
 */
-#define PML_CONST_2OVERPI 0.6366197723675814
+#define PML_CONST_2OVERPI 0.6366197723675813430755
 
 /**
 * @def PML_CONST_4OVERPI
@@ -97,7 +97,7 @@
 * @brief
 * Value of the four over PI, 4/PI.
 */
-#define PML_CONST_4OVERPI 1.2732395447351627
+#define PML_CONST_4OVERPI 1.273239544735162686151
 
 /**
 * @def PML_CONST_1OVERTWOPI
@@ -105,7 +105,7 @@
 * @brief
 * Value of the one over 2 times PI, 1/(2*PI).
 */
-#define PML_CONST_1OVERTWOPI 0.1591549430918953
+#define PML_CONST_1OVERTWOPI 0.1591549430918953357689
 
 /**
 * @def PML_CONST_1OVERSQRTTWOPI
@@ -113,7 +113,7 @@
 * @brief
 * Value of the one over square root of 2 times PI, 1/sqrt(2*PI).
 */
-#define PML_CONST_1OVERSQRTTWOPI 0.3989422804014327
+#define PML_CONST_1OVERSQRTTWOPI 0.3989422804014326779399
 
 /**
 * @def PML_CONST_E
@@ -121,7 +121,7 @@
 * @brief
 * Value of the Napire's number.
 */
-#define PML_CONST_E 2.718281828459045
+#define PML_CONST_E 2.71828182845904523536
 
 /**
 * @namespace pml
@@ -139,6 +139,16 @@ namespace pml {
     * List of mathematical constants, PI, e, and so on.
     */
     namespace constants {
+
+        namespace detail {
+
+            double constexpr sqrtNewtonRaphson(double x, double curr, double prev)
+            {
+                return curr == prev
+                    ? curr
+                    : pml::constants::detail::sqrtNewtonRaphson(x, 0.5 * (curr + x / curr), curr);
+            }
+        }
 
         /**
         * @brief
@@ -268,69 +278,6 @@ namespace pml {
 
         /**
         * @brief
-        * Inline function returning the value of the square root of 2.
-        *
-        * @return
-        * Value of sqrt(2.0).
-        */
-        inline double SqrtOf2() noexcept { return 1.414213562373095; }
-
-        /**
-        * @brief
-        * Inline function returning the value of the square root of 3.
-        *
-        * @return
-        * Value of sqrt(3.0).
-        */
-        inline double SqrtOf3() noexcept { return 1.732050807568877; }
-
-        /**
-        * @brief
-        * Inline function returning the value of the square root of 5.
-        *
-        * @return
-        * Value of sqrt(5.0).
-        */
-        inline double SqrtOf5() noexcept { return 2.236067977499789; }
-
-        /**
-        * @brief
-        * Inline function returning the value of the square root of 6.
-        *
-        * @return
-        * Value of sqrt(6.0).
-        */
-        inline double SqrtOf6() noexcept { return 2.449489742783178; }
-
-        /**
-        * @brief
-        * Inline function returning the value of the square root of 7.
-        *
-        * @return
-        * Value of sqrt(7.0).
-        */
-        inline double SqrtOf7() noexcept { return 2.645751311064590; }
-
-        /**
-        * @brief
-        * Inline function returning the value of the square root of 8.
-        *
-        * @return
-        * Value of sqrt(8.0).
-        */
-        inline double SqrtOf8() noexcept { return 2.828427124746190; }
-
-        /**
-        * @brief
-        * Inline function returning the value of the square root of 10.
-        *
-        * @return
-        * Value of sqrt(10.0).
-        */
-        inline double SqrtOf10() noexcept { return 3.162277660168379; }
-
-        /**
-        * @brief
         * Inline function returning the value of the golden ratio.
         *
         * @return
@@ -357,50 +304,93 @@ namespace pml {
         */
         inline double UniversalParabolicP() noexcept { return 2.295587149392638; }
 
-        /**
-        * @namespace Q
-        *
+        /*
         * @brief
-        * List of rational numbers, 1/3, 1/6, and so on.
+        * Constexpr version of std::fabs.
+        *
+        * @return
+        * inA * inB.
         */
-        namespace Q
+        constexpr double fabs(double inX)
         {
-            /**
-            * @brief
-            * Inline function returning the value of 1 over 3.
-            *
-            * @return
-            * Value of 1.0/3.0.
-            */
-            inline double _1over3() noexcept { return 0.3333333333333333; }
+            return (inX >= 0.0) ? inX : -inX;
+        }
 
-            /**
-            * @brief
-            * Inline function returning the value of 1 over 6.
-            *
-            * @return
-            * Value of 1.0/6.0.
-            */
-            inline double _1over6() noexcept { return 0.1666666666666666; }
+        /*
+        * @brief
+        * Constexpr version of sum(+).
+        *
+        * @return
+        * inA * inB.
+        */
+        constexpr double sum(double inA, double inB)
+        {
+            return inA + inB;
+        }
 
-            /**
-            * @brief
-            * Inline function returning the value of 1 over 7.
-            *
-            * @return
-            * Value of 1.0/7.0.
-            */
-            inline double _1over7() noexcept { return 0.1428571428571428; }
+        /*
+        * @brief
+        * Constexpr version of multiplication(*).
+        *
+        * @return
+        * inA * inB.
+        */
+        constexpr double multiply(double inA, double inB)
+        {
+            return inA * inB;
+        }
 
-            /**
-            * @brief
-            * Inline function returning the value of 1 over 9.
-            *
-            * @return
-            * Value of 1.0/9.0.
-            */
-            inline double _1over9() noexcept { return 0.1111111111111111; }
-        }// Q
+        /*
+        * @brief
+        * Constexpr version of the rational number(/).
+        *
+        * @return
+        * inNumerator / inDenominator.
+        */
+        constexpr double rational(double inNumerator, double inDenominator)
+        {
+            return inNumerator / inDenominator;
+        }
+
+        /*
+        * @brief
+        * Constexpr version of the rational number plus constant.
+        *
+        * @return
+        * (inNumerator / inDenominator) + inX.
+        */
+        constexpr double rational_sum(double inNumerator, double inDenominator, double inX)
+        {
+            return (inNumerator / inDenominator) + inX;
+        }
+
+        /*
+        * @brief
+        * Constexpr version of the square root.
+        *
+        * @return
+        * Square root of inX.
+        */
+        double constexpr sqrt(double inX)
+        {
+            return ((inX >= 0) && (inX < std::numeric_limits<double>::infinity()))
+                ? pml::constants::detail::sqrtNewtonRaphson(inX, inX, 0)
+                : std::numeric_limits<double>::quiet_NaN();
+        }
+
+        /*
+        * @brief
+        * Constexpr version of the power.
+        *
+        * @return
+        * std::power(inX, inExponent).
+        */
+        constexpr double pow(double inX, unsigned int inExponent)
+        {
+            return (inExponent == 0)     ? 1.0 :
+                   (inExponent % 2 == 0) ? pow(inX, inExponent / 2)*pow(inX, inExponent / 2) :
+                   inX * pow(inX, (inExponent - 1) / 2) * pow(inX, (inExponent - 1) / 2);
+        }
 
     } // constants
 } //pml
