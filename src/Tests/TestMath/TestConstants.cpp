@@ -104,7 +104,7 @@ TEST(constants, rational_sum)
 
 TEST(constants, sqrt)
 {
-	static_assert(pml::constants::fabs(pml::constants::sqrt(2.0)  - 1.41421356237309504880) < 1.0e-15, "Err. of pml::constants::sqrt(2.0).");
+    static_assert(pml::constants::fabs(pml::constants::sqrt(2.0)  - 1.41421356237309504880) < 1.0e-15, "Err. of pml::constants::sqrt(2.0).");
     static_assert(pml::constants::fabs(pml::constants::sqrt(3.0)  - 1.73205080756887729352) < 1.0e-15, "Err. of pml::constants::sqrt(3.0).");
     static_assert(pml::constants::fabs(pml::constants::sqrt(5.0)  - 2.23606797749978969640) < 1.0e-15, "Err. of pml::constants::sqrt(5.0).");
     static_assert(pml::constants::fabs(pml::constants::sqrt(6.0)  - 2.44948974278317809819) < 1.0e-15, "Err. of pml::constants::sqrt(6.0).");
