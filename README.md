@@ -12,13 +12,14 @@ This library aims to provide useful functions or classes for IT practitioners.
 
 `mkdir build`
 
-**Then generate the project for your environment by CMake.**
+**Then generate the project for your developing environment by CMake.**
 
 For instance, If you use Visual Studio 2017, following command
 
 `cmake .. -G "Visual Studio 15 2017"`
 
 generates the VS2017 project of PML.
+
 If you use Xcode,
 
 `cmake .. -G "Xcode"`
