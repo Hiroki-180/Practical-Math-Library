@@ -1,6 +1,8 @@
 # Practical Math Library
 This library aims to provide useful functions or classes for IT practitioners.
 
+# How to start ?
+
 
 ## Current Status
 Current development is mainly for use in 32-bit applications.
@@ -18,7 +20,7 @@ Supporting 64-bit environment or other compilers is important future task.
     - ~~Their vector versions~~
 
  - Differentiations
-    - ~~1st/2nd/3rd/4th derivatives with 1st/2nd/3rd/4th/5th accuracy by forward/central/backward finite difference~~
+    - ~~1st/2nd/3rd/4th derivatives with 1st/2nd/3rd/4th/5th/6th accuracy by forward/central/backward finite difference~~
 
  - Integrations
     - ~~Trapezoidal rules~~
@@ -26,7 +28,7 @@ Supporting 64-bit environment or other compilers is important future task.
     - ~~Double exponential formulas~~
     
  - Interporations and Extrapolations
-    - ~~linear, 2nd/3rd order spline~~
+    - ~~linear, 2nd and 3rd order spline~~
     - ~~monotonic ones~~
     - ~~Hermite polynomial~~
     - ~~bilinear/bicubic~~
@@ -87,6 +89,10 @@ Supporting 64-bit environment or other compilers is important future task.
     - ~~Joe~~
     - ~~Ali-Mikhail-Haq~~
     - ~~empilical~~
+
+ - Utilities
+    - CSV Parser
+    - String Maniplation
 
 ## Exceptions
 This library throws “PMLException” with detailed error descriptions when input is incorrect.
