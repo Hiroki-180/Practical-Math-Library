@@ -1,7 +1,29 @@
-# Practical Math Library
+# Practical Math Library (PML)
 This library aims to provide useful functions or classes for IT practitioners.
 
-# How to start ?
+## How to start ?
+**Download**, 
+
+`git clone https://github.com/Hiroki-180/Practical-Math-Library.git`
+
+**Create a build folder**,
+
+`cd Practical-Math-Library`
+
+`mkdir build`
+
+**Then generate the project for your environment by CMake.**
+
+**For instance, If you use Visual Studio 2017, following command**
+
+`cmake .. -G "Visual Studio 15 2017"`
+
+**generates the VS2017 project of PML.**
+**If you use Xcode,*
+
+`cmake .. -G "Xcode"`
+
+**generates the Xcode project of PML.**
 
 
 ## Current Status
