@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   #Clang or AppleClang
+  set(FILE_FILTER "Files")
   set(CMAKE_CXX_FLAGS "-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -fno-aligned-allocation -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2")
   set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -19,6 +20,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
   #Intel Compiler
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   #Microsoft Visual C++
+  set(FILE_FILTER "files")
   set(CMAKE_CXX_FLAGS         "/W4")
   set(CMAKE_CXX_FLAGS_RELEASE "/MT  /DNDEBUG")
   set(CMAKE_CXX_FLAGS_DEBUG   "/MTd")
@@ -52,10 +54,10 @@ add_library(
   ../../include/PML/Math/numeric_simd/inner_product.h
   ../../include/PML/Math/numeric_simd/positive_difference.h)
 
-SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/accumulate.h)
-SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/inner_product.h)
-SOURCE_GROUP("Header files\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/positive_difference.h)
+SOURCE_GROUP("Header ${FILE_FILTER}\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/accumulate.h)
+SOURCE_GROUP("Header ${FILE_FILTER}\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/inner_product.h)
+SOURCE_GROUP("Header ${FILE_FILTER}\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/positive_difference.h)
 
-SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/accumulate.cpp)
-SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/inner_product.cpp)
-SOURCE_GROUP("Source files\\numeric_simd" FILES numeric_simd/positive_difference.cpp)
+SOURCE_GROUP("Source ${FILE_FILTER}\\numeric_simd" FILES numeric_simd/accumulate.cpp)
+SOURCE_GROUP("Source ${FILE_FILTER}\\numeric_simd" FILES numeric_simd/inner_product.cpp)
+SOURCE_GROUP("Source ${FILE_FILTER}\\numeric_simd" FILES numeric_simd/positive_difference.cpp)

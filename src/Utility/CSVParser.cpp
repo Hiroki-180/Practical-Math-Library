@@ -8,7 +8,7 @@
 
 namespace pml {
 
-    class CSVParser:: ParserBase
+    class CSVParser::ParserBase
     {
     public:
         virtual ~ParserBase() = default;

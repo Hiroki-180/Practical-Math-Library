@@ -146,7 +146,7 @@ namespace pml{
         {
             if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                     return derivative_1st_Fwd_1stAcc(inFunc, inX, indX);
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
@@ -167,7 +167,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Central)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -182,7 +182,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -200,7 +200,7 @@ namespace pml{
         {
             if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -215,7 +215,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Central)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -230,7 +230,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -248,7 +248,7 @@ namespace pml{
         {
             if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -263,7 +263,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Central)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -278,7 +278,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -296,7 +296,7 @@ namespace pml{
         {
             if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -311,7 +311,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Central)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -326,7 +326,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -344,7 +344,7 @@ namespace pml{
         {
             if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -359,7 +359,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Central)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -374,7 +374,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -392,7 +392,7 @@ namespace pml{
         {
             if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -407,7 +407,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Central)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }
@@ -422,7 +422,7 @@ namespace pml{
             }
             else if (inType == DifferenceType::Backward)
             {
-                if (inAccuracy == Accuracy::_1_st) {
+                if (inAccuracy == Accuracy::_1st) {
                 }
                 else if (inAccuracy == Accuracy::_2nd) {
                 }

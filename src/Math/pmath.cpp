@@ -67,14 +67,14 @@ namespace pml {
 
             constexpr IEEE754Format() : mExpTable(), mSinCosTable()
             {
-                for (int i = 0;i < (1UL << EXPBIT);++i)
+                for (std::size_t i = 0;i < (1UL << EXPBIT);++i)
                 {
                     di ldi;
                     ldi._double = std::pow(2.0, i / static_cast<double>(1UL << EXPBIT));
                     mExpTable[i] = (ldi._uint64_t & ((1ULL << FRACTIONBIT) - 1));
                 }
 
-                for (int i = 0;i < ((1UL << EXPBIT)+1);++i)
+                for (std::size_t i = 0;i < ((1UL << EXPBIT)+1);++i)
                 {
                     mSinCosTable[2*i  ] = 0.5*std::sin(i*mSinCosAlphaInv);
                     mSinCosTable[2*i+1] = 0.5*std::cos(i*mSinCosAlphaInv);

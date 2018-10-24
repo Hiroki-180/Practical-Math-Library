@@ -60,9 +60,6 @@ namespace pml {
     * @param[in] inA
     * Pointer to the address of the first element of the array.
     *
-    * @param[in] inSize
-    * Size of the array inA.
-    *
     * @return
     * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
     */
@@ -88,9 +85,6 @@ namespace pml {
         *
         * @param[in] inA
         * Pointer to the address of the first element of the array.
-        *
-        * @param[in] inSize
-        * Size of the array inA.
         *
         * @return
         * Sum of the all elements of the input array, inA[0] + inA[1] + ... + inA[inSize-1].
