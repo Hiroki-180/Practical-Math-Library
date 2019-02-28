@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(Core CXX)
+project(CoreLib CXX)
 
 
 #####################
@@ -34,12 +34,22 @@ include_directories(../../include)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)
 
-add_library(
+add_library(CoreLib INTERFACE)
+
+target_include_directories(CoreLib INTERFACE include/)
+
+install(
+  FILES
+  ../../include/PML/Core/aligned_array.h
+  ../../include/PML/Core/aligned_vector.h
+  ../../include/PML/Core/CPUDispatcher.h
+  ../../include/PML/Core/cross_intrin.h
+  ../../include/PML/Core/exception_handler.h
+  DESTINATION include/)
+
+add_custom_target(
   Core
-  STATIC
-  cross_intrin.cpp
-  CPUDispatcher.cpp
-  exception_handler.cpp
+  SOURCES
   ../../include/PML/Core/aligned_array.h
   ../../include/PML/Core/aligned_vector.h
   ../../include/PML/Core/CPUDispatcher.h
