@@ -29,10 +29,10 @@ endif()
 ####### Links #######
 #####################
 
-include_directories(../../include)
+include_directories(../../)
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../../)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../../)
 
 add_library(CoreLib INTERFACE)
 
@@ -40,18 +40,18 @@ target_include_directories(CoreLib INTERFACE include/)
 
 install(
   FILES
-  ../../include/PML/Core/aligned_array.h
-  ../../include/PML/Core/aligned_vector.h
-  ../../include/PML/Core/CPUDispatcher.h
-  ../../include/PML/Core/cross_intrin.h
-  ../../include/PML/Core/exception_handler.h
+  aligned_array.h
+  aligned_vector.h
+  CPUDispatcher.h
+  cross_intrin.h
+  exception_handler.h
   DESTINATION include/)
 
 add_custom_target(
   Core
   SOURCES
-  ../../include/PML/Core/aligned_array.h
-  ../../include/PML/Core/aligned_vector.h
-  ../../include/PML/Core/CPUDispatcher.h
-  ../../include/PML/Core/cross_intrin.h
-  ../../include/PML/Core/exception_handler.h)
+  aligned_array.h
+  aligned_vector.h
+  CPUDispatcher.h
+  cross_intrin.h
+  exception_handler.h)
