@@ -1,8 +1,6 @@
 ﻿#ifndef MATH_CONSTANTS_H
 #define MATH_CONSTANTS_H
 
-#pragma once
-
 /**
 * @file
 * public header provided by PML.

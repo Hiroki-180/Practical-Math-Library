@@ -1,8 +1,6 @@
 #ifndef MATH_NUMERIC_SIMD_H
 #define MATH_NUMERIC_SIMD_H
 
-#pragma once
-
 /**
 * @file
 * public header provided by PML.

@@ -41,13 +41,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)
 add_library(
   Math
   STATIC
-  pmath.cpp
   numeric_simd.cpp
   numeric_simd/accumulate.cpp
   numeric_simd/inner_product.cpp
   numeric_simd/positive_difference.cpp
   ../../include/PML/Math/constants.h
-  ../../include/PML/Math/pmath.h
   ../../include/PML/Math/derivative.h
   ../../include/PML/Math/numeric_simd.h
   ../../include/PML/Math/numeric_simd/accumulate.h

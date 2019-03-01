@@ -1,8 +1,6 @@
 #ifndef MATH_DERIVATIVE_H
 #define MATH_DERIVATIVE_H
 
-#pragma once
-
 #include <PML/Math/constants.h>
 #include <cmath>
 

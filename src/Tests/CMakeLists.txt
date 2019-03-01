@@ -43,7 +43,6 @@ add_executable(
  TestMath/TestConstants.cpp
  TestMath/TestDerivative.cpp
  TestMath/TestNumericSIMD.cpp
- TestMath/TestPMath.cpp
  TestUtility/TestCSVParser.cpp)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -87,6 +86,5 @@ SOURCE_GROUP("Source files\\TestCore" FILES TestCore/TestExceptionHandler.cpp)
 SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestConstants.cpp)
 SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestDerivative.cpp)
 SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestNumericSIMD.cpp)
-SOURCE_GROUP("Source files\\TestMath" FILES TestMath/TestPMath.cpp)
 
 SOURCE_GROUP("Source files\\TestUtility" FILES TestUtility/TestCSVParser.cpp)
