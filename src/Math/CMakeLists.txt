@@ -7,7 +7,7 @@ project(Math CXX)
 ## Compile Options ##
 #####################
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   #Clang or AppleClang
@@ -21,7 +21,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   #Microsoft Visual C++
   set(FILE_FILTER "files")
-  set(CMAKE_CXX_FLAGS         "/W4")
+  set(CMAKE_CXX_FLAGS         "/W4 /EHsc")
   set(CMAKE_CXX_FLAGS_RELEASE "/MT  /DNDEBUG")
   set(CMAKE_CXX_FLAGS_DEBUG   "/MTd")
 endif()

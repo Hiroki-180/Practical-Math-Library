@@ -11,7 +11,7 @@
 * numeric manipulation implemented by SIMD operations.
 */
 
-#include <PML/Core/aligned_vector.h>
+#include <PML/Core/aligned_allocator.h>
 
 namespace pml {
 

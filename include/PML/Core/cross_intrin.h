@@ -1,8 +1,6 @@
 #ifndef CORE_CROSS_INTRIN_H
 #define CORE_CROSS_INTRIN_H
 
-#pragma once
-
 /**
 * @file
 * public header provided by PML.
@@ -35,8 +33,9 @@ namespace pml {
         * For instance, if inN = +1 then
         *    { inX[0], inX[1], inX[2], inX[3] } -> { inX[1], inX[2], inX[3], inX[0] }.
         */
-        inline __m256d _mm256_rotate_left_pd(const __m256d& inX, int inN) {
-            const __m128i c = _mm_cvtsi32_si128(inN);
+        inline __m256d _mm256_rotate_left_pd(const __m256d& inX, int inN)
+        {
+            const __m128i c  = _mm_cvtsi32_si128(inN);
             const __m128i cc = _mm_unpacklo_epi64(c, c);
 
             // create blend masks (highest bit)
@@ -57,7 +56,7 @@ namespace pml {
             // select correct rotation
             const __m256d y01 = _mm256_blendv_pd(y0, y1, half);
             const __m256d y23 = _mm256_blendv_pd(y2, y3, half);
-            const __m256d yn = _mm256_blendv_pd(y01, y23, swap);
+            const __m256d yn  = _mm256_blendv_pd(y01, y23, swap);
 
             return yn;
         }

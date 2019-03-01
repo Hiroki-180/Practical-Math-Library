@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <PML/Core/aligned_vector.h>
+#include <PML/Core/aligned_allocator.h>
 
 namespace pml {
 

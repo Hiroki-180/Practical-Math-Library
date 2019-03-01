@@ -42,7 +42,7 @@ namespace pml {
             const __m128d loDual = _mm256_castpd256_pd128(lSum256);
             const __m128d lSum128 = _mm_add_pd(loDual, hiDual);
 
-            PML_STATIC_ALLIGN(16) double lPartialSum[2] = { 0 };
+            alignas(16) double lPartialSum[2] = { 0 };
             _mm_store_pd(lPartialSum, lSum128);
             auto lSum = lPartialSum[0] + lPartialSum[1];
 

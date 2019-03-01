@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 #include <PML/Core/CPUDispatcher.h>
-#include <PML/Core/aligned_vector.h>
+#include <PML/Core/aligned_allocator.h>
 
 TEST(TestCore, CPUInfo)
 {

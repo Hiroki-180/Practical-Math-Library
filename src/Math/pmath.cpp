@@ -1,5 +1,5 @@
 #include <PML/Core/cross_intrin.h>
-#include <PML/Core/aligned_vector.h>
+#include <PML/Core/aligned_allocator.h>
 #include <PML/Core/CPUDispatcher.h>
 #include <PML/Math/pmath.h>
 #include <PML/Math/constants.h>

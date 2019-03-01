@@ -25,11 +25,12 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
  link_directories(../../lib/googletest/MSVC_2017_Community)
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 if(MSVC)
- set(CMAKE_CXX_FLAGS_RELEASE "/MT /W4 /DNDEBUG")
- set(CMAKE_CXX_FLAGS_DEBUG "/MTd /W4")
+ set(CMAKE_CXX_FLAGS         "/W4 /EHsc")
+ set(CMAKE_CXX_FLAGS_RELEASE "/MT /DNDEBUG")
+ set(CMAKE_CXX_FLAGS_DEBUG   "/MTd")
 endif(MSVC)
 
 add_executable(

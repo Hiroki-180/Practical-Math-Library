@@ -1,8 +1,6 @@
 #ifndef CORE_EXCEPTION_HANDLER_H
 #define CORE_EXCEPTION_HANDLER_H
 
-#pragma once
-
 /**
 * @file
 * public header provided by PML.
@@ -71,7 +69,8 @@ namespace pml {
         * Line number where exception occured in inExceptionFileName.
         */
         template<typename E>
-        [[noreturn]] void throw_with_nested_SSA(
+        [[noreturn]]
+        void throw_with_nested_SSA(
             std::string&& inMessage,
             char const* inExceptionFileName,
             std::size_t inLine)
@@ -82,7 +81,7 @@ namespace pml {
 
         template<typename E>
         std::enable_if_t<std::is_polymorphic<E>::value>
-            rethrow_if_nested_ptr(const E& inException)
+        rethrow_if_nested_ptr(const E& inException)
         {
             const auto *p = dynamic_cast<const std::nested_exception*>(std::addressof(inException));
 
@@ -199,7 +198,8 @@ namespace pml {
             std::string& inAggregatedMessage,
             bool inIsFirstCall)
         {
-            try {
+            try
+            {
                 if (inIsFirstCall) {
                     throw;
                 }
