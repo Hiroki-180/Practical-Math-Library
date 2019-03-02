@@ -17,7 +17,7 @@ TEST_P(CSVParserString, refAndCopy)
 
         EXPECT_TRUE(lParser.isOpen());
         EXPECT_FALSE(lParser.isEnd());
-        EXPECT_EQ(0U, lParser.getLine());
+        EXPECT_EQ(0U, lParser.getLineNumber());
 
         auto lLines = 0U;
         auto lIdx = 0U;
@@ -33,7 +33,7 @@ TEST_P(CSVParserString, refAndCopy)
 
         EXPECT_TRUE(lParser.isEnd());
         EXPECT_TRUE(lParser.isOpen());
-        EXPECT_EQ(lLines, lParser.getLine());
+        EXPECT_EQ(lLines, lParser.getLineNumber());
     }
 }
 

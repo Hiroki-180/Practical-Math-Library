@@ -13,8 +13,8 @@
 #include <ostream>
 #include <string>
 #include <vector>
-#include <bitset>
 #include <array>
+#include <bitset>
 
 #ifndef _MSC_VER
 #include <cpuid.h>
