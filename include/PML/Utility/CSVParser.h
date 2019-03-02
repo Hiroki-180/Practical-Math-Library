@@ -75,36 +75,9 @@ namespace pml{
         * If this is false, the first row is interpreted as keys.
         *
         * @return
-        * Resulted table as map.
-        */
-        static std::map<std::string, std::vector<std::string>> readTable(
-            const std::string& inFilePath,
-            bool inIsColumnKey);
-
-        /**
-        * @brief
-        * Read table in CSV format.
-        * Suppose the file content as "A,B,C\nD,E,F\G,H,I".
-        * Then if inIsColumnKey is true, the result is
-        *   outMap[A] = {B,C},
-        *   outMap[D] = {E,F},
-        *   outMap[G] = {H,I}.
-        * On the other hand, if inIsColumnKey is false, the result is
-        *   outMap[A] = {D,G},
-        *   outMap[B] = {E,H},
-        *   outMap[C] = {F,I}.
-        *
-        * @param[in] inFilePath
-        * The path to the target CSV file.
-        *
-        * @param[in] inIsColumnKey
-        * Whether the first column is keys or not.
-        * If this is false, the first row is interpreted as keys.
-        *
-        * @return
         * Resulted table as unordered_map.
         */
-        static std::unordered_map<std::string, std::vector<std::string>> readTableUnordered(
+        static std::unordered_map<std::string, std::vector<std::string>> readTable(
             const std::string& inFilePath,
             bool inIsColumnKey);
 

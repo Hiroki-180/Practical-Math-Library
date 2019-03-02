@@ -28,7 +28,7 @@ namespace pml {
         class ParserBaseImpl : public CSVParser::ParserBase
         {
         protected:
-            typedef IterT IterTAlias;
+            using IterTAlias = IterT;
             IterT mStart;
             IterT mEnd;
             std::size_t mLine;
@@ -49,7 +49,7 @@ namespace pml {
                 outBuffer.clear();
 
                 if (!isOpen()) {
-                    PML_THROW_WITH_NESTED(std::runtime_error, "Taregt is not opened.");
+                    QHMACRO_THROW_WITH_NESTED(std::runtime_error, "Taregt is not opened.");
                 }
 
                 if (isEnd()) {
@@ -93,9 +93,8 @@ namespace pml {
                                 mStart = lit;
                                 SkipToNextLine();
 
-                                PML_THROW_WITH_NESTED(
-                                    std::runtime_error,
-                                    "Field is not closed by right side double quotation.");
+                                QHMACRO_THROW_WITH_NESTED(
+                                    std::runtime_error, "Field is not closed by right side double quotation.");
                             }
                         }
 
@@ -136,9 +135,8 @@ namespace pml {
                                 mStart = lit;
                                 SkipToNextLine();
 
-                                PML_THROW_WITH_NESTED(
-                                    std::runtime_error,
-                                    "Double quotation as an element of fields must be escaped by itself.");
+                                QHMACRO_THROW_WITH_NESTED(
+                                    std::runtime_error, "Double quotation as an element of fields must be escaped by itself.");
                             }
                         }
                         else if (lc == ',')
@@ -157,7 +155,7 @@ namespace pml {
                         else if ((lc == '\r') || (lc == '\n'))
                         {
                             // end of the record
-                            outBuffer.push_back(lIsRight ? lQuotedString : lUnQuotedString);
+                            outBuffer.push_back(std::move(lIsRight ? lQuotedString : lUnQuotedString));
 
                             ++lit;
                             if ((lit != mEnd) && (lc == '\r') && (*lit == '\n')) {
@@ -176,7 +174,7 @@ namespace pml {
                             mStart = lit;
                             SkipToNextLine();
 
-                            PML_THROW_WITH_NESTED(
+                            QHMACRO_THROW_WITH_NESTED(
                                 std::runtime_error, "Character exist in the field " + lQuotedString + " outside of double quotations.");
                         }
                         else
@@ -191,7 +189,7 @@ namespace pml {
                 }
 
                 // finished without a newline character
-                outBuffer.push_back(lIsRight ? lQuotedString : lUnQuotedString);
+                outBuffer.push_back(std::move(lIsRight ? lQuotedString : lUnQuotedString));
                 ++mLine;
 
                 mStart = mEnd;
@@ -274,7 +272,7 @@ namespace pml {
         {
         public:
             StringParserRef(const std::string& inString)
-                :ParserBaseImpl<std::string::const_iterator>(inString.cbegin(), inString.cend())
+                : ParserBaseImpl<std::string::const_iterator>(inString.cbegin(), inString.cend())
             {
                 mIsOpen = true;
             }
@@ -300,8 +298,6 @@ namespace pml {
             const std::string& inFilePath,
             bool inIsColumnKey)
         {
-            PML_CATCH_BEGIN
-
             Map<std::string, std::vector<std::string>> lTable;
 
             CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
@@ -315,46 +311,43 @@ namespace pml {
                         continue;
                     }
 
-                    const auto lKey = std::move(lRecord[0]);
-                    lRecord.erase(lRecord.begin());
+                    auto lKey = std::move(lRecord[0]);
+                    lRecord.erase(lRecord.cbegin());
                     lRecord.shrink_to_fit();
 
-                    lTable[std::move(lKey)] = std::move(lRecord);
+                    lTable.emplace(std::move(lKey), std::move(lRecord));
                 }
-
-                return lTable;
             }
-
-
-            // When the first row is keys.
-            std::vector<std::string> lKeys;
-            lParser.readNextOneRecord(lKeys);
-
-            std::vector<std::vector<std::string>> lVals(lKeys.size());
-
-            for (;;)
+            else
             {
-                if (!lParser.readNextOneRecord(lRecord)) {
-                    break;
+                std::vector<std::string> lKeys;
+                lParser.readNextOneRecord(lKeys);
+
+                std::vector<std::vector<std::string>> lVals(lKeys.size());
+
+                for (;;)
+                {
+                    if (!lParser.readNextOneRecord(lRecord)) {
+                        break;
+                    }
+
+                    if (lRecord.size() != lKeys.size()) {
+                        QHMACRO_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
+                    }
+
+                    for (std::size_t i = 0; i < lRecord.size(); ++i) {
+                        lVals[i].push_back(std::move(lRecord[i]));
+                    }
                 }
 
-                if (lRecord.size() != lKeys.size()) {
-                    PML_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
+                for (std::size_t i = 0; i < lKeys.size(); ++i)
+                {
+                    lVals[i].shrink_to_fit();
+                    lTable.emplace(std::move(lKeys[i]), std::move(lVals[i]));
                 }
-
-                for (auto i = 0U; i < lRecord.size(); ++i) {
-                    lVals[i].push_back(std::move(lRecord[i]));
-                }
-            }
-
-            for (auto i = 0U; i < lKeys.size(); ++i) {
-                lVals[i].shrink_to_fit();
-                lTable[lKeys[i]] = std::move(lVals[i]);
             }
 
             return lTable;
-
-            PML_CATCH_END_AND_THROW(std::runtime_error, "Reading CSV table failed.");
         }
 
     } // unnamed
@@ -373,7 +366,7 @@ namespace pml {
             mParser = std::make_unique<StringParserCopy>(inString);
             break;
         default:
-            PML_THROW_WITH_NESTED(std::logic_error, "Undefined type is specified.");
+            QHMACRO_THROW_WITH_NESTED(std::logic_error, "Undefined type is specified.");
         }
     }
 
@@ -389,7 +382,7 @@ namespace pml {
 
     std::vector<std::vector<std::string>> CSVParser::readAllRecords(const std::string& inFilePath)
     {
-        PML_CATCH_BEGIN
+        QHMACRO_CATCH_BEGIN
 
         std::vector<std::vector<std::string>> lOutBuffer;
 
@@ -404,21 +397,16 @@ namespace pml {
 
         return lOutBuffer;
 
-        PML_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readAllRecords failed.");
+        QHMACRO_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readAllRecords failed.")
     }
 
-    std::map<std::string, std::vector<std::string>> CSVParser::readTable(
+    std::unordered_map<std::string, std::vector<std::string>> CSVParser::readTable(
         const std::string& inFilePath,
         bool inIsColumnKey)
     {
-        return readTableImpl<std::map>(inFilePath, inIsColumnKey);
-    }
-
-    std::unordered_map<std::string, std::vector<std::string>> CSVParser::readTableUnordered(
-        const std::string& inFilePath,
-        bool inIsColumnKey)
-    {
-        return readTableImpl<std::unordered_map>(inFilePath, inIsColumnKey);
+        return QHMACRO_HOOK(
+            readTableImpl<std::unordered_map>(inFilePath, inIsColumnKey),
+            std::runtime_error, "CSVParser::readAllRecords failed.");
     }
 
     bool CSVParser::isOpen() const

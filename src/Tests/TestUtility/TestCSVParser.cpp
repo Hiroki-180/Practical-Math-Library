@@ -60,7 +60,7 @@ INSTANTIATE_TEST_CASE_P(
 TEST(CSVParserStatic, allRecords)
 {
     auto lAllRecords = pml::CSVParser::readAllRecords("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv");
-    std::map<std::string, std::vector<std::string>> lTable;
+    std::unordered_map<std::string, std::vector<std::string>> lTable;
     for (auto i = 0U; i < lAllRecords.size(); ++i)
     {
         for (auto j = 1U; j < lAllRecords[i].size(); ++j) {
@@ -82,14 +82,4 @@ TEST(CSVParserStatic, table)
     EXPECT_EQ(lTable_ColumnKey, lTable_RowKey);
     EXPECT_EQ(3U, lTable_ColumnKey.size());
     EXPECT_EQ(3U, lTable_RowKey   .size());
-}
-
-TEST(CSVParserStatic, table_unordered)
-{
-    auto lTable_ColumnKey = pml::CSVParser::readTableUnordered("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true);
-    auto lTable_RowKey    = pml::CSVParser::readTableUnordered("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_RowKey.csv"   , false);
-
-    EXPECT_EQ(lTable_ColumnKey, lTable_RowKey);
-    EXPECT_EQ(3U, lTable_ColumnKey.size());
-    EXPECT_EQ(3U, lTable_RowKey.size());
 }

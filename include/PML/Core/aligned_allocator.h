@@ -12,6 +12,7 @@
 #include <PML/Core/CPUDispatcher.h>
 #include <type_traits>
 #include <cstdlib>
+#include <exception>
 #include <stdexcept>
 #include <vector>
 
@@ -96,7 +97,7 @@ namespace pml {
                 pointer allocate(size_type n) const
                 {
                     if (n > this->max_size()){
-                        throw std::bad_alloc();
+                        std::throw_with_nested(std::bad_alloc());
                     }
 
                     return pml::aligned::detail::alignedMalloc<pointer>(n*sizeof(T), CPUDispatcher::getOptimalAlignment());

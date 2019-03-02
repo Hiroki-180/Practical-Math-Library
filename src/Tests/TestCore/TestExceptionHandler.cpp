@@ -12,27 +12,17 @@ namespace{
 
     [[noreturn]] void h()
     {
-        PML_THROW_WITH_NESTED(std::logic_error, "Error in h().");
+        QHMACRO_THROW_WITH_NESTED(std::logic_error, "Error in h().");
     }
 
-    [[noreturn]] void g()
+    void g()
     {
-        try {
-            h();
-        }
-        catch (...) {
-            PML_THROW_WITH_NESTED(std::runtime_error, "Error in g().");
-        }
+        QHMACRO_HOOK(h(), std::runtime_error, "Error in g().");
     };
 
-    [[noreturn]] void f()
+    void f()
     {
-        try {
-            g();
-        }
-        catch (...) {
-            PML_THROW_WITH_NESTED(std::runtime_error, "Error in f().");
-        }
+        QHMACRO_HOOK(g(), std::runtime_error, "Error in f().");
     }
 } // unnamed
 
@@ -48,9 +38,9 @@ TEST_P(exception_handler, nest_output)
         {
             std::ofstream lOfs(lFileName);
             EXPECT_TRUE(lOfs.is_open());
-            PML_CATCH_BEGIN
-                (GetParam().first)();
-            PML_CATCH_END_AND_OUTPUT(lOfs)
+            QHMACRO_CATCH_BEGIN
+            (GetParam().first)();
+            QHMACRO_CATCH_END(lOfs)
 
             auto lResult = pml::CSVParser::readAllRecords(lFileName);
             EXPECT_EQ(GetParam().second, lResult.size());
@@ -65,28 +55,10 @@ TEST_P(exception_handler, nest_output)
     }
 
     std::stringstream lSs_2;
-    PML_CATCH_BEGIN
+    QHMACRO_CATCH_BEGIN
         (GetParam().first)();
-    PML_CATCH_END_AND_OUTPUT(lSs_2)
+    QHMACRO_CATCH_END(lSs_2)
     EXPECT_EQ(lSs_1.str(), lSs_2.str());
-}
-
-TEST_P(exception_handler, nest_aggregate)
-{
-    const std::string lFileName("Test_exception_handler_nest_aggregate.csv");
-
-    std::ofstream lOfs(lFileName);
-    EXPECT_TRUE(lOfs.is_open());
-    PML_CATCH_BEGIN
-        PML_CATCH_BEGIN
-        (GetParam().first)();
-        PML_CATCH_END_AND_AGGREGATE
-    PML_CATCH_END_AND_OUTPUT(lOfs)
-
-    auto lResult = pml::CSVParser::readAllRecords(lFileName);
-    EXPECT_EQ(((GetParam().second == 0) ? 0U : 1U), lResult.size());
-
-    remove(lFileName.c_str());
 }
 
 TEST_P(exception_handler, nest_rethrow)
@@ -95,11 +67,9 @@ TEST_P(exception_handler, nest_rethrow)
 
     std::ofstream lOfs(lFileName);
     EXPECT_TRUE(lOfs.is_open());
-    PML_CATCH_BEGIN
-        PML_CATCH_BEGIN
-        (GetParam().first)();
-        PML_CATCH_END_AND_THROW(std::runtime_error, "Additional error message.")
-    PML_CATCH_END_AND_OUTPUT(lOfs)
+    QHMACRO_CATCH_BEGIN
+    QHMACRO_HOOK((GetParam().first)(), std::runtime_error, "This is a test.");
+    QHMACRO_CATCH_END(lOfs)
 
     auto lResult = pml::CSVParser::readAllRecords(lFileName);
     EXPECT_EQ(((GetParam().second == 0) ? 0U : (GetParam().second + 1U)), lResult.size());

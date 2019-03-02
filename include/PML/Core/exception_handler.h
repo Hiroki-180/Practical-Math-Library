@@ -3,30 +3,32 @@
 
 /**
 * @file
-* public header provided by PML.
+* public header provided by QuantsHub.
 *
 * @brief
 * Useful macros for handling exceptions.
 */
 
 #include <exception>
+#include <stdexcept>
 #include <ostream>
 #include <type_traits>
 
 /**
 * @def
-* Macro to throw std::nested_exception by std::throw_with_nested( TYPE(MESSAGE with info. of __FILE__ and __LINE__) ).
-* PML always throws exceptions using this macro if TYPE has a Single String Argument constructor.
-* PML throws only inheritances of std::exception if exceptions occured and does not throw it's original implementations.
+* Macro to throw std::nested_exception by std::throw_with_nested( ETYPE(MESSAGE with info. of __FILE__ and __LINE__, ...) ).
+* QuantsHub athrows exceptions using this macro if it's ctor accepts an message.
+* QuantsHub throws only inheritances of std::exception when exceptions occured and does not throw something original implementations.
 */
-#define PML_THROW_WITH_NESTED( TYPE, MESSAGE ) pml::detail::throw_with_nested_SSA<TYPE>(MESSAGE, __FILE__, __LINE__)
+#define QHMACRO_THROW_WITH_NESTED(ETYPE, MESSAGE, ...) \
+pml::detail::throw_with_nested_wrapper<ETYPE>(__FILE__, __LINE__, MESSAGE, __VA_ARGS__)
 
 /**
 * @def
 * Macro to begin a try-brock.
-* This macro should be used with PML_CATCH_END_AND_OUTPUT, PML_CATCH_END_AND_AGGREGATE, or PML_CATCH_END_AND_THROW.
+* This macro should be used with PML_CATCH_END.
 */
-#define PML_CATCH_BEGIN try{
+#define QHMACRO_CATCH_BEGIN try{
 
 /**
 * @def
@@ -34,49 +36,65 @@
 * std::logic_error, std::runtime_error, and other exceptions are distinguished in message.
 * This macro should be used with PML_CATCH_BEGIN.
 */
-#define PML_CATCH_END_AND_OUTPUT( OSTREAM )   } catch(...) { pml::detail::output_exceptions(OSTREAM); }
-
-/**
-* @def
-* Macro to finish a try-brock which aggregates error message of nested exceptions and throws a single std::runtime_error with aggregated one.
-* This macro should be used with PML_CATCH_BEGIN.
-*/
-#define PML_CATCH_END_AND_AGGREGATE   } catch(...) { pml::detail::aggregate_exceptions(); }
+#define QHMACRO_CATCH_END(OSTREAM)   } catch(...) { pml::detail::output_exceptions(OSTREAM); }
 
 /**
 * @def
 * Macro to finish a try-brock which calls std::throw_with_nested(TYPE(MESSAGE)) if something exceptions are catched.
 * This macro should be used with PML_CATCH_BEGIN.
+* Macro to throw std::nested_exception by std::throw_with_nested when an exception occurred in OPERATION.
 */
-#define PML_CATCH_END_AND_THROW( TYPE, MESSAGE )   } catch(...) { PML_THROW_WITH_NESTED( TYPE, MESSAGE ); }
+#define QHMACRO_CATCH_END_AND_THROW(ETYPE, MESSAGE, ...)   }catch (...) { QHMACRO_THROW_WITH_NESTED(ETYPE, MESSAGE, __VA_ARGS__); }
 
+/**
+* @def
+* Macro to throw std::nested_exception by std::throw_with_nested when an exception occurred in OPERATION.
+*/
+#define QHMACRO_HOOK(OPERATION, ETYPE, MESSAGE, ...)            \
+[&]()                                                           \
+{                                                               \
+    try{                                                        \
+        return OPERATION;                                       \
+    }                                                           \
+    catch(...){                                                 \
+        QHMACRO_THROW_WITH_NESTED(ETYPE, MESSAGE, __VA_ARGS__); \
+    }                                                           \
+}()
 
 namespace pml {
     namespace detail {
 
         /**
         * @brief
-        * Throws std::nested_exception by std::throw_with_nested( E(inMessage with info. of inExceptionFileName and inLine) )
-        * Templated exception E must have a Single String Argument constructor.
+        * Throws std::nested_exception by std::throw_with_nested( E(inMessage with info. of inFileName and inLine) )
         *
-        * @param[in] inMessage
-        * Error message.
+        * @param[in] E
+        * Exception type.
+        * The first argument of the ctor must be a string literal and error message.
         *
-        * @param[in] inExceptionFileName
+        * @param[in] inFileName
         * File name throwing the present exception.
         *
         * @param[in] inLine
         * Line number where exception occured in inExceptionFileName.
+        *
+        * @param[in] inMessage
+        * Error message.
+        *
+        * @param[in] inArgs
+        * Second and other arguments of the ctor of E.
         */
-        template<typename E>
+        template<typename E, typename ...Args>
         [[noreturn]]
-        void throw_with_nested_SSA(
-            std::string&& inMessage,
-            char const* inExceptionFileName,
-            std::size_t inLine)
+        void throw_with_nested_wrapper(
+            char const* inFileName,
+            std::size_t inLine,
+            const std::string& inMessage,
+            Args&&... inArgs)
         {
-            std::throw_with_nested(
-                E(std::string{} + inExceptionFileName + "(" + std::to_string(inLine) + "): " + inMessage + " "));
+            const std::string info{ "l." + std::to_string(inLine) + " in " + inFileName + ": " + inMessage + " " };
+
+            std::throw_with_nested(E(info, std::forward<Args>(inArgs)...));
         };
 
         template<typename E>
@@ -108,7 +126,8 @@ namespace pml {
             std::ostream& inoutStream,
             bool inIsFirstCall)
         {
-            try {
+            try
+            {
                 if (inIsFirstCall) {
                     throw;
                 }
@@ -155,8 +174,11 @@ namespace pml {
             }
 #endif
             catch (const std::exception& e) {
-                inoutStream << "Error: ";
+                inoutStream << "Something STL Error: ";
                 output_std_exceptions(e, inoutStream, false);
+            }
+            catch(...) {
+                inoutStream << "None-STL Error.";
             }
         }
 
@@ -179,60 +201,6 @@ namespace pml {
                 inoutStream << "PML never throws unstandard exceptions." << std::endl;
             }
         }
-
-        /**
-        * @brief
-        * Aggregate error message of std::exceptions.
-        *
-        * @param[in] inException
-        * Nested exceptions.
-        *
-        * @param[in] inAggregatedMessage
-        * Recursively aggregated message.
-        *
-        * @param[in] inIsFirstCall
-        * Is the current call first one in recursion of nested_exception unrolling.
-        */
-        inline void aggregate_std_exceptions(
-            const std::exception& inException,
-            std::string& inAggregatedMessage,
-            bool inIsFirstCall)
-        {
-            try
-            {
-                if (inIsFirstCall) {
-                    throw;
-                }
-
-                inAggregatedMessage += std::string(std::string{} +" " + inException.what());
-                pml::detail::rethrow_if_nested_ptr(inException);
-            }
-            catch (const std::exception& e) {
-                aggregate_std_exceptions(e, inAggregatedMessage, false);
-            }
-        }
-
-        /**
-        * @brief
-        * Aggregate error message of current exceptions.
-        */
-        inline void aggregate_exceptions()
-        {
-            try {
-                throw;
-            }
-            catch (std::exception& e) {
-                std::string lAggregatedMessage("");
-                aggregate_std_exceptions(e, lAggregatedMessage, true);
-                throw std::runtime_error(lAggregatedMessage);
-            }
-            catch (...) {
-                std::string lAggregatedMessage("");
-                lAggregatedMessage = "PML never throws unstandard exceptions.";
-                throw std::runtime_error(lAggregatedMessage);
-            }
-        }
-
     } // detail
 } // pml
 
