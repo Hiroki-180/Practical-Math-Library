@@ -28,17 +28,17 @@ namespace pml{
     * CSVParser
     *
     * @brief
-    * This class reads files or string of the CSV format.
-    * Here the CSV format is defined as follows;
-    *  1. Mixing of newline format of CR, LF, and CRLF is permitted.
-    *     That is, each record must be separated by a newline character \n, \r, or \r\n.
-    *     \r\n is interpreted as a single newline character of CRLF, not twice newline characters of CR plus LF.
-    *  2. Newline character in the end of data is indifferent.
+    * This class reads files or string within the CSV format.
+    * Here the CSV format is defined as follows:
+    *  1. Mixing use of newline format of CR, LF and CRLF is permitted.
+    *     That is, each record must be separated by one of newline characters \r, \n and \r\n.
+    *     \r\n is interpreted as a single newline character of CRLF, not two newline characters of CR and suceeding LF.
+    *  2. Newline character in the end of file or data is ignored.
     *  3. Each field must be separated by a single comma(,).
-    *  3. The number of fields in each record is not necessarily common.
-    *  4. Enclosing a field by two double quotations(") is indifferent.
-    *     If the field is not enclosed by double quotations, it is not permitted that the filed contains double quotations " itself.
-    *     If the field is enclosed by double quotations, it is permitted by escaping with one further double quotation as "".
+    *  3. The number of fields in each record is not necessarily constant through the input file or data.
+    *  4. It does not matter whether each field is enclosed by two double quotations(") or not.
+    *     If the field is not enclosed by double quotations, then it is not permitted that the filed contains double quotations " itself.
+    *     If the field is enclosed by double quotations, then it is permitted by escaping with one further double quotation as "".
     *  5. Spaces and tubs outside double quotations are ignored when the field is enclosed by them.
     */
     class CSVParser final
@@ -99,13 +99,62 @@ namespace pml{
         * @return
         * Resulted table as unordered_map.
         */
-        static std::unordered_map<std::string, std::vector<std::string>> readTable(
-            const std::string& inFilePath,
-            bool inIsColumnKey)
+        template<template <typename...> class Map = std::unordered_map>
+        static auto readTable(const std::string& inFilePath, bool inIsColumnKey)
         {
-            return QHMACRO_HOOK(
-                readTableImpl<std::unordered_map>(inFilePath, inIsColumnKey),
-                std::runtime_error, "CSVParser::readTable failed.");
+            QHMACRO_CATCH_BEGIN
+
+            Map<std::string, std::vector<std::string>> lTable;
+
+            CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
+            std::vector<std::string> lRecord;
+
+            if (inIsColumnKey)
+            {
+                while (lParser.readNextOneRecord(lRecord))
+                {
+                    if (lRecord.empty()) {
+                        continue;
+                    }
+
+                    auto lKey = std::move(lRecord[0]);
+                    lRecord.erase(lRecord.cbegin());
+
+                    lTable.emplace(std::move(lKey), std::move(lRecord));
+                }
+            }
+            else
+            {
+                std::vector<std::string> lKeys;
+                lParser.readNextOneRecord(lKeys);
+
+                std::vector<std::vector<std::string>> lVals(lKeys.size());
+
+                for (;;)
+                {
+                    if (!lParser.readNextOneRecord(lRecord)) {
+                        break;
+                    }
+
+                    if (lRecord.size() != lKeys.size()) {
+                        QHMACRO_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
+                    }
+
+                    for (std::size_t i = 0; i < lRecord.size(); ++i) {
+                        lVals[i].push_back(std::move(lRecord[i]));
+                    }
+                }
+
+                for (std::size_t i = 0; i < lKeys.size(); ++i)
+                {
+                    lVals[i].shrink_to_fit();
+                    lTable.emplace(std::move(lKeys[i]), std::move(lVals[i]));
+                }
+            }
+
+            return lTable;
+
+            QHMACRO_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readTable failed.")
         }
 
         /**
@@ -273,7 +322,7 @@ namespace pml{
                 bool lIsRight    = false; // Is the analyzed character in right side of the double quotations.
 
                 Iterator lit(mStart); // analyzed character
-                std::size_t lDistanceFromStart = 0;
+                long lDistanceFromStart = 0;
 
                 std::string lQuotedString;
                 std::string lUnQuotedString;
@@ -498,62 +547,6 @@ namespace pml{
         private:
             std::string mString;
         };
-
-        template<template <typename...> class Map>
-        static auto readTableImpl(
-            const std::string& inFilePath,
-            bool inIsColumnKey)
-        {
-            Map<std::string, std::vector<std::string>> lTable;
-
-            CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
-            std::vector<std::string> lRecord;
-
-            if (inIsColumnKey)
-            {
-                while (lParser.readNextOneRecord(lRecord))
-                {
-                    if (lRecord.empty()) {
-                        continue;
-                    }
-
-                    auto lKey = std::move(lRecord[0]);
-                    lRecord.erase(lRecord.cbegin());
-
-                    lTable.emplace(std::move(lKey), std::move(lRecord));
-                }
-            }
-            else
-            {
-                std::vector<std::string> lKeys;
-                lParser.readNextOneRecord(lKeys);
-
-                std::vector<std::vector<std::string>> lVals(lKeys.size());
-
-                for (;;)
-                {
-                    if (!lParser.readNextOneRecord(lRecord)) {
-                        break;
-                    }
-
-                    if (lRecord.size() != lKeys.size()) {
-                        QHMACRO_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
-                    }
-
-                    for (std::size_t i = 0; i < lRecord.size(); ++i) {
-                        lVals[i].push_back(std::move(lRecord[i]));
-                    }
-                }
-
-                for (std::size_t i = 0; i < lKeys.size(); ++i)
-                {
-                    lVals[i].shrink_to_fit();
-                    lTable.emplace(std::move(lKeys[i]), std::move(lVals[i]));
-                }
-            }
-
-            return lTable;
-        }
 
         /**
         * @brief
