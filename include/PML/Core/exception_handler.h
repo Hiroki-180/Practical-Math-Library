@@ -44,7 +44,7 @@ pml::detail::throw_with_nested_wrapper<ETYPE>(__FILE__, __LINE__, MESSAGE, __VA_
 * This macro should be used with PML_CATCH_BEGIN.
 * Macro to throw std::nested_exception by std::throw_with_nested when an exception occurred in OPERATION.
 */
-#define QHMACRO_CATCH_END_AND_THROW(ETYPE, MESSAGE, ...)   }catch (...) { QHMACRO_THROW_WITH_NESTED(ETYPE, MESSAGE, __VA_ARGS__); }
+#define QHMACRO_CATCH_END_AND_THROW(ETYPE, MESSAGE, ...)   } catch (...) { QHMACRO_THROW_WITH_NESTED(ETYPE, MESSAGE, __VA_ARGS__); }
 
 /**
 * @def
