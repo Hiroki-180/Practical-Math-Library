@@ -2,7 +2,6 @@
 
 #include <gtest/gtest.h>
 #include <PML/Math/numeric_simd.h>
-#include <PML/Math/numeric_simd/accumulate.h>
 #include <PML/Math/numeric_simd/inner_product.h>
 #include <PML/Math/numeric_simd/positive_difference.h>
 #include <PML/Core/CPUDispatcher.h>
@@ -112,37 +111,10 @@ TEST(TestNumericSIMD, accumulate)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumOptSIMDV = pml::accumulate_SIMD(lVector);
+            lSumOptSIMDV = pml::accumulate_SIMD(lVector, 0.0);
         }
         lEnd = std::chrono::system_clock::now();
         lOptSIMDVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
-
-        // calculation using AVX with std::vector
-        lStart = std::chrono::system_clock::now();
-        for (auto i = 0; i < lTestNum; ++i)
-        {
-            lSumAVXV = pml::accumulate_AVX_vector(lVector);
-        }
-        lEnd = std::chrono::system_clock::now();
-        lAVXVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
-
-        // calculation using automatically selected optimal SIMD with array.
-        lStart = std::chrono::system_clock::now();
-        for (auto i = 0; i < lTestNum; ++i)
-        {
-            lSumOptSIMDA = pml::accumulate_SIMD(lVector.data(), lVector.size());
-        }
-        lEnd = std::chrono::system_clock::now();
-        lOptSIMDAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
-
-        // calculation using AVX with array.
-        lStart = std::chrono::system_clock::now();
-        for (auto i = 0; i < lTestNum; ++i)
-        {
-            lSumAVXA = pml::accumulate_AVX_array(lVector.data(), lVector.size());
-        }
-        lEnd = std::chrono::system_clock::now();
-        lAVXAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
     }
 
     // In case of the memory alignent is guaranteed.
@@ -160,19 +132,10 @@ TEST(TestNumericSIMD, accumulate)
         auto lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumOptSIMDAV = pml::aligned::accumulate_SIMD(lAVector);
+            lSumOptSIMDAV = pml::accumulate_SIMD(lAVector, 0.0);
         }
         auto lEnd = std::chrono::system_clock::now();
         lOptSIMDAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
-
-        // calculation using AVX with aligned vector
-        lStart = std::chrono::system_clock::now();
-        for (auto i = 0; i < lTestNum; ++i)
-        {
-            lSumAVXAV = pml::aligned::accumulate_AVX_alvector(lAVector);
-        }
-        lEnd = std::chrono::system_clock::now();
-        lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
     }
 
 	outputResult(

@@ -1,6 +1,5 @@
 #include <PML/Core/CPUDispatcher.h>
 #include <PML/Math/numeric_simd.h>
-#include <PML/Math/numeric_simd/accumulate.h>
 #include <PML/Math/numeric_simd/inner_product.h>
 #include <PML/Math/numeric_simd/positive_difference.h>
 #include <numeric>
@@ -28,18 +27,6 @@ namespace pml {
         }
 
     } // unnamed
-
-    double accumulate_SIMD(
-        const double* inA,
-        std::size_t inSize)
-    {
-        return optimizer(
-            std::bind(&accumulate_AVX_array, std::placeholders::_1, std::placeholders::_2),
-            std::bind(&accumulate_AVX_array, std::placeholders::_1, std::placeholders::_2),
-            std::bind(&accumulate_array,     std::placeholders::_1, std::placeholders::_2),
-            std::bind(&accumulate_array,     std::placeholders::_1, std::placeholders::_2),
-            inA, inSize);
-    }
 
     double inner_product_SIMD(
         const double* inA,
@@ -76,16 +63,6 @@ namespace pml {
             inA, inB, outC, inSize);
     }
 
-    double accumulate_SIMD(const std::vector<double>& inA)
-    {
-        return optimizer(
-            std::bind(&accumulate_AVX_vector, std::placeholders::_1),
-            std::bind(&accumulate_AVX_vector, std::placeholders::_1),
-            std::bind(&accumulate_vector,     std::placeholders::_1),
-            std::bind(&accumulate_vector,     std::placeholders::_1),
-            inA);
-    }
-
     double inner_product_SIMD(
         const std::vector<double>& inA,
         const std::vector<double>& inB)
@@ -120,16 +97,6 @@ namespace pml {
     }
 
     namespace aligned {
-
-        double accumulate_SIMD(const alvector<double>& inA)
-        {
-            return optimizer(
-                std::bind(&accumulate_AVX_alvector, std::placeholders::_1),
-                std::bind(&accumulate_AVX_alvector, std::placeholders::_1),
-                std::bind(&accumulate_alvector,     std::placeholders::_1),
-                std::bind(&accumulate_alvector,     std::placeholders::_1),
-                inA);
-        }
 
         double inner_product_SIMD(
             const alvector<double>& inA,
