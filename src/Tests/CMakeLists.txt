@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Tests CXX)
 
-add_dependencies(CoreLib Math Utility)
+add_dependencies(CoreLib Math UtilityLib)
 
 include_directories(../../include)
 include_directories(./)
@@ -78,7 +78,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 endif()
 
 target_link_libraries(
- Tests ${LINK_LIBRARIES_GTEST} ${LINK_LIBRARIES_GTEST_MAIN} CoreLib Math Utility)
+ Tests ${LINK_LIBRARIES_GTEST} ${LINK_LIBRARIES_GTEST_MAIN} CoreLib Math UtilityLib)
 
 SOURCE_GROUP("Source files\\TestCore" FILES TestCore/TestCore.cpp)
 SOURCE_GROUP("Source files\\TestCore" FILES TestCore/TestExceptionHandler.cpp)

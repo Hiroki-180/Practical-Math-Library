@@ -273,7 +273,7 @@ namespace pml{
                 bool lIsRight    = false; // Is the analyzed character in right side of the double quotations.
 
                 Iterator lit(mStart); // analyzed character
-                long lDistanceFromStart = 0;
+                std::size_t lDistanceFromStart = 0;
 
                 std::string lQuotedString;
                 std::string lUnQuotedString;
@@ -468,11 +468,6 @@ namespace pml{
 
                 mStart = FileParser::iterator_type(mFile);
                 mEnd   = FileParser::iterator_type();
-            }
-
-            virtual ~FileParser() override
-            {
-                mFile.close();
             }
 
         private:

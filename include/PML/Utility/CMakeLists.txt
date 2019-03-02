@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(Utility CXX)
+project(UtilityLib CXX)
 
 
 #####################
@@ -36,8 +36,16 @@ SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)
 
-add_library(
+add_library(UtilityLib INTERFACE)
+
+target_include_directories(UtilityLib INTERFACE include/)
+
+install(
+  FILES
+  CSVParser.h
+  DESTINATION include/)
+
+add_custom_target(
   Utility
-  STATIC
-  CSVParser.cpp
-  ../../include/PML/Utility/CSVParser.h)
+  SOURCES
+  CSVParser.h)
