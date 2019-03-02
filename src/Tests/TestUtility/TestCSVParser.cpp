@@ -13,7 +13,6 @@ TEST_P(CSVParserString, refAndCopy)
     for (const auto& type_i : lTypes)
     {
         pml::CSVParser lParser(type_i, GetParam().first);
-        std::vector<std::string> lBuffer;
 
         EXPECT_TRUE(lParser.isOpen());
         EXPECT_FALSE(lParser.isEnd());
@@ -21,8 +20,10 @@ TEST_P(CSVParserString, refAndCopy)
 
         auto lLines = 0U;
         auto lIdx = 0U;
-        while (lParser.readNextOneRecord(lBuffer))
+        while (!lParser.isEnd())
         {
+            const auto lBuffer = lParser.readNextOneRecord();
+
             for (auto i = 0U; i < lBuffer.size(); ++i) {
                 EXPECT_EQ(GetParam().second[lIdx], lBuffer[i]);
                 ++lIdx;
@@ -74,7 +75,7 @@ TEST(CSVParserStatic, allRecords)
     EXPECT_EQ(3U, lTable.size());
 }
 
-TEST(CSVParserStatic, table)
+TEST(CSVParserStatic, table_unordered_map)
 {
     auto lTable_ColumnKey = pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true );
     auto lTable_RowKey    = pml::CSVParser::readTable("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_RowKey.csv"   , false);
@@ -82,4 +83,14 @@ TEST(CSVParserStatic, table)
     EXPECT_EQ(lTable_ColumnKey, lTable_RowKey);
     EXPECT_EQ(3U, lTable_ColumnKey.size());
     EXPECT_EQ(3U, lTable_RowKey   .size());
+}
+
+TEST(CSVParserStatic, table_map)
+{
+    auto lTable_ColumnKey = pml::CSVParser::readTable<std::map>("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_ColumnKey.csv", true);
+    auto lTable_RowKey    = pml::CSVParser::readTable<std::map>("..\\..\\..\\src\\Tests\\TestUtility\\TestTable_RowKey.csv"   , false);
+
+    EXPECT_EQ(lTable_ColumnKey, lTable_RowKey);
+    EXPECT_EQ(3U, lTable_ColumnKey.size());
+    EXPECT_EQ(3U, lTable_RowKey.size());
 }

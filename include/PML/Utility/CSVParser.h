@@ -63,10 +63,11 @@ namespace pml{
             std::vector<std::vector<std::string>> lOutBuffer;
 
             CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
-            std::vector<std::string> lRecord;
 
-            while (lParser.readNextOneRecord(lRecord))
+            while (!lParser.isEnd())
             {
+                auto lRecord = lParser.readNextOneRecord();
+
                 lRecord.shrink_to_fit();
                 lOutBuffer.push_back(std::move(lRecord));
             }
@@ -100,19 +101,20 @@ namespace pml{
         * Resulted table as unordered_map.
         */
         template<template <typename...> class Map = std::unordered_map>
-        static auto readTable(const std::string& inFilePath, bool inIsColumnKey)
+        static Map<std::string, std::vector<std::string>> readTable(const std::string& inFilePath, bool inIsColumnKey)
         {
             QHMACRO_CATCH_BEGIN
 
             Map<std::string, std::vector<std::string>> lTable;
 
             CSVParser lParser(CSVParser::InputType::FILE, inFilePath);
-            std::vector<std::string> lRecord;
 
             if (inIsColumnKey)
             {
-                while (lParser.readNextOneRecord(lRecord))
+                while (!lParser.isEnd())
                 {
+                    auto lRecord = lParser.readNextOneRecord();
+
                     if (lRecord.empty()) {
                         continue;
                     }
@@ -125,16 +127,16 @@ namespace pml{
             }
             else
             {
-                std::vector<std::string> lKeys;
-                lParser.readNextOneRecord(lKeys);
-
+                auto lKeys = lParser.readNextOneRecord();
                 std::vector<std::vector<std::string>> lVals(lKeys.size());
 
                 for (;;)
                 {
-                    if (!lParser.readNextOneRecord(lRecord)) {
+                    if (lParser.isEnd()) {
                         break;
                     }
+
+                    auto lRecord = lParser.readNextOneRecord();
 
                     if (lRecord.size() != lKeys.size()) {
                         QHMACRO_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
@@ -221,12 +223,9 @@ namespace pml{
         * @return
         * False if and only if data has alreadyfinished, otherwise true.
         */
-        bool readNextOneRecord(std::vector<std::string>& outBuffer)
+        std::vector<std::string> readNextOneRecord()
         {
-            const auto lIsRead = mParser->readNextOneRecord(outBuffer);
-            outBuffer.shrink_to_fit();
-
-            return lIsRead;
+            return mParser->readNextOneRecord();
         }
 
         /**
@@ -276,7 +275,7 @@ namespace pml{
         public:
             virtual ~ParserBase() = default;
 
-            virtual bool readNextOneRecord(std::vector<std::string>& outBuffer) = 0;
+            virtual std::vector<std::string> readNextOneRecord() = 0;
 
             virtual bool isEnd() const = 0;
 
@@ -305,16 +304,16 @@ namespace pml{
 
             virtual ~ParserBaseImpl() override = default;
 
-            virtual bool readNextOneRecord(std::vector<std::string>& outBuffer) override
+            virtual std::vector<std::string> readNextOneRecord() override
             {
-                outBuffer.clear();
+                std::vector<std::string> outBuffer;
 
                 if (!isOpen()) {
                     QHMACRO_THROW_WITH_NESTED(std::runtime_error, "Taregt is not opened.");
                 }
 
                 if (isEnd()) {
-                    return false;
+                    return outBuffer;
                 }
 
                 bool lIsQuoted   = true;  // Is field enclosed by double quotations.
@@ -426,7 +425,7 @@ namespace pml{
                             mStart = lit;
                             ++mLineNumber;
 
-                            return true;
+                            return outBuffer;
                         }
                         else if (lIsRight)
                         {
@@ -454,7 +453,7 @@ namespace pml{
                 ++mLineNumber;
 
                 mStart = mEnd;
-                return true;
+                return outBuffer;
             }
 
             virtual bool isEnd() const override
