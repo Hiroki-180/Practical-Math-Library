@@ -12,116 +12,116 @@
 #include <limits>
 
 /**
-* @def PML_CONST_PI
+* @def QHMACRO_CONST_PI
 *
 * @brief
 * Value of PI.
 */
-#define PML_CONST_PI 3.141592653589793238463
+#define QHMACRO_CONST_PI 3.141592653589793238463
 
 /**
-* @def PML_CONST_PIHALF
+* @def QHMACRO_CONST_PIHALF
 *
 * @bries
 * Value of PI over 2, PI/2.
 */
-#define PML_CONST_PIHALF 1.570796326794896619231
+#define QHMACRO_CONST_PIHALF 1.570796326794896619231
 
 /**
-* @def PML_CONST_PIQUATER
+* @def QHMACRO_CONST_PIQUATER
 *
 * @brief
 * Value of PI over 4, PI/4.
 */
-#define PML_CONST_PIQUATER 0.7853981633974483096157
+#define QHMACRO_CONST_PIQUATER 0.7853981633974483096157
 
 /**
-* @def PML_CONST_TWOPI
+* @def QHMACRO_CONST_TWOPI
 *
 * @brief
 * Value of 2 times PI, 2*PI.
 */
-#define PML_CONST_TWOPI 6.283185307179586476925
+#define QHMACRO_CONST_TWOPI 6.283185307179586476925
 
 /**
-* @def PML_CONST_SQRTPI
+* @def QHMACRO_CONST_SQRTPI
 *
 * @brief
 * Value of the square root of PI, sqrt(PI).
 */
-#define PML_CONST_SQRTPI 1.772453850905516027298
+#define QHMACRO_CONST_SQRTPI 1.772453850905516027298
 
 /**
-* @def PML_CONST_SQRTPIHALF
+* @def QHMACRO_CONST_SQRTPIHALF
 *
 * @brief
 * Value of the square root of PI over 2, sqrt(PI/2).
 */
-#define PML_CONST_SQRTPIHALF 1.253314137315500251208
+#define QHMACRO_CONST_SQRTPIHALF 1.253314137315500251208
 
 /**
-* @def PML_CONST_SQRTTWOPI
+* @def QHMACRO_CONST_SQRTTWOPI
 *
 * @brief
 * Value of the square root of 2 times PI, sqrt(2*PI).
 */
-#define PML_CONST_SQRTTWOPI 2.506628274631000502416
+#define QHMACRO_CONST_SQRTTWOPI 2.506628274631000502416
 
 /**
-* @def PML_CONST_PISQRD
+* @def QHMACRO_CONST_PISQRD
 *
 * @brief
 * Value of the PI squared, PI*PI.
 */
-#define PML_CONST_PISQRD 9.869604401089358618834
+#define QHMACRO_CONST_PISQRD 9.869604401089358618834
 
 /**
-* @def PML_CONST_1OVERPI
+* @def QHMACRO_CONST_1OVERPI
 *
 * @brief
 * Value of the one over PI, 1/PI.
 */
-#define PML_CONST_1OVERPI 0.3183098861837906715378
+#define QHMACRO_CONST_1OVERPI 0.3183098861837906715378
 
 /**
-* @def PML_CONST_2OVERPI
+* @def QHMACRO_CONST_2OVERPI
 *
 * @brief
 * Value of the two over PI, 2/PI.
 */
-#define PML_CONST_2OVERPI 0.6366197723675813430755
+#define QHMACRO_CONST_2OVERPI 0.6366197723675813430755
 
 /**
-* @def PML_CONST_4OVERPI
+* @def QHMACRO_CONST_4OVERPI
 *
 * @brief
 * Value of the four over PI, 4/PI.
 */
-#define PML_CONST_4OVERPI 1.273239544735162686151
+#define QHMACRO_CONST_4OVERPI 1.273239544735162686151
 
 /**
-* @def PML_CONST_1OVERTWOPI
+* @def QHMACRO_CONST_1OVERTWOPI
 *
 * @brief
 * Value of the one over 2 times PI, 1/(2*PI).
 */
-#define PML_CONST_1OVERTWOPI 0.1591549430918953357689
+#define QHMACRO_CONST_1OVERTWOPI 0.1591549430918953357689
 
 /**
-* @def PML_CONST_1OVERSQRTTWOPI
+* @def QHMACRO_CONST_1OVERSQRTTWOPI
 *
 * @brief
 * Value of the one over square root of 2 times PI, 1/sqrt(2*PI).
 */
-#define PML_CONST_1OVERSQRTTWOPI 0.3989422804014326779399
+#define QHMACRO_CONST_1OVERSQRTTWOPI 0.3989422804014326779399
 
 /**
-* @def PML_CONST_E
+* @def QHMACRO_CONST_E
 *
 * @brief
 * Value of the Napire's number.
 */
-#define PML_CONST_E 2.71828182845904523536
+#define QHMACRO_CONST_E 2.71828182845904523536
 
 /**
 * @namespace pml
@@ -144,9 +144,8 @@ namespace pml {
 
             double constexpr sqrtNewtonRaphson(double x, double curr, double prev)
             {
-                return curr == prev
-                    ? curr
-                    : pml::constants::detail::sqrtNewtonRaphson(x, 0.5 * (curr + x / curr), curr);
+                return (curr == prev) ? curr :
+                                        sqrtNewtonRaphson(x, 0.5 * (curr + x / curr), curr);
             }
         }
 
@@ -157,7 +156,7 @@ namespace pml {
         * @return
         * Value of PI.
         */
-        inline double PI() noexcept { return PML_CONST_PI; }
+        inline double PI() noexcept { return QHMACRO_CONST_PI; }
 
         /**
         * @brief
@@ -166,7 +165,7 @@ namespace pml {
         * @return
         * Value of PI/2.
         */
-        inline double PIHalf() noexcept { return PML_CONST_PIHALF; }
+        inline double PIHalf() noexcept { return QHMACRO_CONST_PIHALF; }
 
         /**
         * @brief
@@ -175,7 +174,7 @@ namespace pml {
         * @return
         * Value of PI/4.
         */
-        inline double PIQuater() noexcept { return PML_CONST_PIQUATER; }
+        inline double PIQuater() noexcept { return QHMACRO_CONST_PIQUATER; }
 
         /**
         * @brief
@@ -184,7 +183,7 @@ namespace pml {
         * @return
         * Value of 2*PI.
         */
-        inline double TwoPI() noexcept { return PML_CONST_TWOPI; }
+        inline double TwoPI() noexcept { return QHMACRO_CONST_TWOPI; }
 
         /**
         * @brief
@@ -193,7 +192,7 @@ namespace pml {
         * @return
         * Value of sqrt(PI).
         */
-        inline double SqrtPI() noexcept { return PML_CONST_SQRTPI; }
+        inline double SqrtPI() noexcept { return QHMACRO_CONST_SQRTPI; }
 
         /**
         * @brief
@@ -202,7 +201,7 @@ namespace pml {
         * @return
         * Value of sqrt(PI/2).
         */
-        inline double SqrtPIHalf() noexcept { return PML_CONST_SQRTPIHALF; }
+        inline double SqrtPIHalf() noexcept { return QHMACRO_CONST_SQRTPIHALF; }
 
         /**
         * @brief
@@ -211,7 +210,7 @@ namespace pml {
         * @return
         * Value of sqrt(2*PI).
         */
-        inline double SqrtTwoPI() noexcept { return PML_CONST_SQRTTWOPI; }
+        inline double SqrtTwoPI() noexcept { return QHMACRO_CONST_SQRTTWOPI; }
 
         /**
         * @brief
@@ -220,7 +219,7 @@ namespace pml {
         * @return
         * Value of PI*PI.
         */
-        inline double PISqrd() noexcept { return PML_CONST_PISQRD; }
+        inline double PISqrd() noexcept { return QHMACRO_CONST_PISQRD; }
 
         /**
         * @brief
@@ -229,7 +228,7 @@ namespace pml {
         * @return
         * Value of 1/PI.
         */
-        inline double _1OverPI() noexcept { return PML_CONST_1OVERPI; }
+        inline double _1OverPI() noexcept { return QHMACRO_CONST_1OVERPI; }
 
         /**
         * @brief
@@ -238,7 +237,7 @@ namespace pml {
         * @return
         * Value of 2/PI.
         */
-        inline double _2OverPI() noexcept { return PML_CONST_2OVERPI; }
+        inline double _2OverPI() noexcept { return QHMACRO_CONST_2OVERPI; }
 
         /**
         * @brief
@@ -247,7 +246,7 @@ namespace pml {
         * @return
         * Value of 4/PI.
         */
-        inline double _4OverPI() noexcept { return PML_CONST_4OVERPI; }
+        inline double _4OverPI() noexcept { return QHMACRO_CONST_4OVERPI; }
 
         /**
         * @brief
@@ -256,7 +255,7 @@ namespace pml {
         * @return
         * Value of 1/(2*PI).
         */
-        inline double _1OverTwoPI() noexcept { return PML_CONST_1OVERTWOPI; }
+        inline double _1OverTwoPI() noexcept { return QHMACRO_CONST_1OVERTWOPI; }
 
         /**
         * @brief
@@ -265,7 +264,7 @@ namespace pml {
         * @return
         * Value of 1/sqrt(2*PI).
         */
-        inline double _1OverSqrtTwoPI() noexcept { return PML_CONST_1OVERSQRTTWOPI; }
+        inline double _1OverSqrtTwoPI() noexcept { return QHMACRO_CONST_1OVERSQRTTWOPI; }
 
         /**
         * @brief
@@ -274,7 +273,7 @@ namespace pml {
         * @return
         * Value of e.
         */
-        inline double e() noexcept { return PML_CONST_E; }
+        inline double e() noexcept { return QHMACRO_CONST_E; }
 
         /**
         * @brief

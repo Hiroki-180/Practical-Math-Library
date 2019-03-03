@@ -42,16 +42,12 @@ add_library(
   Math
   STATIC
   numeric_simd.cpp
-  numeric_simd/inner_product.cpp
   numeric_simd/positive_difference.cpp
   ../../include/PML/Math/constants.h
   ../../include/PML/Math/derivative.h
   ../../include/PML/Math/numeric_simd.h
-  ../../include/PML/Math/numeric_simd/inner_product.h
   ../../include/PML/Math/numeric_simd/positive_difference.h)
 
-SOURCE_GROUP("Header ${FILE_FILTER}\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/inner_product.h)
 SOURCE_GROUP("Header ${FILE_FILTER}\\numeric_simd" FILES ../../include/PML/Math/numeric_simd/positive_difference.h)
 
-SOURCE_GROUP("Source ${FILE_FILTER}\\numeric_simd" FILES numeric_simd/inner_product.cpp)
 SOURCE_GROUP("Source ${FILE_FILTER}\\numeric_simd" FILES numeric_simd/positive_difference.cpp)

@@ -1,6 +1,5 @@
 #include <PML/Core/CPUDispatcher.h>
 #include <PML/Math/numeric_simd.h>
-#include <PML/Math/numeric_simd/inner_product.h>
 #include <PML/Math/numeric_simd/positive_difference.h>
 #include <numeric>
 #include <functional>
@@ -28,19 +27,6 @@ namespace pml {
 
     } // unnamed
 
-    double inner_product_SIMD(
-        const double* inA,
-        const double* inB,
-        std::size_t inSize)
-    {
-        return optimizer(
-            std::bind(&inner_product_AVX_array, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-            std::bind(&inner_product_AVX_array, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-            std::bind(&inner_product_array,     std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-            std::bind(&inner_product_array,     std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-            inA, inB, inSize);
-    }
-
     void positive_difference_SIMD(
         const double* inA,
         const double* inB,
@@ -61,18 +47,6 @@ namespace pml {
                 &positive_difference_array,
                 std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4),
             inA, inB, outC, inSize);
-    }
-
-    double inner_product_SIMD(
-        const std::vector<double>& inA,
-        const std::vector<double>& inB)
-    {
-        return optimizer(
-            std::bind(&inner_product_AVX_vector, std::placeholders::_1, std::placeholders::_2),
-            std::bind(&inner_product_AVX_vector, std::placeholders::_1, std::placeholders::_2),
-            std::bind(&inner_product_vector,     std::placeholders::_1, std::placeholders::_2),
-            std::bind(&inner_product_vector,     std::placeholders::_1, std::placeholders::_2),
-            inA, inB);
     }
 
     void positive_difference_SIMD(
@@ -97,18 +71,6 @@ namespace pml {
     }
 
     namespace aligned {
-
-        double inner_product_SIMD(
-            const alvector<double>& inA,
-            const alvector<double>& inB)
-        {
-            return optimizer(
-                std::bind(&inner_product_AVX_alvector, std::placeholders::_1, std::placeholders::_2),
-                std::bind(&inner_product_AVX_alvector, std::placeholders::_1, std::placeholders::_2),
-                std::bind(&inner_product_alvector,     std::placeholders::_1, std::placeholders::_2),
-                std::bind(&inner_product_alvector,     std::placeholders::_1, std::placeholders::_2),
-                inA, inB);
-        }
 
         void positive_difference_SIMD(
             const alvector<double>& inA,

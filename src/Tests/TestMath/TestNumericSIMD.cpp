@@ -2,7 +2,6 @@
 
 #include <gtest/gtest.h>
 #include <PML/Math/numeric_simd.h>
-#include <PML/Math/numeric_simd/inner_product.h>
 #include <PML/Math/numeric_simd/positive_difference.h>
 #include <PML/Core/CPUDispatcher.h>
 #include <numeric>
@@ -197,7 +196,7 @@ TEST(TestNumericSIMD, inner_product)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumOptSIMDV = pml::inner_product_SIMD(lVector1, lVector2);
+            lSumOptSIMDV = pml::inner_product_SIMD(lVector1, lVector2, 0.0);
         }
         lEnd = std::chrono::system_clock::now();
         lOptSIMDVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -206,7 +205,7 @@ TEST(TestNumericSIMD, inner_product)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXV = pml::inner_product_AVX_vector(lVector1, lVector2);
+            //lSumAVXV = pml::inner_product_AVX_vector(lVector1, lVector2);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -215,7 +214,7 @@ TEST(TestNumericSIMD, inner_product)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumOptSIMDA = pml::inner_product_SIMD(lVector1.data(), lVector2.data(), lVector1.size());
+            //lSumOptSIMDA = pml::inner_product_SIMD(lVector1.data(), lVector2.data(), lVector1.size());
         }
         lEnd = std::chrono::system_clock::now();
         lOptSIMDAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -224,7 +223,7 @@ TEST(TestNumericSIMD, inner_product)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXA = pml::inner_product_AVX_array(lVector1.data(), lVector2.data(), lVector1.size());
+            //lSumAVXA = pml::inner_product_AVX_array(lVector1.data(), lVector2.data(), lVector1.size());
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -246,7 +245,7 @@ TEST(TestNumericSIMD, inner_product)
         auto lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumOptSIMDAV = pml::aligned::inner_product_SIMD(lAVector1, lAVector2);
+            lSumOptSIMDAV = pml::inner_product_SIMD(lAVector1, lAVector2, 0.0);
         }
         auto lEnd = std::chrono::system_clock::now();
         lOptSIMDAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
@@ -255,7 +254,7 @@ TEST(TestNumericSIMD, inner_product)
         lStart = std::chrono::system_clock::now();
         for (auto i = 0; i < lTestNum; ++i)
         {
-            lSumAVXAV = pml::aligned::inner_product_AVX_alvector(lAVector1, lAVector2);
+            //lSumAVXAV = pml::aligned::inner_product_AVX_alvector(lAVector1, lAVector2);
         }
         lEnd = std::chrono::system_clock::now();
         lAVXAVElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(lEnd - lStart).count();
