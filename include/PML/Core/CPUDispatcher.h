@@ -10,6 +10,7 @@
 */
 
 #include <PML/Core/cross_intrin.h>
+
 #include <ostream>
 #include <string>
 #include <vector>
@@ -26,7 +27,7 @@ namespace pml {
     * @namespace CPUDispatcher
     *
     * @brief
-    * Useful functions are provided for runtime CPU dispatching.
+    * Useful functions are provided for the runtime CPU dispatching.
     * For instance, isSSEXX()/isAVX()/isAVX2()/isAVX512F() enebles the run-time dispatch of which SIMD verion is supported on your CPU.
     */
     namespace CPUDispatcher {
@@ -44,8 +45,15 @@ namespace pml {
                 std::bitset<32> f_1_EDX_;
                 std::bitset<32> f_7_EBX_;
                 std::vector<std::array<int, 4>> data_;
+
                 std::vector<std::array<int, 4>> extdata_;
                 std::size_t mOptimalAlignment;
+
+                ~CPUData()                         = default;
+                CPUData(const CPUData&)            = delete;
+                CPUData(CPUData&&)                 = delete;
+                CPUData& operator=(const CPUData&) = delete;
+                CPUData& operator=(CPUData&&)      = delete;
 
                 CPUData()
                     : nIds_{ 0 },

@@ -29,12 +29,12 @@ endif()
 ####### Links #######
 #####################
 
-include_directories(../../include)
+include_directories(../../)
 
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../../)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../../)
 
 add_library(UtilityLib INTERFACE)
 

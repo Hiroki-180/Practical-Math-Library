@@ -12,7 +12,7 @@ TEST(TestCore, CPUInfo)
 TEST(TestCore, aligned_vector)
 {
     const std::size_t lSize = 100;
-    pml::aligned::alvector<double> lAVector(lSize);
+    std::vector<double, pml::aligned_allocator<double>> lAVector(lSize);
 
     EXPECT_EQ(lSize, lAVector.size());
 
