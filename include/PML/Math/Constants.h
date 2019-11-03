@@ -126,17 +126,15 @@
 /**
 * @namespace pml
 *
-* @brief
-* Top level of the Practical Math Library.
-* Basic functions and algorithms of this library are provided in this namespace.
+* @brief Top level of the Practical Math Library.
+*        Basic functions and algorithms of this library are provided in this namespace.
 */
 namespace pml {
 
     /**
     * @namespace constants
     *
-    * @brief
-    * List of mathematical constants, PI, e, and so on.
+    * @brief List of mathematical constants, PI, e, and so on.
     */
     namespace constants {
 
@@ -150,101 +148,79 @@ namespace pml {
         }
 
         /**
-        * @brief
-        * Inline function returning the value of PI.
+        * @brief Inline function returning the value of PI.
         *
-        * @return
-        * Value of PI.
+        * @return Value of PI.
         */
         constexpr double PI() noexcept { return PML_CONST_PI; }
 
         /**
-        * @brief
-        * Inline function returning the value of PI over 2.
+        * @brief Inline function returning the value of PI over 2.
         *
-        * @return
-        * Value of PI/2.
+        * @return Value of PI/2.
         */
         constexpr double PIHalf() noexcept { return PML_CONST_PIHALF; }
 
         /**
-        * @brief
-        * Inline function returning the value of PI over 4.
+        * @brief Inline function returning the value of PI over 4.
         *
-        * @return
-        * Value of PI/4.
+        * @return Value of PI/4.
         */
         constexpr double PIQuater() noexcept { return PML_CONST_PIQUATER; }
 
         /**
-        * @brief
-        * Inline function returning the value of 2 times PI.
+        * @brief Inline function returning the value of 2 times PI.
         *
-        * @return
-        * Value of 2*PI.
+        * @return Value of 2*PI.
         */
         constexpr double TwoPI() noexcept { return PML_CONST_TWOPI; }
 
         /**
-        * @brief
-        * Inline function returning the value of the square root of PI.
+        * @brief Inline function returning the value of the square root of PI.
         *
-        * @return
-        * Value of sqrt(PI).
+        * @return Value of sqrt(PI).
         */
         constexpr double SqrtPI() noexcept { return PML_CONST_SQRTPI; }
 
         /**
-        * @brief
-        * Inline function returning the value of the square root of PI over 2.
+        * @brief Inline function returning the value of the square root of PI over 2.
         *
-        * @return
-        * Value of sqrt(PI/2).
+        * @return Value of sqrt(PI/2).
         */
         constexpr double SqrtPIHalf() noexcept { return PML_CONST_SQRTPIHALF; }
 
         /**
-        * @brief
-        * Inline function returning the value of the square root of 2 times PI.
+        * @brief Inline function returning the value of the square root of 2 times PI.
         *
-        * @return
-        * Value of sqrt(2*PI).
+        * @return Value of sqrt(2*PI).
         */
         constexpr double SqrtTwoPI() noexcept { return PML_CONST_SQRTTWOPI; }
 
         /**
-        * @brief
-        * Inline function returning the value of PI squared.
+        * @brief Inline function returning the value of PI squared.
         *
-        * @return
-        * Value of PI*PI.
+        * @return Value of PI*PI.
         */
         constexpr double PISqrd() noexcept { return PML_CONST_PISQRD; }
 
         /**
-        * @brief
-        * Inline function returning the value of 1 over PI.
+        * @brief Inline function returning the value of 1 over PI.
         *
-        * @return
-        * Value of 1/PI.
+        * @return Value of 1/PI.
         */
         constexpr double _1OverPI() noexcept { return PML_CONST_1OVERPI; }
 
         /**
-        * @brief
-        * Inline function returning the value of 2 over PI.
+        * @brief Inline function returning the value of 2 over PI.
         *
-        * @return
-        * Value of 2/PI.
+        * @return Value of 2/PI.
         */
         constexpr double _2OverPI() noexcept { return PML_CONST_2OVERPI; }
 
         /**
-        * @brief
-        * Inline function returning the value of 4 over PI.
+        * @brief Inline function returning the value of 4 over PI.
         *
-        * @return
-        * Value of 4/PI.
+        * @return Value of 4/PI.
         */
         constexpr double _4OverPI() noexcept { return PML_CONST_4OVERPI; }
 
@@ -258,57 +234,45 @@ namespace pml {
         constexpr double _1OverTwoPI() noexcept { return PML_CONST_1OVERTWOPI; }
 
         /**
-        * @brief
-        * Inline function returning the value of 1 over the square root of 2 times PI.
+        * @brief Inline function returning the value of 1 over the square root of 2 times PI.
         *
-        * @return
-        * Value of 1/sqrt(2*PI).
+        * @return Value of 1/sqrt(2*PI).
         */
         constexpr double _1OverSqrtTwoPI() noexcept { return PML_CONST_1OVERSQRTTWOPI; }
 
         /**
-        * @brief
-        * Inline function returning the value of the Nepire's number.
+        * @brief Inline function returning the value of the Nepire's number.
         *
-        * @return
-        * Value of e.
+        * @return Value of e.
         */
         constexpr double e() noexcept { return PML_CONST_E; }
 
         /**
-        * @brief
-        * Inline function returning the value of the golden ratio.
+        * @brief Inline function returning the value of the golden ratio.
         *
-        * @return
-        * Value of the golden ratio, 1.618033988749894.
+        * @return Value of the golden ratio, 1.618033988749894.
         */
         constexpr double GoldenRatio() noexcept { return 1.618033988749894; }
 
         /**
-        * @brief
-        * Inline function returning the value of the Apery's constant.
-        * This is also equal to the value of the Riemann zeta fanction of 3. 
+        * @brief Inline function returning the value of the Apery's constant.
+        *        This is also equal to the value of the Riemann zeta fanction of 3. 
         *
-        * @return
-        * Value of the Apery's constant, 1.202056903159594.
+        * @return Value of the Apery's constant, 1.202056903159594.
         */
         constexpr double Apery() noexcept { return 1.202056903159594; }
 
         /**
-        * @brief
-        * Inline function returning the value of the universal palabolic constant, ln(1 + sqrt(2.0)) + sqrt(2.0).
+        * @brief Inline function returning the value of the universal palabolic constant, ln(1 + sqrt(2.0)) + sqrt(2.0).
         *
-        * @return
-        * Value of the universal palabolic constant, 1.618033988749894.
+        * @return Value of the universal palabolic constant, 1.618033988749894.
         */
         constexpr double UniversalParabolicP() noexcept { return 2.295587149392638; }
 
         /*
-        * @brief
-        * Constexpr version of std::fabs.
+        * @brief Constexpr version of std::fabs.
         *
-        * @return
-        * inA * inB.
+        * @return inA * inB.
         */
         template<class T>
         constexpr T fabs(T inX) noexcept
@@ -317,11 +281,9 @@ namespace pml {
         }
 
         /*
-        * @brief
-        * Constexpr version of sum(+).
+        * @brief Constexpr version of sum(+).
         *
-        * @return
-        * inA * inB.
+        * @return inA * inB.
         */
         template<class T>
         constexpr T sum(T inA, T inB) noexcept
@@ -330,11 +292,9 @@ namespace pml {
         }
 
         /*
-        * @brief
-        * Constexpr version of multiplication(*).
+        * @brief Constexpr version of multiplication(*).
         *
-        * @return
-        * inA * inB.
+        * @return inA * inB.
         */
         template<class T>
         constexpr T multiply(T inA, T inB) noexcept
@@ -343,37 +303,31 @@ namespace pml {
         }
 
         /*
-        * @brief
-        * Constexpr version of the rational number(/).
+        * @brief Constexpr version of the rational number(/).
         *
-        * @return
-        * inNumerator / inDenominator.
+        * @return inNumerator/inDenominator.
         */
         template<class T>
-        constexpr T rational(T inNumerator, T inDenominator) noexcept
+        constexpr T divide(T inNumerator, T inDenominator) noexcept
         {
             return inNumerator / inDenominator;
         }
 
         /*
-        * @brief
-        * Constexpr version of the rational number plus constant.
+        * @brief Constexpr version of the rational number plus constant.
         *
-        * @return
-        * (inNumerator / inDenominator) + inX.
+        * @return (inNumerator/inDenominator) + inX.
         */
         template<class T>
-        constexpr T rational_sum(T inNumerator, T inDenominator, T inX) noexcept
+        constexpr T divsum(T inNumerator, T inDenominator, T inX) noexcept
         {
             return (inNumerator / inDenominator) + inX;
         }
 
         /*
-        * @brief
-        * Constexpr version of the square root.
+        * @brief Constexpr version of the square root.
         *
-        * @return
-        * Square root of inX.
+        * @return Square root of inX.
         */
         template<class T>
         double constexpr sqrt(T inX) noexcept
@@ -382,16 +336,15 @@ namespace pml {
         }
 
         /*
-        * @brief
-        * Constexpr version of the power.
+        * @brief Constexpr version of the power.
         *
-        * @return
-        * std::power(inX, inExponent).
+        * @return std::power(inX, inExponent).
         */
         template<class T>
-        constexpr double pow(T inX, unsigned int inExponent) noexcept
+        constexpr double pow(T inX, int inExponent) noexcept
         {
-            return (inExponent     == 0) ? 1.0 :
+            return (inExponent     <  0) ? 1.0 / pow(inX, -inExponent):
+                   (inExponent     == 0) ? 1.0 :
                    (inExponent % 2 == 0) ? pow(inX, inExponent / 2)*pow(inX, inExponent / 2) :
                                            inX * pow(inX, (inExponent - 1) / 2) * pow(inX, (inExponent - 1) / 2);
         }

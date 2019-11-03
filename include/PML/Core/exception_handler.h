@@ -2,11 +2,9 @@
 #define CORE_EXCEPTION_HANDLER_H
 
 /**
-* @file
-* public header provided by QuantsHub.
+* @file public header provided by PML.
 *
-* @brief
-* Useful macros for handling exceptions.
+* @brief Useful macros for handling exceptions.
 */
 
 #include <exception>
@@ -17,10 +15,10 @@
 /**
 * @def
 * Macro to throw std::nested_exception by std::throw_with_nested( ETYPE(MESSAGE with info. of __FILE__ and __LINE__, ...) ).
-* QuantsHub athrows exceptions using this macro if it's ctor accepts an message.
-* QuantsHub throws only inheritances of std::exception when exceptions occured and does not throw something original implementations.
+* PML athrows exceptions using this macro if it's ctor accepts an message.
+* PML throws only inheritances of std::exception when exceptions occured and does not throw something original implementations.
 */
-#define QHMACRO_THROW_WITH_NESTED(ETYPE, MESSAGE, ...) \
+#define PML_THROW_WITH_NESTED(ETYPE, MESSAGE, ...) \
 pml::detail::throw_with_nested_wrapper<ETYPE>(__FILE__, __LINE__, MESSAGE, __VA_ARGS__)
 
 /**
@@ -28,7 +26,7 @@ pml::detail::throw_with_nested_wrapper<ETYPE>(__FILE__, __LINE__, MESSAGE, __VA_
 * Macro to begin a try-brock.
 * This macro should be used with PML_CATCH_END.
 */
-#define QHMACRO_CATCH_BEGIN try{
+#define PML_CATCH_BEGIN try{
 
 /**
 * @def
@@ -36,7 +34,7 @@ pml::detail::throw_with_nested_wrapper<ETYPE>(__FILE__, __LINE__, MESSAGE, __VA_
 * std::logic_error, std::runtime_error, and other exceptions are distinguished in message.
 * This macro should be used with PML_CATCH_BEGIN.
 */
-#define QHMACRO_CATCH_END(OSTREAM)   } catch(...) { pml::detail::output_exceptions(OSTREAM); }
+#define PML_CATCH_END(OSTREAM)   } catch(...) { pml::detail::output_exceptions(OSTREAM); }
 
 /**
 * @def
@@ -44,21 +42,21 @@ pml::detail::throw_with_nested_wrapper<ETYPE>(__FILE__, __LINE__, MESSAGE, __VA_
 * This macro should be used with PML_CATCH_BEGIN.
 * Macro to throw std::nested_exception by std::throw_with_nested when an exception occurred in OPERATION.
 */
-#define QHMACRO_CATCH_END_AND_THROW(ETYPE, MESSAGE, ...)   } catch (...) { QHMACRO_THROW_WITH_NESTED(ETYPE, MESSAGE, __VA_ARGS__); }
+#define PML_CATCH_END_AND_THROW(ETYPE, MESSAGE, ...)   } catch (...) { PML_THROW_WITH_NESTED(ETYPE, MESSAGE, __VA_ARGS__); }
 
 /**
 * @def
 * Macro to throw std::nested_exception by std::throw_with_nested when an exception occurred in OPERATION.
 */
-#define QHMACRO_HOOK(OPERATION, ETYPE, MESSAGE, ...)            \
-[&]()                                                           \
-{                                                               \
-    try{                                                        \
-        return OPERATION;                                       \
-    }                                                           \
-    catch(...){                                                 \
-        QHMACRO_THROW_WITH_NESTED(ETYPE, MESSAGE, __VA_ARGS__); \
-    }                                                           \
+#define PML_HOOK(OPERATION, ETYPE, MESSAGE, ...)            \
+[&]()                                                       \
+{                                                           \
+    try{                                                    \
+        return OPERATION;                                   \
+    }                                                       \
+    catch(...){                                             \
+        PML_THROW_WITH_NESTED(ETYPE, MESSAGE, __VA_ARGS__); \
+    }                                                       \
 }()
 
 namespace pml {

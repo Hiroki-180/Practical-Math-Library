@@ -88,18 +88,18 @@ TEST(constants, multiply)
 
 TEST(constants, rational)
 {
-    static_assert((pml::constants::rational(1.0, 3.0) == 0.3333333333333333333333), "Err. of pml::constants::rational(1.0, 3.0)");
-    static_assert((pml::constants::rational(1.0, 6.0) == 0.1666666666666666666667), "Err. of pml::constants::rational(1.0, 6.0)");
-    static_assert((pml::constants::rational(1.0, 7.0) == 0.1428571428571428571429), "Err. of pml::constants::rational(1.0, 7.0)");
-    static_assert((pml::constants::rational(1.0, 9.0) == 0.1111111111111111111111), "Err. of pml::constants::rational(1.0, 9.0)");
+    static_assert((pml::constants::divide(1.0, 3.0) == 0.3333333333333333333333), "Err. of pml::constants::divide(1.0, 3.0)");
+    static_assert((pml::constants::divide(1.0, 6.0) == 0.1666666666666666666667), "Err. of pml::constants::divide(1.0, 6.0)");
+    static_assert((pml::constants::divide(1.0, 7.0) == 0.1428571428571428571429), "Err. of pml::constants::divide(1.0, 7.0)");
+    static_assert((pml::constants::divide(1.0, 9.0) == 0.1111111111111111111111), "Err. of pml::constants::divide(1.0, 9.0)");
 }
 
 TEST(constants, rational_sum)
 {
-    static_assert((pml::constants::rational_sum(1.0, 3.0,  2.0) ==  2.33333333333333333), "Err. of pml::constants::rational_sum(1, 3, 2)");
-    static_assert((pml::constants::rational_sum(1.0, 6.0, -3.0) == -2.83333333333333333), "Err. of pml::constants::rational_sum(1, 6, -3)");
-    static_assert((pml::constants::rational_sum(5.0, 2.0,  1.0) ==  3.5), "Err. of pml::constants::rational_sum(5, 2, 1)");
-    static_assert((pml::constants::rational_sum(8.0, 9.0, -5.0) == -4.11111111111111111), "Err. of pml::constants::rational_sum(8, 9, -5)");
+    static_assert((pml::constants::divsum(1.0, 3.0,  2.0) ==  2.33333333333333333), "Err. of pml::constants::divsum(1, 3, 2)");
+    static_assert((pml::constants::divsum(1.0, 6.0, -3.0) == -2.83333333333333333), "Err. of pml::constants::divsum(1, 6, -3)");
+    static_assert((pml::constants::divsum(5.0, 2.0,  1.0) ==  3.5), "Err. of pml::constants::divsum(5, 2, 1)");
+    static_assert((pml::constants::divsum(8.0, 9.0, -5.0) == -4.11111111111111111), "Err. of pml::constants::divsum(8, 9, -5)");
 }
 
 TEST(constants, sqrt)

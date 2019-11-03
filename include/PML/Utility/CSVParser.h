@@ -24,8 +24,7 @@
 namespace pml{
 
     /**
-    * @class
-    * CSVParser
+    * @class CSVParser
     *
     * @brief
     * This class reads files or string within the CSV format.
@@ -46,19 +45,18 @@ namespace pml{
     public:
 
         /**
-        * @brief
-        * Read CSV file.
+        * @brief Read CSV file.
         *
         * @param[in] inFilePath
         * The path to the target CSV file.
         *
         * @return
-        * All fields of the target data.
+        * All fields of the PML data.
         * outBuffer[i][j] contains j-th field in i-th record.
         */
         static std::vector<std::vector<std::string>> readAllRecords(const std::string& inFilePath)
         {
-            QHMACRO_CATCH_BEGIN
+            PML_CATCH_BEGIN
 
             std::vector<std::vector<std::string>> lOutBuffer;
 
@@ -74,7 +72,7 @@ namespace pml{
 
             return lOutBuffer;
 
-            QHMACRO_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readAllRecords failed.")
+            PML_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readAllRecords failed.")
         }
 
         /**
@@ -97,13 +95,12 @@ namespace pml{
         * Whether the first column is keys or not.
         * If this is false, the first row is interpreted as keys.
         *
-        * @return
-        * Resulted table as unordered_map.
+        * @return Resulted table as unordered_map.
         */
-        template<template <typename...> class Map = std::unordered_map>
+        template<template <class...> class Map = std::unordered_map>
         static Map<std::string, std::vector<std::string>> readTable(const std::string& inFilePath, bool inIsColumnKey)
         {
-            QHMACRO_CATCH_BEGIN
+            PML_CATCH_BEGIN
 
             Map<std::string, std::vector<std::string>> lTable;
 
@@ -139,7 +136,7 @@ namespace pml{
                     auto lRecord = lParser.readNextOneRecord();
 
                     if (lRecord.size() != lKeys.size()) {
-                        QHMACRO_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
+                        PML_THROW_WITH_NESTED(std::runtime_error, "Record size is unmatched with the key size.");
                     }
 
                     for (std::size_t i = 0; i < lRecord.size(); ++i) {
@@ -156,12 +153,11 @@ namespace pml{
 
             return lTable;
 
-            QHMACRO_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readTable failed.")
+            PML_CATCH_END_AND_THROW(std::runtime_error, "CSVParser::readTable failed.")
         }
 
         /**
-        * @brief
-        * Target data type of the CSV parser.
+        * @brief Target data type of the CSV parser.
         */
         enum class InputType
         {
@@ -171,8 +167,7 @@ namespace pml{
         };
 
         /**
-        * @brief
-        * Unique constructor of this class.
+        * @brief Unique constructor of this class.
         *
         * @param[in] inType
         * Target CSV data type. Following three types are possible;
@@ -196,7 +191,7 @@ namespace pml{
                 mParser = std::make_unique<StringParserCopy>(inString);
                 break;
             default:
-                QHMACRO_THROW_WITH_NESTED(std::logic_error, "Undefined type is specified.");
+                PML_THROW_WITH_NESTED(std::logic_error, "Undefined type is specified.");
             }
         }
 
@@ -206,22 +201,18 @@ namespace pml{
         CSVParser & operator =(CSVParser&&)      = delete;
 
         /**
-        * @brief
-        * Destructor.
-        * If the CSV data type is CSVParser::InputType::FILE, the target file is closed here.
+        * @brief Destructor. If the CSV data type is CSVParser::InputType::FILE, the target file is closed here.
         */
         ~CSVParser() = default;
 
         /**
-        * @brief
-        * Read the next one record of CSV data.
+        * @brief Read the next one record of CSV data.
         *
         * @param[out] outBuffer
         * All Fields of the target one record are pushed back.
         * outBuffer is cleared at the begining of this function.
         *
-        * @return
-        * False if and only if data has alreadyfinished, otherwise true.
+        * @return False if and only if data has alreadyfinished, otherwise true.
         */
         std::vector<std::string> readNextOneRecord()
         {
@@ -229,11 +220,9 @@ namespace pml{
         }
 
         /**
-        * @brief
-        * Target file or string is correctly set or not.
+        * @brief Target file or string is correctly set or not.
         *
-        * @return
-        * True if target is correctly set.
+        * @return True if target is correctly set.
         */
         bool isOpen() const
         {
@@ -241,11 +230,9 @@ namespace pml{
         }
 
         /**
-        * @brief
-        * Whether all records are read or not.
+        * @brief Whether all records are read or not.
         *
-        * @return
-        * True if the next charater is EOF or the tarmination character.
+        * @return True if the next charater is EOF or the tarmination character.
         */
         bool isEnd() const
         {
@@ -253,11 +240,9 @@ namespace pml{
         }
 
         /**
-        * @brief
-        * The number of already read records.
+        * @brief The number of already read records.
         *
-        * @return
-        * The number of already read records.
+        * @return The number of already read records.
         */
         std::size_t getLineNumber() const
         {
@@ -267,8 +252,7 @@ namespace pml{
     private:
 
         /**
-        * @brief
-        * Pure virtual base class for implementation of the class CSVParser by composit pattern.
+        * @brief Pure virtual base class for implementation of the class CSVParser by composit pattern.
         */
         class ParserBase
         {
@@ -284,7 +268,7 @@ namespace pml{
             virtual std::size_t getLineNumber() const = 0;
         };
 
-        template<typename Iterator>
+        template<class Iterator>
         class ParserBaseImpl : public ParserBase
         {
         protected:
@@ -309,7 +293,7 @@ namespace pml{
                 std::vector<std::string> outBuffer;
 
                 if (!isOpen()) {
-                    QHMACRO_THROW_WITH_NESTED(std::runtime_error, "Taregt is not opened.");
+                    PML_THROW_WITH_NESTED(std::runtime_error, "Taregt is not opened.");
                 }
 
                 if (isEnd()) {
@@ -353,7 +337,7 @@ namespace pml{
                                 mStart = lit;
                                 SkipToNextLine();
 
-                                QHMACRO_THROW_WITH_NESTED(
+                                PML_THROW_WITH_NESTED(
                                     std::runtime_error, "Field is not closed by right side double quotation.");
                             }
                         }
@@ -395,7 +379,7 @@ namespace pml{
                                 mStart = lit;
                                 SkipToNextLine();
 
-                                QHMACRO_THROW_WITH_NESTED(
+                                PML_THROW_WITH_NESTED(
                                     std::runtime_error, "Double quotation as an element of fields must be escaped by itself.");
                             }
                         }
@@ -434,7 +418,7 @@ namespace pml{
                             mStart = lit;
                             SkipToNextLine();
 
-                            QHMACRO_THROW_WITH_NESTED(
+                            PML_THROW_WITH_NESTED(
                                 std::runtime_error, "Character exist in the field " + lQuotedString + " outside of double quotations.");
                         }
                         else
@@ -548,8 +532,7 @@ namespace pml{
         };
 
         /**
-        * @brief
-        * Composit member of implementation.
+        * @brief Composit member of implementation.
         */
         std::unique_ptr<ParserBase> mParser;
     };
