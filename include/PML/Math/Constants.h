@@ -156,7 +156,7 @@ namespace pml {
         * @return
         * Value of PI.
         */
-        inline double PI() noexcept { return QHMACRO_CONST_PI; }
+        constexpr double PI() noexcept { return QHMACRO_CONST_PI; }
 
         /**
         * @brief
@@ -165,7 +165,7 @@ namespace pml {
         * @return
         * Value of PI/2.
         */
-        inline double PIHalf() noexcept { return QHMACRO_CONST_PIHALF; }
+        constexpr double PIHalf() noexcept { return QHMACRO_CONST_PIHALF; }
 
         /**
         * @brief
@@ -174,7 +174,7 @@ namespace pml {
         * @return
         * Value of PI/4.
         */
-        inline double PIQuater() noexcept { return QHMACRO_CONST_PIQUATER; }
+        constexpr double PIQuater() noexcept { return QHMACRO_CONST_PIQUATER; }
 
         /**
         * @brief
@@ -183,7 +183,7 @@ namespace pml {
         * @return
         * Value of 2*PI.
         */
-        inline double TwoPI() noexcept { return QHMACRO_CONST_TWOPI; }
+        constexpr double TwoPI() noexcept { return QHMACRO_CONST_TWOPI; }
 
         /**
         * @brief
@@ -192,7 +192,7 @@ namespace pml {
         * @return
         * Value of sqrt(PI).
         */
-        inline double SqrtPI() noexcept { return QHMACRO_CONST_SQRTPI; }
+        constexpr double SqrtPI() noexcept { return QHMACRO_CONST_SQRTPI; }
 
         /**
         * @brief
@@ -201,7 +201,7 @@ namespace pml {
         * @return
         * Value of sqrt(PI/2).
         */
-        inline double SqrtPIHalf() noexcept { return QHMACRO_CONST_SQRTPIHALF; }
+        constexpr double SqrtPIHalf() noexcept { return QHMACRO_CONST_SQRTPIHALF; }
 
         /**
         * @brief
@@ -210,7 +210,7 @@ namespace pml {
         * @return
         * Value of sqrt(2*PI).
         */
-        inline double SqrtTwoPI() noexcept { return QHMACRO_CONST_SQRTTWOPI; }
+        constexpr double SqrtTwoPI() noexcept { return QHMACRO_CONST_SQRTTWOPI; }
 
         /**
         * @brief
@@ -219,7 +219,7 @@ namespace pml {
         * @return
         * Value of PI*PI.
         */
-        inline double PISqrd() noexcept { return QHMACRO_CONST_PISQRD; }
+        constexpr double PISqrd() noexcept { return QHMACRO_CONST_PISQRD; }
 
         /**
         * @brief
@@ -228,7 +228,7 @@ namespace pml {
         * @return
         * Value of 1/PI.
         */
-        inline double _1OverPI() noexcept { return QHMACRO_CONST_1OVERPI; }
+        constexpr double _1OverPI() noexcept { return QHMACRO_CONST_1OVERPI; }
 
         /**
         * @brief
@@ -237,7 +237,7 @@ namespace pml {
         * @return
         * Value of 2/PI.
         */
-        inline double _2OverPI() noexcept { return QHMACRO_CONST_2OVERPI; }
+        constexpr double _2OverPI() noexcept { return QHMACRO_CONST_2OVERPI; }
 
         /**
         * @brief
@@ -246,7 +246,7 @@ namespace pml {
         * @return
         * Value of 4/PI.
         */
-        inline double _4OverPI() noexcept { return QHMACRO_CONST_4OVERPI; }
+        constexpr double _4OverPI() noexcept { return QHMACRO_CONST_4OVERPI; }
 
         /**
         * @brief
@@ -255,7 +255,7 @@ namespace pml {
         * @return
         * Value of 1/(2*PI).
         */
-        inline double _1OverTwoPI() noexcept { return QHMACRO_CONST_1OVERTWOPI; }
+        constexpr double _1OverTwoPI() noexcept { return QHMACRO_CONST_1OVERTWOPI; }
 
         /**
         * @brief
@@ -264,7 +264,7 @@ namespace pml {
         * @return
         * Value of 1/sqrt(2*PI).
         */
-        inline double _1OverSqrtTwoPI() noexcept { return QHMACRO_CONST_1OVERSQRTTWOPI; }
+        constexpr double _1OverSqrtTwoPI() noexcept { return QHMACRO_CONST_1OVERSQRTTWOPI; }
 
         /**
         * @brief
@@ -273,7 +273,7 @@ namespace pml {
         * @return
         * Value of e.
         */
-        inline double e() noexcept { return QHMACRO_CONST_E; }
+        constexpr double e() noexcept { return QHMACRO_CONST_E; }
 
         /**
         * @brief
@@ -282,7 +282,7 @@ namespace pml {
         * @return
         * Value of the golden ratio, 1.618033988749894.
         */
-        inline double GoldenRatio() noexcept { return 1.618033988749894; }
+        constexpr double GoldenRatio() noexcept { return 1.618033988749894; }
 
         /**
         * @brief
@@ -292,7 +292,7 @@ namespace pml {
         * @return
         * Value of the Apery's constant, 1.202056903159594.
         */
-        inline double Apery() noexcept { return 1.202056903159594; }
+        constexpr double Apery() noexcept { return 1.202056903159594; }
 
         /**
         * @brief
@@ -301,7 +301,7 @@ namespace pml {
         * @return
         * Value of the universal palabolic constant, 1.618033988749894.
         */
-        inline double UniversalParabolicP() noexcept { return 2.295587149392638; }
+        constexpr double UniversalParabolicP() noexcept { return 2.295587149392638; }
 
         /*
         * @brief

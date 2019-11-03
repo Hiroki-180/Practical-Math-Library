@@ -9,7 +9,6 @@
 * numeric manipulation implemented by SIMD operations.
 */
 
-#include <PML/Core/aligned_allocator.h>
 #include <PML/Core/CPUDispatcher.h>
 
 #include <type_traits>
@@ -32,22 +31,14 @@ namespace pml {
     * @return
     * Sum of the all elements of the input array, inVal + (inA[0] + inA[1] + ... + inA[inA.size()-1]).
     */
-    template<typename Allocator>
-    double accumulate_SIMD(const std::vector<double, Allocator>& inA, double inVal)
+    template<class Container>
+    double accumulate_SIMD(const Container& inA, double inVal)
     {
         if (CPUDispatcher::isAVX())
         {
-            if constexpr (std::is_same<Allocator, pml::aligned_allocator<double>>::value)
-            {
-                return inVal + detail::accumulate_AVX_Impl(
-                    inA.data(), inA.size(),
-                    [](auto* inArray) { return _mm256_load_pd(inArray); });
-            }
-            else {
-                return inVal + detail::accumulate_AVX_Impl(
+            return inVal + detail::accumulate_AVX_Impl(
                     inA.data(), inA.size(),
                     [](auto* inArray) { return _mm256_loadu_pd(inArray); });
-            }
         }
 
         return std::accumulate(inA.cbegin(), inA.cend(), inVal);
@@ -66,25 +57,17 @@ namespace pml {
     * @return
     * Inner product of the input arrays, inA[0]*inB[0] + inA[1]*inB[1] + ... + inA[inA.size()-1]*inB[inB.size()-1].
     */
-    template<typename Allocator>
+    template<class Container>
     double inner_product_SIMD(
-        const std::vector<double, Allocator>& inA,
-        const std::vector<double, Allocator>& inB,
+        const Container& inA,
+        const Container& inB,
         double inVal)
     {
         if (CPUDispatcher::isAVX())
         {
-            if constexpr (std::is_same<Allocator, pml::aligned_allocator<double>>::value)
-            {
-                return inVal + detail::inner_product_AVX_Impl(
-                    inA.data(), inB.data(), inA.size(),
-                    [](auto* inArray) { return _mm256_load_pd(inArray); });
-            }
-            else {
-                return inVal + detail::inner_product_AVX_Impl(
-                    inA.data(), inB.data(), inA.size(),
-                    [](auto* inArray) { return _mm256_loadu_pd(inArray); });
-            }
+            return inVal + detail::inner_product_AVX_Impl(
+                inA.data(), inB.data(), inA.size(),
+                [](auto* inArray) { return _mm256_loadu_pd(inArray); });
         }
 
         return std::inner_product(inA.cbegin(), inA.cend(), inB.cbegin(), inVal);
@@ -92,7 +75,7 @@ namespace pml {
 
     namespace detail {
 
-        template<typename L>
+        template<class L>
         double accumulate_AVX_Impl(
             const double* inA,
             std::size_t inSize,
@@ -129,7 +112,7 @@ namespace pml {
             return lSum;
         }
 
-        template<typename L>
+        template<class L>
         double inner_product_AVX_Impl(
             const double* inA,
             const double* inB,
