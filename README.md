@@ -14,11 +14,11 @@ This library aims to provide useful functions or classes for IT practitioners.
 
 **Then generate the project for your developing environment by CMake.**
 
-For instance, If you use Visual Studio 2017, following command
+For instance, If you use Visual Studio 2019, following command
 
-`cmake .. -G "Visual Studio 15 2017"`
+`cmake .. -G "Visual Studio 16 2019"`
 
-generates the VS2017 project of PML.
+generates the VS2019 solution of PML, PML.sln.
 
 If you use Xcode,
 
@@ -29,7 +29,7 @@ generates the Xcode project of PML.
 
 ## Current Status
 Current development is mainly for use in 32-bit applications.
-Also, current version supports only the Visual Studio 2017 Community compiler.
+Also, current version supports only the Visual Studio 2019 Community compiler.
 Supporting 64-bit environment or other compilers is important future task.
 
 ## Contents
