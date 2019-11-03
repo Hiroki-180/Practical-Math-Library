@@ -38,9 +38,9 @@ namespace {
 #endif
             << TEST_NUM << "-times calculation,\n"
             << TEST_ARRAY_SIZE << "-elements array,\n"
-            << "Naive                :" << inElapsedTime << "[msec],\n"
-            << "Opt. SIMD std::vector:" << inElapsedTimeOptSIMDV << "[msec],\n"
-            << "Opt. SIMD std::array :" << inElapsedTimeOptSIMDA << "[msec].\n";
+            << "Naive               :" << inElapsedTime << "[msec],\n"
+            << "Opt.SIMD std::vector:" << inElapsedTimeOptSIMDV << "[msec],\n"
+            << "Opt.SIMD std::array :" << inElapsedTimeOptSIMDA << "[msec].\n";
 
 #ifdef NDEBUG
         EXPECT_LT(inElapsedTimeOptSIMDV,  inElapsedTime);

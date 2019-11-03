@@ -6,9 +6,10 @@
 
 int main(int argc, char** argv) 
 {
-    std::cout << "Unit tests of PML are written with GoogleTest, ";
+    std::cout << "Unit tests of PML are written with GoogleTest, " << std::endl;
     std::cout << "which has the following BSD 3 - Clause that must be duplicated in its entirety:" << std::endl << std::endl;
 
+    std::cout << "  -------------------------------------------------------------------------------" << std::endl;
     std::cout << "   GoogleTest, 2005, Google Inc.All rights reserved." << std::endl << std::endl;
 
     std::cout << "   Redistributionand use in sourceand binary forms, with or without modification," << std::endl;
@@ -33,7 +34,8 @@ int main(int argc, char** argv)
     std::cout << "   OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, " << std::endl;
     std::cout << "   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR " << std::endl;
     std::cout << "   OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF " << std::endl;
-    std::cout << "   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE." << std::endl << std::endl;
+    std::cout << "   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE." << std::endl;
+    std::cout << "  -------------------------------------------------------------------------------" << std::endl << std::endl;
 
     ::testing::InitGoogleTest(&argc, argv);
 

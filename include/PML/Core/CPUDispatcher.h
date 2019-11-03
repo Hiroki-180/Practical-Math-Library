@@ -330,21 +330,21 @@ namespace pml {
             outStream << CPUDispatcher::getBrand() << std::endl;
 
             const auto support_message = [&outStream](const std::string& isa_feature, bool is_supported) {
-                outStream << isa_feature << "," << (is_supported ? " supported" : " not supported") << std::endl;
+                outStream << isa_feature << ":" << (is_supported ? " supported" : " not supported") << std::endl;
             };
 
-            support_message("SSE"   , CPUDispatcher::isSSE  ());
-            support_message("SSE2"  , CPUDispatcher::isSSE2 ());
-            support_message("SSE3"  , CPUDispatcher::isSSE3 ());
-            support_message("SSSE3" , CPUDispatcher::isSSSE3());
+            support_message("SSE   ", CPUDispatcher::isSSE  ());
+            support_message("SSE2  ", CPUDispatcher::isSSE2 ());
+            support_message("SSE3  ", CPUDispatcher::isSSE3 ());
+            support_message("SSSE3 ", CPUDispatcher::isSSSE3());
             support_message("SSE4.1", CPUDispatcher::isSSE41());
             support_message("SSE4.2", CPUDispatcher::isSSE42());
 
-            support_message("FMA" , CPUDispatcher::isFMA ());
-            support_message("AVX" , CPUDispatcher::isAVX ());
-            support_message("AVX2", CPUDispatcher::isAVX2());
+            support_message("FMA   " , CPUDispatcher::isFMA ());
+            support_message("AVX   " , CPUDispatcher::isAVX ());
+            support_message("AVX2  ", CPUDispatcher::isAVX2());
 
-            support_message("AVX512F" , CPUDispatcher::isAVX512F ());
+            support_message("AVX512F ", CPUDispatcher::isAVX512F ());
             support_message("AVX512PF", CPUDispatcher::isAVX512PF());
             support_message("AVX512ER", CPUDispatcher::isAVX512ER());
             support_message("AVX512CD", CPUDispatcher::isAVX512CD());
